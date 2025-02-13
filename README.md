@@ -1,0 +1,2 @@
+# lifeinsure
+GitHub Pages
