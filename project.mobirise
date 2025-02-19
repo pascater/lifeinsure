@@ -66,23 +66,9 @@
     "lazyLoad": true,
     "site_lang": "it",
     "favicon": false,
-    "mbrsiteDomain": "adq7zigi0a",
+    "mbrsiteDomain": "frw87jw867",
     "usedWebp": false,
     "cssOptimize": false,
-    "cookiesAlert": {
-      "customDialogSelector": false,
-      "colorText": "#424a4d",
-      "colorBg": "#ffffff",
-      "colorButton": "#491414",
-      "rejectColor": "#ffffff",
-      "colorLink": "#424a4d",
-      "underlineLink": true,
-      "opacityOverlay": "0",
-      "bgOpacity": "100",
-      "text": "We use cookies to give you the best experience. Read our <a href='privacy.html'>cookie policy</a>.",
-      "textButton": "OK",
-      "rejectText": "REJECT"
-    },
     "pwa-switcher": false,
     "publishChangesOnly": false,
     "mcSmartCart": {
@@ -90,7 +76,8 @@
     },
     "uniqCompNum": 108,
     "versionPublish": "5.9.6",
-    "screenshot": "screenshot.png"
+    "screenshot": "screenshot.png",
+    "cookiesAlert": false
   },
   "pages": {
     "index.html": {
