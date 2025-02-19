@@ -42,7 +42,7 @@
       ]
     },
     "path": "@PROJECT_PATH@",
-    "name": "LifeInsure.ch",
+    "name": "LifeInsure IT",
     "versionFirst": "5.9.6",
     "siteFonts": [
       {
@@ -52,8 +52,8 @@
       }
     ],
     "imageResize": true,
-    "sitemapSwitcher": false,
-    "siteUrl": false,
+    "sitemapSwitcher": true,
+    "siteUrl": "https://it.lifeinsure.ch",
     "sitemapSwitcherAuto": "on",
     "robotsSwitcher": true,
     "robotsText": "User-agent: *\r\nDisallow: /cgi-bin\r\n",
@@ -61,12 +61,12 @@
       "colorText": "#a7a7a7",
       "colorLink": "#149dcc",
       "underlineLink": true,
-      "text": "By continuing you agree to our <a href='terms.html'>Terms of Service</a> and <a href='policy.html'>Privacy Policy</a>."
+      "text": "Continuando, accetti le nostre: <a href='privacy.html'>privacy</a>, <a href='cookie.html'>cookie policy</a> e <a href='termini-condizioni.html'>condizioni d'uso</a> a termini di legge."
     },
     "lazyLoad": true,
     "site_lang": "it",
     "favicon": false,
-    "mbrsiteDomain": "lifeinsure",
+    "mbrsiteDomain": "adq7zigi0a",
     "usedWebp": false,
     "cssOptimize": false,
     "cookiesAlert": {
@@ -84,7 +84,7 @@
       "rejectText": "REJECT"
     },
     "pwa-switcher": false,
-    "publishChangesOnly": true,
+    "publishChangesOnly": false,
     "mcSmartCart": {
       "currency": "USD"
     },
