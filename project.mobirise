@@ -1,6 +1,6 @@
 {
   "settings": {
-    "currentPage": "page3.html",
+    "currentPage": "privacy.html",
     "theme": {
       "name": "inspirem5",
       "title": "InspireM5",
@@ -3536,7 +3536,7 @@
         }
       ]
     },
-    "page3.html": {
+    "privacy.html": {
       "settings": {
         "title": "Privacy policy",
         "order": "3",
