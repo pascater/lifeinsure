@@ -1047,7 +1047,7 @@
 
             <div class="col-lg-6 my-auto pb-4 mbr-form" data-form-type="formoid">
 <!--Formbuilder Form-->
-<form action="https://mobirise.eu/" method="POST" class="mbr-form form-with-styler" data-form-title="Form di PolizzaVita.io"><input type="hidden" name="email" data-form-email="true" value="d/Obu0AwHVkn+b3q41y4BlHxtnDlBnEMTZfYsvCn85ghVQmOiPaa46+Qzkg59ddy56IFBX2H1Yojt5lKsvpipeCJtEHAadYDSIpzC4Vbo8cqhm/0ZB1hyuSWQbN2A4jk.PTxD0BqNZzxxfqX3/NXf+X10KMNC/ax4n5bxOMooyVUUUbwL+mgtqm/OqWlsd/ZR6XcfqRs7Ho/WBxjUHznpWkScMjZIJERQkZlmvmW552Z1wNf0tV9LdnTXXnCJgyBM">
+<form action="https://mobirise.eu/" method="POST" class="mbr-form form-with-styler" data-form-title="Form di PolizzaVita.io"><input type="hidden" name="email" data-form-email="true" value="A7DqDMItS+PNrnlQ0mGOUZZlVJGDTP/qywMO8bBMlYioIDTJcd7e/XEu9pnUywDNdnudrPqloEkhFg5EHRHebK/914CI3dbd90conc0JUQ3D+vrzBzwlUIw3rclLM5Yc.S6Z22RHC6uTT2OYodoc9YacoHNmOKGpa/3dgqrXbGuzyJb8QzKnLnDYvXl/fLgkDXCEDxmH4Wm0rJUPUGGh69MotOkA1afF0PSIFS8UJFJJaJn3J9PYdmnyKg9xmBPzW">
 <div class="row">
 <div hidden="hidden" data-form-alert="" class="alert alert-success col-12">Grazie per averci inviato il tuo messaggio. Ti ricontattiamo a breve.</div>
 <div hidden="hidden" data-form-alert-danger="" class="alert alert-danger col-12">Oops...! some problem!</div>
@@ -1210,7 +1210,6 @@
 <div id="custom-html-2z">
 
 
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestione Cookie</title>
@@ -1230,6 +1229,7 @@
             padding: 20px;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
             text-align: center;
+            z-index: 1000;
         }
         .cookie-banner button {
             margin: 5px;
@@ -1259,6 +1259,7 @@
             padding: 20px;
             box-shadow: 0 0 10px rgba(0,0,0,0.2);
             text-align: center;
+            z-index: 1001;
         }
         .cookie-settings button {
             margin-top: 10px;
@@ -1266,7 +1267,7 @@
         .cookie-icon {
             position: fixed;
             bottom: 20px;
-            right: 20px;
+            left: 20px;
             background: white;
             border-radius: 50%;
             width: 40px;
@@ -1276,6 +1277,8 @@
             justify-content: center;
             box-shadow: 0 0 5px rgba(0,0,0,0.2);
             cursor: pointer;
+            z-index: 1002;
+            font-size: 20px;
         }
     </style>
 
@@ -1297,7 +1300,7 @@
         <button class="accept" onclick="savePreferences()">Salva Preferenze</button>
     </div>
 
-    <div class="cookie-icon" onclick="showSettings()">
+    <div class="cookie-icon" id="cookieIcon" onclick="showSettings()">
         🍪
     </div>
 
@@ -1305,6 +1308,7 @@
         function setCookiePreferences(accepted) {
             localStorage.setItem("cookieAccepted", accepted);
             document.getElementById("cookieBanner").style.display = "none";
+            document.getElementById("cookieIcon").style.display = "flex";
         }
         
         function showSettings() {
@@ -1322,11 +1326,12 @@
         window.onload = function() {
             if (localStorage.getItem("cookieAccepted") !== null) {
                 document.getElementById("cookieBanner").style.display = "none";
+                document.getElementById("cookieIcon").style.display = "flex";
+            } else {
+                document.getElementById("cookieIcon").style.display = "none";
             }
         }
     </script>
-
-
 
 
 </div>
