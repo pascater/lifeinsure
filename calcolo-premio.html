@@ -148,9 +148,9 @@
 
       const result = await response.json();
       document.getElementById('result').innerText = `Premio calcolato: CHF ${result.premium[0].yearly_gross_premium}`;
-    } catch (error) {
-      document.getElementById('result').innerText = 'Errore durante il calcolo. Riprova.';
-    }
+    } .catch(error => {
+    console.error("Errore dettagliato:", error);
+    document.getElementById('result').innerText = `Errore: ${error.message}`;
   });
 </script>
 </div>
