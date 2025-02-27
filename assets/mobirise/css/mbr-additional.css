@@ -2956,6 +2956,94 @@ a {
     left: -1rem;
   }
 }
+.cid-uE0Qxfr7ws {
+  padding-top: 10rem;
+  padding-bottom: 4rem;
+  background-color: #ecede8;
+}
+.cid-uE0Qxfr7ws .mbr-fallback-image.disabled {
+  display: none;
+}
+.cid-uE0Qxfr7ws .mbr-fallback-image {
+  display: block;
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+.cid-uE0Qxfr7ws .mbr-text,
+.cid-uE0Qxfr7ws .mbr-section-btn {
+  text-align: center;
+  color: #491414;
+}
+.cid-uE0Qxfr7ws .mbr-section-title {
+  text-align: center;
+  color: #491414;
+}
+.cid-uE0Qxfr7ws .mbr-section-subtitle {
+  text-align: center;
+}
+#custom-html-2n {
+  /* Imposta il body per il centramento */
+  /* Stile per il modulo */
+  /* Stile per le etichette e gli input */
+  /* Stile per il pulsante */
+  /* Stile per il risultato */
+}
+#custom-html-2n body {
+  display: flex;
+  justify-content: center;
+  /* Centra orizzontalmente */
+  align-items: center;
+  /* Centra verticalmente */
+  height: 100vh;
+  /* Occupa tutta l'altezza della finestra */
+  background-color: #f4f4f4;
+  /* Sfondo leggero per contrasto */
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+#custom-html-2n #insurance-form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  text-align: center;
+}
+#custom-html-2n #insurance-form label {
+  display: block;
+  font-weight: bold;
+  margin-top: 10px;
+}
+#custom-html-2n #insurance-form input,
+#custom-html-2n #insurance-form select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+#custom-html-2n #insurance-form button {
+  background: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  margin-top: 15px;
+  cursor: pointer;
+}
+#custom-html-2n #insurance-form button:hover {
+  background: #0056b3;
+}
+#custom-html-2n #result {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #333;
+}
 .cid-uwdsaDyjpZ {
   padding-top: 30px;
   padding-bottom: 60px;
