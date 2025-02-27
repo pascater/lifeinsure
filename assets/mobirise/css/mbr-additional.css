@@ -2987,41 +2987,51 @@ a {
 }
 #custom-html-2n {
   /* Imposta il body per il centramento */
+  /* Contenitore principale per il modulo */
   /* Stile per il modulo */
   /* Stile per le etichette e gli input */
   /* Stile per il pulsante */
   /* Stile per il risultato */
 }
+#custom-html-2n html,
 #custom-html-2n body {
+  height: 100%;
+  margin: 0;
   display: flex;
   justify-content: center;
   /* Centra orizzontalmente */
   align-items: center;
   /* Centra verticalmente */
-  height: 100vh;
-  /* Occupa tutta l'altezza della finestra */
   background-color: #f4f4f4;
-  /* Sfondo leggero per contrasto */
+  /* Sfondo chiaro */
   font-family: Arial, sans-serif;
-  margin: 0;
+}
+#custom-html-2n .form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* Altezza dell'intera finestra */
+  width: 100%;
 }
 #custom-html-2n #insurance-form {
   background: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 300px;
+  width: 320px;
   text-align: center;
 }
 #custom-html-2n #insurance-form label {
   display: block;
   font-weight: bold;
   margin-top: 10px;
+  text-align: left;
 }
 #custom-html-2n #insurance-form input,
 #custom-html-2n #insurance-form select {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -3035,6 +3045,7 @@ a {
   width: 100%;
   margin-top: 15px;
   cursor: pointer;
+  font-size: 16px;
 }
 #custom-html-2n #insurance-form button:hover {
   background: #0056b3;
