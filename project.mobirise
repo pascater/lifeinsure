@@ -3012,7 +3012,7 @@
           "_customTemplate": true,
           "_afterNavbarItem": false,
           "_customHTML": "[JS_CODE_0]\n",
-          "_customCSS": "",
+          "_customCSS": "/* Contenitore del risultato */\n#result {\n    text-align: center; /* Centra il testo */\n    font-weight: bold;\n    font-size: 18px;\n    color: #333;\n    margin-top: 15px; /* Distanza dal pulsante */\n    padding: 10px;\n    border-radius: 5px;\n    width: 100%;\n    max-width: 350px; /* Larghezza massima per non allargarsi troppo */\n    background: #f8f8f8; /* Sfondo leggero */\n    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Effetto ombra */\n    display: block;\n    margin-left: auto;\n    margin-right: auto;\n}\n",
           "alias": "code-editor",
           "_tags": [
             "Extension"
