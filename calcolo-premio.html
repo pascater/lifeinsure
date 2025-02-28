@@ -121,16 +121,22 @@
 </div>
 
 <div id="custom-html-31"><script>
-document.getElementById('insurance-form').addEventListener('submit', async (e) =&gt; {
+document.getElementById('insurance-form').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Raccolta dati dal form
+    // Recupero dati dal form
+    const birthdate = document.getElementById('birthdate').value.replace(/-/g, '');
+    const smoker = document.getElementById('smoker').value === 'true';
+    const duration = parseInt(document.getElementById('duration').value);
+    const coverage = parseInt(document.getElementById('coverage').value);
+
+    // Creazione del body JSON con tutti i dati richiesti
     const data = {
-        origin: 20220101,
-        birthdate: parseInt(document.getElementById('birthdate').value.replace(/-/g, '')),
-        smoker: document.getElementById('smoker').value === 'true',
-        duration: parseInt(document.getElementById('duration').value),
-        coverage: parseInt(document.getElementById('coverage').value)
+        origin: 20220101,  // Un valore fisso per il test
+        birthdate: parseInt(birthdate),
+        smoker: smoker,
+        duration: duration,
+        coverage: coverage
     };
 
     try {
@@ -140,10 +146,9 @@ document.getElementById('insurance-form').addEventListener('submit', async (e) =
                 'Content-Type': 'application/json',
                 'X-SQUARELIFE-APIKEY': 'yra9qc9WffYaEsKlib8IrQwc2GRLdUCEJIzOo4uTfyc'
             },
-            body: JSON.stringify(data) // Assicuriamoci che sia solo per i metodi che supportano un body
+            body: JSON.stringify(data)  // Assicuriamoci che il body sia JSON valido
         });
 
-        // Controlliamo se la risposta è valida
         if (!response.ok) {
             throw new Error(`Errore HTTP! Status: ${response.status}`);
         }
@@ -155,6 +160,7 @@ document.getElementById('insurance-form').addEventListener('submit', async (e) =
         console.error("Errore dettagliato:", error);
     }
 });
+
 </script></div>
 
 <section data-bs-version="5.1" once="" class="cid-uwdsaDyjpZ" id="footer01-2h">
