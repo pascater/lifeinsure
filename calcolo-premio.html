@@ -120,46 +120,40 @@
 
 </div>
 
-<div id="custom-html-31"><script>
-  document.getElementById('insurance-form').addEventListener('submit', async (e) => {
-    e.preventDefault(); // Previene il ricaricamento della pagina.
+<div id="custom-html-31">document.getElementById('insurance-form').addEventListener('submit', async (e) =&gt; {
+    e.preventDefault();
 
-    // Recupera i dati dal modulo.
-    const birthdate = document.getElementById('birthdate').value.replace(/-/g, '');
-    const smoker = document.getElementById('smoker').value === 'true';
-    const duration = parseInt(document.getElementById('duration').value);
-    const coverage = parseInt(document.getElementById('coverage').value);
-
+    // Raccolta dati dal form
     const data = {
-      origin: 20220101, // Data preimpostata per il test.
-      birthdate: parseInt(birthdate),
-      smoker: smoker,
-      duration: duration,
-      coverage: coverage
+        origin: 20220101,
+        birthdate: parseInt(document.getElementById('birthdate').value.replace(/-/g, '')),
+        smoker: document.getElementById('smoker').value === 'true',
+        duration: parseInt(document.getElementById('duration').value),
+        coverage: parseInt(document.getElementById('coverage').value)
     };
 
     try {
-      // Invia i dati alle API.
-      const response = await fetch('https://squarelifetest.asp.lifeware.ch/squarelife_protection/api/v0/switzerland/life_insurance/premium', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-SQUARELIFE-APIKEY': 'yra9qc9WffYaEsKlib8IrQwc2GRLdUCEJIzOo4uTfyc'
-        },
-        body: JSON.stringify(data)
-      });
+        const response = await fetch('https://squarelifetest.asp.lifeware.ch/squarelife_protection/api/v0/switzerland/life_insurance/premium', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-SQUARELIFE-APIKEY': 'yra9qc9WffYaEsKlib8IrQwc2GRLdUCEJIzOo4uTfyc'
+            },
+            body: JSON.stringify(data) // Assicuriamoci che sia solo per i metodi che supportano un body
+        });
 
-      const result = await response.json();
-      document.getElementById('result').innerText = `Premio calcolato: CHF ${result.premium[0].yearly_gross_premium}`;
+        // Controlliamo se la risposta è valida
+        if (!response.ok) {
+            throw new Error(`Errore HTTP! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        document.getElementById('result').innerText = `Premio calcolato: CHF ${result.premium[0].yearly_gross_premium}`;
     } catch (error) {
-.catch(error => {
-    console.error("Errore dettagliato:", error);
-    document.getElementById('result').innerText = `Errore: ${error.message}`;
-});
-
+        document.getElementById('result').innerText = `Errore: ${error.message}`;
+        console.error("Errore dettagliato:", error);
     }
-  });
-</script>
+});
 </div>
 
 <section data-bs-version="5.1" once="" class="cid-uwdsaDyjpZ" id="footer01-2h">
