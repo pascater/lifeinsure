@@ -126,10 +126,15 @@ $(document).ready(function() {
   $("#preventivo-form").submit(function(event) {
     event.preventDefault();
 
+    // Se "origin" deve essere fisso, puoi usare:
+    var originValue = 20220101;
+    // Altrimenti, se è un campo di input, usa:
+    // var originValue = parseInt($("#origin").val().replace(/-/g, ''));
+
     var formData = {
-      origin: parseInt($("#origin").val().replace(/-/g, '')),
+      origin: originValue,
       birthdate: parseInt($("#birthdate").val().replace(/-/g, '')),
-      smoker: $("#smoker").val() === "Sì" ? false : true,
+      smoker: $("#smoker").val() === "Sì", // Risolto: se "Sì" allora true, altrimenti false.
       duration: parseInt($("#duration").val()),
       coverage: parseInt($("#coverage").val()),
       height: parseInt($("#height").val()),
@@ -147,12 +152,10 @@ $(document).ready(function() {
       body: JSON.stringify(formData)
     })
     .then(response => {
-      // **Registra l'oggetto di risposta completo nella console**
       console.log("Risposta API Completa:", response);
-      return response.json(); // Prova comunque ad analizzare come JSON
+      return response.json();
     })
     .then(data => {
-      // **Registra i dati JSON nella console**
       console.log("Dati di Risposta API:", data);
       if (data.status === "ok") {
         var premio = data.premium[0].yearly_gross_premium;
@@ -163,10 +166,12 @@ $(document).ready(function() {
     })
     .catch(error => {
       $("#preventivo-risultato").text("Errore di comunicazione: " + error);
+      console.error("Errore di comunicazione:", error);
     });
   });
 });
-</script></div>
+</script>
+</div>
 
 <section data-bs-version="5.1" once="" class="cid-uwdsaDyjpZ" id="footer01-2h">
 
