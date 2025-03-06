@@ -145,14 +145,15 @@ $(document).ready(function() {
 
     var apiKey = "yra9qc9WffYaEsKlib8IrQwc2GRLdUCEJIzOo4uTfyc";
 
-    fetch('https://squarelifetest.asp.lifeware.ch/squarelife_protection/api/v0/switzerland/life_insurance/premium', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-SQUARELIFE-APIKEY': apiKey
-      },
-      body: JSON.stringify(formData)
-    })
+fetch('https://cors-anywhere.herokuapp.com/https://squarelifetest.asp.lifeware.ch/squarelife_protection/api/v0/switzerland/life_insurance/premium', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-SQUARELIFE-APIKEY': apiKey
+  },
+  body: JSON.stringify(formData)
+})
+
     .then(response => {
       console.log("Risposta API Completa:", response);
       return response.json();
