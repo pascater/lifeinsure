@@ -92,10 +92,13 @@
 </section>
 
 <div id="custom-html-2n"><div class="form-container">
-<form id="insurance-form">
-    
+<form id="preventivo-form">   
 <h3 style="text-align: center; font-weight: bold; text-transform: uppercase;">INSERISCI LE TUE INFORMAZIONI</h3>
   <br>  
+    <label for="origin">Origine (Numero YYYYMMDD):</label>
+<input type="number" id="origin" name="origin" required=""><br>
+<small>Inserisci l'origine come numero in formato YYYYMMDD (es. 20231027).</small><br>
+    
   <label for="birthdate">Data di nascita (GG-MM-AAAA):</label>
   <input type="date" id="birthdate" name="birthdate" required=""><br>
 
@@ -112,12 +115,10 @@
   <input type="number" id="coverage" name="coverage" required=""><br>
 
   <button type="submit">Calcola Premio</button>
-     <br> 
-<div id="result"></div> <!-- Risultato centrato sotto il pulsante -->
- <br>     
+<div id="preventivo-risultato"></div> <!-- Risultato centrato sotto il pulsante -->
 </form>
 </div>
-  <div id="result"></div> <!-- Risultato centrato sotto il pulsante -->
+
 
 </div>
 
@@ -129,7 +130,7 @@ $(document).ready(function() {
     var formData = {
       origin: parseInt($("#origin").val().replace(/-/g, '')),
       birthdate: parseInt($("#birthdate").val().replace(/-/g, '')),
-      smoker: $("#smoker").val() === "Sì" ? false : true,
+    smoker: $("#smoker").val() === "true", // Se il valore selezionato è "true", smoker è true, altrimenti false
       duration: parseInt($("#duration").val()),
       coverage: parseInt($("#coverage").val()),
       height: parseInt($("#height").val()),
