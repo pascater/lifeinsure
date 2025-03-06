@@ -1,6 +1,6 @@
 {
   "settings": {
-    "currentPage": "calcolo-premio.html",
+    "currentPage": "test-api.html",
     "theme": {
       "name": "inspirem5",
       "title": "InspireM5",
@@ -4556,7 +4556,10 @@
         "title": "TEST API",
         "order": "2",
         "meta_descr": "Calcolatore premio polizza vita decesso caso morte in Svizzera Ticino",
-        "meta_image": "@PROJECT_PATH@/assets/images/lifeinsure-172x172.png"
+        "meta_image": "@PROJECT_PATH@/assets/images/lifeinsure-172x172.png",
+        "footer_custom": "<script>\ndocument.getElementById('premiumForm').addEventListener('submit', function(e) {\n  e.preventDefault();\n  \n  // Configurazione API\n  const apiUrl = 'https://squarelifetest.asp.lifeware.ch/squarelife_protection/api/v0/switzerland/life_insurance/premium';\n  const apiKey = 'yra9qc9WffYaB8Klib8IrQwc2GRLdUCEJIzOo4uTfyc';\n\n  // Formattazione dati\n  const formData = {\n    origin: parseInt(document.querySelector('[name=\"origin\"]').value),\n    birthdate: document.querySelector('[name=\"birthdate\"]').value.replace(/-/g, ''),\n    smoker: document.querySelector('[name=\"smoker\"]').value === 'true',\n    duration: parseInt(document.querySelector('[name=\"duration\"]').value),\n    coverage: parseInt(document.querySelector('[name=\"coverage\"]').value),\n    height: parseInt(document.querySelector('[name=\"height\"]').value) || undefined,\n    weight: parseInt(document.querySelector('[name=\"weight\"]').value) || undefined\n  };\n\n  // Richiesta API con CORS Proxy\n  fetch('https://cors-anywhere.herokuapp.com/' + apiUrl, {\n    method: 'POST',\n    headers: {\n      'Content-Type': 'application/json',\n      'X-SQUARELIFE-APIKEY': apiKey\n    },\n    body: JSON.stringify(formData)\n  })\n  .then(response => response.json())\n  .then(data => {\n    if(data.status === 'ok') {\n      document.getElementById('result').innerHTML = `\n        Premio annuale: ${data.premium[0].yearly_gross_premium} ${data.currency}\n      `;\n    } else {\n      document.getElementById('result').innerHTML = 'Errore nel calcolo';\n    }\n  })\n  .catch(error => {\n    console.error('Error:', error);\n    document.getElementById('result').innerHTML = 'Errore di connessione';\n  });\n});\n</script>",
+        "header_custom": "<script src=\"https://code.jquery.com/jquery-3.6.0.min.js\"></script>",
+        "html_before": ""
       },
       "components": [
         {
@@ -5029,7 +5032,7 @@
         {
           "_customTemplate": true,
           "_afterNavbarItem": false,
-          "_customHTML": "<button id=\"test-api\">Test API</button>\n<div id=\"api-response\"></div>\n\n[JS_CODE_0]\n",
+          "_customHTML": "<input type=\"number\" name=\"origin\" placeholder=\"Data origine (YYYYMMDD)\">\n<input type=\"date\" name=\"birthdate\" placeholder=\"Data di nascita\">\n<select name=\"smoker\">\n  <option value=\"false\">Non fumatore</option>\n  <option value=\"true\">Fumatore</option>\n</select>\n<input type=\"number\" name=\"duration\" placeholder=\"Durata (anni)\">\n<input type=\"number\" name=\"coverage\" placeholder=\"Copertura (CHF)\">\n<input type=\"number\" name=\"height\" placeholder=\"Altezza (cm)\" optional=\"\">\n<input type=\"number\" name=\"weight\" placeholder=\"Peso (kg)\" optional=\"\">\n\n<form id=\"premiumForm\" action=\"javascript:void(0);\"></form>",
           "_customCSS": "",
           "alias": "code-editor",
           "_tags": [
@@ -5038,9 +5041,7 @@
           "_name": "pro.custom-html",
           "_sourceTheme": "inspirem5",
           "_PHPplaceholders": [],
-          "_JSplaceholders": [
-            "<script>\n  document.getElementById(\"test-api\").addEventListener(\"click\", async function() {\n    const data = {\n      origin: 20220101,\n      birthdate: 19800101,\n      smoker: false,\n      duration: 10,\n      coverage: 100000\n    };\n\n    try {\n      const response = await fetch(\"https://squarelifetest.asp.lifeware.ch/squarelife_protection/api/v0/switzerland/life_insurance/premium\", {\n        method: \"POST\",\n        headers: {\n          \"Content-Type\": \"application/json\",\n          \"X-SQUARELIFE-APIKEY\": \"yra9qc9WffYaEsKlib8IrQwc2GRLdUCEJIzOo4uTfyc\"\n        },\n        body: JSON.stringify(data)\n      });\n\n      const result = await response.json();\n      document.getElementById(\"api-response\").innerText = \"Risultato: \" + JSON.stringify(result, null, 2);\n    } catch (error) {\n      document.getElementById(\"api-response\").innerText = \"Errore: \" + error;\n    }\n  });\n</script>"
-          ],
+          "_JSplaceholders": [],
           "_anchor": "custom-html-36"
         }
       ]
