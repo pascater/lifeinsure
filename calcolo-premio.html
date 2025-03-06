@@ -92,20 +92,21 @@
 </section>
 
 <div id="custom-html-2n"><div class="form-container">
-<form id="preventivo-form">   
-<h3 style="text-align: center; font-weight: bold; text-transform: uppercase;">INSERISCI LE TUE INFORMAZIONI</h3>
-  <br>  
-    <label for="origin">Origine (Numero YYYYMMDD):</label>
-<input type="number" id="origin" name="origin" required=""><br>
-<small>Inserisci l'origine come numero in formato YYYYMMDD (es. 20231027).</small><br>
+<form id="preventivo-form">  <!-- ID del form corretto -->
     
+<h3 style="text-align: center; font-weight: bold; text-transform: uppercase;">INSERISCI LE TUE INFORMAZIONI</h3>
+  <br>
+  <label for="origin">Origine (Numero YYYYMMDD):</label>  <!-- Campo "origin" aggiunto -->
+  <input type="number" id="origin" name="origin" required=""><br>
+  <small>Inserisci l'origine come numero in formato YYYYMMDD (es. 20231027).</small><br>
+
   <label for="birthdate">Data di nascita (GG-MM-AAAA):</label>
   <input type="date" id="birthdate" name="birthdate" required=""><br>
 
   <label for="smoker">Fumatore?:</label>
   <select id="smoker" name="smoker">
-    <option value="false">No</option>
-    <option value="true">Sì</option>
+    <option value="false">No</option>  <!-- value="false" per "No" -->
+    <option value="true">Sì</option>   <!-- value="true" per "Sì" -->
   </select><br>
 
   <label for="duration">Durata (anni):</label>
@@ -115,22 +116,23 @@
   <input type="number" id="coverage" name="coverage" required=""><br>
 
   <button type="submit">Calcola Premio</button>
-<div id="preventivo-risultato"></div> <!-- Risultato centrato sotto il pulsante -->
+     <br>
+<div id="preventivo-risultato"></div> <!-- ID del risultato corretto e unico -->
+ <br>
 </form>
 </div>
-
 
 </div>
 
 <div id="custom-html-31"><script>
 $(document).ready(function() {
-  $("#preventivo-form").submit(function(event) {
+  $("#preventivo-form").submit(function(event) { // ID del form corretto
     event.preventDefault();
 
     var formData = {
-      origin: parseInt($("#origin").val().replace(/-/g, '')),
-      birthdate: parseInt($("#birthdate").val().replace(/-/g, '')),
-    smoker: $("#smoker").val() === "true", // Se il valore selezionato è "true", smoker è true, altrimenti false
+      origin: parseInt($("#origin").val().replace(/-/g, '')), // Rimuovi trattini e converti in numero
+      birthdate: parseInt($("#birthdate").val().replace(/-/g, '')), // Rimuovi trattini e converti in numero
+      smoker: $("#smoker").val() === "true", // Logica "smoker" semplificata e corretta
       duration: parseInt($("#duration").val()),
       coverage: parseInt($("#coverage").val()),
       height: parseInt($("#height").val()),
@@ -148,22 +150,20 @@ $(document).ready(function() {
       body: JSON.stringify(formData)
     })
     .then(response => {
-      // **Registra l'oggetto di risposta completo nella console**
-      console.log("Risposta API Completa:", response);
-      return response.json(); // Prova comunque ad analizzare come JSON
+      console.log("Risposta API Completa:", response); // Log risposta completa
+      return response.json();
     })
     .then(data => {
-      // **Registra i dati JSON nella console**
-      console.log("Dati di Risposta API:", data);
+      console.log("Dati di Risposta API:", data); // Log dati risposta
       if (data.status === "ok") {
         var premio = data.premium[0].yearly_gross_premium;
-        $("#preventivo-risultato").text("Il premio annuale è: " + premio + " " + data.currency);
+        $("#preventivo-risultato").text("Il premio annuale è: " + premio + " " + data.currency); // ID risultato corretto
       } else {
-        $("#preventivo-risultato").text("Errore nel calcolo del preventivo: " + data.message);
+        $("#preventivo-risultato").text("Errore nel calcolo del preventivo: " + data.message); // ID risultato corretto
       }
     })
     .catch(error => {
-      $("#preventivo-risultato").text("Errore di comunicazione: " + error);
+      $("#preventivo-risultato").text("Errore di comunicazione: " + error); // ID risultato corretto
     });
   });
 });
