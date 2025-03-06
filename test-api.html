@@ -91,18 +91,37 @@
     </div>
 </section>
 
-<div id="custom-html-36"><input type="number" name="origin" placeholder="Data origine (YYYYMMDD)">
-<input type="date" name="birthdate" placeholder="Data di nascita">
-<select name="smoker">
-  <option value="false">Non fumatore</option>
-  <option value="true">Fumatore</option>
-</select>
-<input type="number" name="duration" placeholder="Durata (anni)">
-<input type="number" name="coverage" placeholder="Copertura (CHF)">
-<input type="number" name="height" placeholder="Altezza (cm)" optional="">
-<input type="number" name="weight" placeholder="Peso (kg)" optional="">
+<div id="custom-html-36"><form id="premiumForm" action="javascript:void(0);">
 
-<form id="premiumForm" action="javascript:void(0);"></form></div>
+  <h2>Inserisci le tue informazioni</h2>
+
+  <label for="birthdate">📅 Data di nascita:</label>
+  <input type="date" id="birthdate" name="birthdate" required="">
+
+  <label for="smoker">🚬 Sei fumatore?</label>
+  <select id="smoker" name="smoker">
+    <option value="No">No</option>
+    <option value="Sì">Sì</option>
+  </select>
+
+  <label for="duration">📆 Durata (anni):</label>
+  <input type="number" id="duration" name="duration" required="" min="1" max="50">
+
+  <label for="coverage">💰 Capitale assicurato (CHF):</label>
+  <input type="number" id="coverage" name="coverage" required="" min="10000" step="1000">
+
+  <label for="height">📏 Altezza (cm):</label>
+  <input type="number" id="height" name="height" min="100" max="250">
+
+  <label for="weight">⚖️ Peso (kg):</label>
+  <input type="number" id="weight" name="weight" min="30" max="200">
+    
+
+  <button type="submit">📊 Calcola Premio</button>
+</form>
+
+
+<div id="result" style="margin-top: 20px; padding: 15px; border: 1px solid #ddd;"></div></div>
 
 
 <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
