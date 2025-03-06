@@ -31,7 +31,7 @@
 
   
   
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 <body>
@@ -91,33 +91,37 @@
     </div>
 </section>
 
-<div id="custom-html-2n"><div class="form-container">
-<form id="insurance-form">
+<div id="custom-html-2n"> <form id="preventivo-form">
+    <h2 style="text-align: center; font-weight: bold; text-transform: uppercase;">INSERISCI LE TUE INFORMAZIONI</h2>
     
-<h3 style="text-align: center; font-weight: bold; text-transform: uppercase;">INSERISCI LE TUE INFORMAZIONI</h3>
-  <br>  
-  <label for="birthdate">Data di nascita (GG-MM-AAAA):</label>
-  <input type="date" id="birthdate" name="birthdate" required=""><br>
+    <label for="birthdate">Data di nascita (GG-MM-AAAA):</label>
+    <input type="date" id="birthdate" name="birthdate" required="">
 
-  <label for="smoker">Fumatore?:</label>
-  <select id="smoker" name="smoker">
-    <option value="false">No</option>
-    <option value="true">Sì</option>
-  </select><br>
+    <label for="smoker">Fumatore?</label>
+    <select id="smoker" name="smoker">
+      <option value="No">No</option>
+      <option value="Sì">Sì</option>
+    </select>
 
-  <label for="duration">Durata (anni):</label>
-  <input type="number" id="duration" name="duration" required=""><br>
+    <label for="duration">Durata (anni):</label>
+    <input type="number" id="duration" name="duration" required="">
 
-  <label for="coverage">Capitale assicurato (CHF):</label>
-  <input type="number" id="coverage" name="coverage" required=""><br>
+    <label for="coverage">Capitale assicurato (CHF):</label>
+    <input type="number" id="coverage" name="coverage" required="">
 
-  <button type="submit">Calcola Premio</button>
-     <br> 
-<div id="result"></div> <!-- Risultato centrato sotto il pulsante -->
- <br>     
-</form>
-</div>
-  <div id="result"></div> <!-- Risultato centrato sotto il pulsante -->
+    <label for="height">Altezza (cm):</label>
+    <input type="number" id="height" name="height">
+
+    <label for="weight">Peso (kg):</label>
+    <input type="number" id="weight" name="weight">
+
+    <button type="submit">Calcola Premio</button>
+  </form>
+
+  <!-- Div per visualizzare il risultato -->
+  <div id="preventivo-risultato"></div>
+  
+
 
 </div>
 
@@ -126,15 +130,13 @@ $(document).ready(function() {
   $("#preventivo-form").submit(function(event) {
     event.preventDefault();
 
-    // Se "origin" deve essere fisso, puoi usare:
+    // Se "origin" è fisso, usiamo questo valore:
     var originValue = 20220101;
-    // Altrimenti, se è un campo di input, usa:
-    // var originValue = parseInt($("#origin").val().replace(/-/g, ''));
 
     var formData = {
       origin: originValue,
       birthdate: parseInt($("#birthdate").val().replace(/-/g, '')),
-      smoker: $("#smoker").val() === "Sì", // Risolto: se "Sì" allora true, altrimenti false.
+      smoker: $("#smoker").val() === "Sì",  // Se "Sì" allora true, altrimenti false.
       duration: parseInt($("#duration").val()),
       coverage: parseInt($("#coverage").val()),
       height: parseInt($("#height").val()),
@@ -170,6 +172,7 @@ $(document).ready(function() {
     });
   });
 });
+
 </script>
 
 </div>
@@ -197,7 +200,7 @@ $(document).ready(function() {
   <script src="assets/theme/js/script.js"></script>
   
   
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  
 <script>"use strict";if("loading"in HTMLImageElement.prototype){document.querySelectorAll('img[loading="lazy"]').forEach(e=>{e.src=e.dataset.src;if(e.getAttribute("style")){e.setAttribute("data-temp-style",e.getAttribute("style"))};if(e.getAttribute("data-aspectratio")){e.style.paddingTop=100*e.getAttribute("data-aspectratio")+"%";e.style.height=0;}e.onload=function(){if(e.getAttribute("data-temp-style")){e.setAttribute("style", e.getAttribute("data-temp-style"))}else{e.removeAttribute("style")};e.removeAttribute("data-temp-style")}})}else{const e=document.createElement("script");e.src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js";document.body.appendChild(e)}</script>
 
 </body>
