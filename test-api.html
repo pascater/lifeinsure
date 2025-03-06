@@ -121,7 +121,43 @@
 </form>
 
 
-<div id="result" style="margin-top: 20px; padding: 15px; border: 1px solid #ddd;"></div></div>
+<div id="result" style="margin-top: 20px; padding: 15px; border: 1px solid #ddd;"></div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelector("form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    
+    // Dati dal modulo
+    const data = {
+      origin: document.querySelector("[name='origin']").value.replace(/-/g, ''),
+      birthdate: document.querySelector("[name='birthdate']").value.replace(/-/g, ''),
+      smoker: document.querySelector("[name='smoker']").value === "Sì",
+      duration: document.querySelector("[name='duration']").value,
+      coverage: document.querySelector("[name='coverage']").value
+    };
+
+    // Usa un "ponte" per aggirare il blocco del browser
+    fetch("https://corsproxy.io/?https://squarelifetest.asp.lifeware.ch/squarelife_protection/api/v0/switzerland/life_insurance/premium", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-SQUARELIFE-APIKEY": "yra9qc9WffYaB8Klib8IrQwc2GRLdUCEJIzOo4uTfyc"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+      if(result.premium) {
+        alert("Preventivo: " + result.premium[0].yearly_gross_premium + " CHF/anno");
+      } else {
+        alert("Errore, riprova!");
+      }
+    });
+  });
+});
+</script></div>
 
 
 <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
