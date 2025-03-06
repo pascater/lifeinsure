@@ -123,13 +123,12 @@
 
 <div id="custom-html-31"><script>
 $(document).ready(function() {
-  $("#preventivo-form").submit(function(event) { // Assicurati che l'ID del form sia corretto
+  $("#preventivo-form").submit(function(event) {
     event.preventDefault();
 
-    // Raccogli i dati dal modulo
     var formData = {
-      origin: parseInt($("#origin").val().replace(/-/g, '')), // Rimuovi trattini e converti in numero
-      birthdate: parseInt($("#birthdate").val().replace(/-/g, '')), // Rimuovi trattini e converti in numero
+      origin: parseInt($("#origin").val().replace(/-/g, '')),
+      birthdate: parseInt($("#birthdate").val().replace(/-/g, '')),
       smoker: $("#smoker").val() === "Sì" ? false : true,
       duration: parseInt($("#duration").val()),
       coverage: parseInt($("#coverage").val()),
@@ -137,21 +136,24 @@ $(document).ready(function() {
       weight: parseInt($("#weight").val())
     };
 
-    // **API KEY - INSERISCI LA TUA API KEY DI TEST QUI!**
-    var apiKey = "yra9qc9WffYaEsKlib8IrQwc2GRLdUCEJIzOo4uTfyc"; // **INSERISCI LA TUA API KEY QUI!**
+    var apiKey = "yra9qc9WffYaEsKlib8IrQwc2GRLdUCEJIzOo4uTfyc";
 
-    // Invia i dati al tuo script PHP (preventivo.php) tramite AJAX (fetch API)
-    fetch('https://squarelifetest.asp.lifeware.ch/squarelife_protection/api/v0/switzerland/life_insurance/premium', { // URL API DIRETTO (TEST)
+    fetch('https://squarelifetest.asp.lifeware.ch/squarelife_protection/api/v0/switzerland/life_insurance/premium', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-SQUARELIFE-APIKEY': apiKey // **Aggiungi l'intestazione API Key**
+        'X-SQUARELIFE-APIKEY': apiKey
       },
       body: JSON.stringify(formData)
     })
-    .then(response => response.json())
+    .then(response => {
+      // **Registra l'oggetto di risposta completo nella console**
+      console.log("Risposta API Completa:", response);
+      return response.json(); // Prova comunque ad analizzare come JSON
+    })
     .then(data => {
-      // Gestisci la risposta dell'API
+      // **Registra i dati JSON nella console**
+      console.log("Dati di Risposta API:", data);
       if (data.status === "ok") {
         var premio = data.premium[0].yearly_gross_premium;
         $("#preventivo-risultato").text("Il premio annuale è: " + premio + " " + data.currency);
