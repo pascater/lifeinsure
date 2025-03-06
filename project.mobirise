@@ -2523,7 +2523,10 @@
         "title": "Calcolatore premio polizza vita caso morte in Svizzera",
         "order": "1",
         "meta_descr": "Calcolatore premio polizza vita decesso caso morte in Svizzera Ticino",
-        "meta_image": "@PROJECT_PATH@/assets/images/lifeinsure-172x172.png"
+        "meta_image": "@PROJECT_PATH@/assets/images/lifeinsure-172x172.png",
+        "header_custom": "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js\"></script>",
+        "footer_custom": "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js\"></script>",
+        "html_before": ""
       },
       "components": [
         {
