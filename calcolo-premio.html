@@ -91,146 +91,33 @@
     </div>
 </section>
 
-<div id="custom-html-2n">
+<div id="custom-html-2n"><div class="form-container">
+<form id="insurance-form">
+    
+<h3 style="text-align: center; font-weight: bold; text-transform: uppercase;">INSERISCI LE TUE INFORMAZIONI</h3>
+  <br>  
+  <label for="birthdate">Data di nascita (GG-MM-AAAA):</label>
+  <input type="date" id="birthdate" name="birthdate" required=""><br>
 
+  <label for="smoker">Fumatore?:</label>
+  <select id="smoker" name="smoker">
+    <option value="false">No</option>
+    <option value="true">Sì</option>
+  </select><br>
 
-  <meta charset="UTF-8">
-  <title>Calcolo Preventivo Assicurativo</title>
-  <!-- Includi jQuery (versione 3.6.0 o compatibile) -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <style>
-    /* Esempio di stile per centrare il form e i risultati */
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: #f4f4f4;
-      margin: 0;
-    }
-    #preventivo-form {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      width: 300px;
-    }
-    #preventivo-form label {
-      display: block;
-      margin-top: 10px;
-    }
-    #preventivo-form input,
-    #preventivo-form select {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      box-sizing: border-box;
-    }
-    #preventivo-form button {
-      margin-top: 15px;
-      width: 100%;
-      padding: 10px;
-      background: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    #preventivo-risultato {
-      text-align: center;
-      font-weight: bold;
-      margin-top: 20px;
-    }
-  </style>
+  <label for="duration">Durata (anni):</label>
+  <input type="number" id="duration" name="duration" required=""><br>
 
+  <label for="coverage">Capitale assicurato (CHF):</label>
+  <input type="number" id="coverage" name="coverage" required=""><br>
 
-  <!-- Form per il preventivo -->
-  <form id="preventivo-form">
-    <label for="birthdate">Data di nascita:</label>
-    <input type="date" id="birthdate" name="birthdate" required="">
-
-    <label for="smoker">Fumatore:</label>
-    <select id="smoker" name="smoker">
-      <option value="No">No</option>
-      <option value="Sì">Sì</option>
-    </select>
-
-    <label for="duration">Durata (anni):</label>
-    <input type="number" id="duration" name="duration" required="">
-
-    <label for="coverage">Copertura (€):</label>
-    <input type="number" id="coverage" name="coverage" required="">
-
-    <label for="height">Altezza (cm):</label>
-    <input type="number" id="height" name="height">
-
-    <label for="weight">Peso (kg):</label>
-    <input type="number" id="weight" name="weight">
-
-    <!-- Se "origin" deve essere fisso, non serve un input. Altrimenti, puoi scommentare e usarlo.
-    <label for="origin">Origin:</label>
-    <input type="text" id="origin" name="origin">
-    -->
-
-    <button type="submit">Calcola Premio</button>
-  </form>
-
-  <!-- Div dove verrà visualizzato il risultato -->
-  <div id="preventivo-risultato"></div>
-
-  <!-- Codice JavaScript -->
-  <script>
-    $(document).ready(function() {
-      $("#preventivo-form").submit(function(event) {
-        event.preventDefault();
-
-        // Se "origin" deve essere fisso, usiamo questo valore:
-        var originValue = 20220101;
-        // Se volessi prendere il valore da un input, usalo così:
-        // var originValue = parseInt($("#origin").val().replace(/-/g, ''));
-
-        var formData = {
-          origin: originValue,
-          birthdate: parseInt($("#birthdate").val().replace(/-/g, '')),
-          smoker: $("#smoker").val() === "Sì", // Se selezioni "Sì" allora true, altrimenti false.
-          duration: parseInt($("#duration").val()),
-          coverage: parseInt($("#coverage").val()),
-          height: parseInt($("#height").val()),
-          weight: parseInt($("#weight").val())
-        };
-
-        var apiKey = "yra9qc9WffYaEsKlib8IrQwc2GRLdUCEJIzOo4uTfyc";
-
-        fetch('https://squarelifetest.asp.lifeware.ch/squarelife_protection/api/v0/switzerland/life_insurance/premium', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-SQUARELIFE-APIKEY': apiKey
-          },
-          body: JSON.stringify(formData)
-        })
-        .then(response => {
-          console.log("Risposta API Completa:", response);
-          return response.json();
-        })
-        .then(data => {
-          console.log("Dati di Risposta API:", data);
-          if (data.status === "ok") {
-            var premio = data.premium[0].yearly_gross_premium;
-            $("#preventivo-risultato").text("Il premio annuale è: " + premio + " " + data.currency);
-          } else {
-            $("#preventivo-risultato").text("Errore nel calcolo del preventivo: " + data.message);
-          }
-        })
-        .catch(error => {
-          $("#preventivo-risultato").text("Errore di comunicazione: " + error);
-          console.error("Errore di comunicazione:", error);
-        });
-      });
-    });
-  </script>
-
+  <button type="submit">Calcola Premio</button>
+     <br> 
+<div id="result"></div> <!-- Risultato centrato sotto il pulsante -->
+ <br>     
+</form>
+</div>
+  <div id="result"></div> <!-- Risultato centrato sotto il pulsante -->
 
 </div>
 
