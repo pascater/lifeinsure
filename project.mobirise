@@ -3014,7 +3014,7 @@
         {
           "_customTemplate": true,
           "_afterNavbarItem": false,
-          "_customHTML": "[JS_CODE_0]\n",
+          "_customHTML": "[JS_CODE_0]\n\n",
           "_customCSS": "",
           "alias": "code-editor",
           "_tags": [
