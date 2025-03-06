@@ -2986,74 +2986,91 @@ a {
   text-align: center;
 }
 #custom-html-2n {
-  /* Imposta il body per il centramento */
-  /* Contenitore principale per il modulo */
-  /* Stile per il modulo */
-  /* Stile per le etichette e gli input */
-  /* Stile per il pulsante */
+  /* Stile Generale */
+  /* Contenitore del form */
+  /* Titolo */
+  /* Etichette */
+  /* Campi di input */
+  /* Effetto focus sui campi */
+  /* Pulsante */
   /* Stile per il risultato */
 }
-#custom-html-2n html,
 #custom-html-2n body {
-  height: 100%;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f4f4f4;
   margin: 0;
-  display: flex;
-  justify-content: center;
-  /* Centra orizzontalmente */
-  align-items: center;
-  /* Centra verticalmente */
-  background-color: #f4f4f4;
-  /* Sfondo chiaro */
-  font-family: Arial, sans-serif;
-}
-#custom-html-2n .form-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  /* Altezza dell'intera finestra */
-  width: 100%;
-}
-#custom-html-2n #insurance-form {
-  background: white;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 320px;
-  text-align: center;
 }
-#custom-html-2n #insurance-form label {
+#custom-html-2n #preventivo-form {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  text-align: left;
+}
+#custom-html-2n #preventivo-form h2 {
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  color: #007bff;
+}
+#custom-html-2n #preventivo-form label {
   display: block;
   font-weight: bold;
   margin-top: 10px;
-  text-align: left;
+  color: #333;
 }
-#custom-html-2n #insurance-form input,
-#custom-html-2n #insurance-form select {
+#custom-html-2n #preventivo-form input,
+#custom-html-2n #preventivo-form select {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: 0.3s;
 }
-#custom-html-2n #insurance-form button {
+#custom-html-2n #preventivo-form input:focus,
+#custom-html-2n #preventivo-form select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+#custom-html-2n #preventivo-form button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
   background: #007bff;
   color: white;
-  padding: 10px;
   border: none;
-  border-radius: 5px;
-  width: 100%;
-  margin-top: 15px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
+  transition: 0.3s;
 }
-#custom-html-2n #insurance-form button:hover {
+#custom-html-2n #preventivo-form button:hover {
   background: #0056b3;
 }
-#custom-html-2n #result {
-  margin-top: 15px;
+#custom-html-2n #preventivo-risultato {
+  text-align: center;
   font-weight: bold;
+  margin-top: 20px;
+  font-size: 18px;
   color: #333;
+  background: #e9f5ff;
+  padding: 15px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  display: none;
 }
 .cid-uwdsaDyjpZ {
   padding-top: 30px;
