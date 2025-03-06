@@ -74,7 +74,7 @@
     "mcSmartCart": {
       "currency": "USD"
     },
-    "uniqCompNum": 116,
+    "uniqCompNum": 124,
     "versionPublish": "5.9.6",
     "screenshot": "screenshot.png",
     "cookiesAlert": false
@@ -2992,6 +2992,21 @@
           "_global": false,
           "_once": false,
           "_params": {}
+        },
+        {
+          "_customTemplate": true,
+          "_afterNavbarItem": false,
+          "_customHTML": "<form id=\"preventivo-form\">\n  <div class=\"form-group\">\n    <label for=\"origin\">Origine (Numero):</label>\n    <input type=\"number\" class=\"form-control\" id=\"origin\" name=\"origin\" required=\"\" placeholder=\"Es. 20230101\">\n    <small class=\"form-text text-muted\">Inserisci l'origine come numero (es. 20230101).</small>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"birthdate\">Data di Nascita:</label>\n    <input type=\"date\" class=\"form-control\" id=\"birthdate\" name=\"birthdate\" required=\"\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"smoker\">Fumatore?</label>\n    <select class=\"form-control\" id=\"smoker\" name=\"smoker\" required=\"\">\n      <option value=\"No\">No</option>\n      <option value=\"Sì\">Sì</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"duration\">Durata (Anni):</label>\n    <input type=\"number\" class=\"form-control\" id=\"duration\" name=\"duration\" required=\"\" placeholder=\"Es. 10\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"coverage\">Copertura (Importo):</label>\n    <input type=\"number\" class=\"form-control\" id=\"coverage\" name=\"coverage\" required=\"\" placeholder=\"Es. 100000\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"height\">Altezza (cm) - Opzionale:</label>\n    <input type=\"number\" class=\"form-control\" id=\"height\" name=\"height\" placeholder=\"Es. 170\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"weight\">Peso (kg) - Opzionale:</label>\n    <input type=\"number\" class=\"form-control\" id=\"weight\" name=\"weight\" placeholder=\"Es. 70\">\n  </div>\n  <button type=\"submit\" class=\"btn btn-primary\">Calcola Preventivo</button>\n</form>\n\n<div id=\"preventivo-risultato\" class=\"mt-3\">\n  <!-- Qui verrà mostrato il preventivo -->\n</div>",
+          "_customCSS": "",
+          "alias": "code-editor",
+          "_tags": [
+            "Extension"
+          ],
+          "_name": "pro.custom-html",
+          "_sourceTheme": "inspirem5",
+          "_anchor": "custom-html-3f",
+          "_PHPplaceholders": [],
+          "_JSplaceholders": []
         },
         {
           "_customTemplate": true,

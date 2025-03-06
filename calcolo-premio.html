@@ -91,6 +91,46 @@
     </div>
 </section>
 
+<div id="custom-html-3f"><form id="preventivo-form">
+  <div class="form-group">
+    <label for="origin">Origine (Numero):</label>
+    <input type="number" class="form-control" id="origin" name="origin" required="" placeholder="Es. 20230101">
+    <small class="form-text text-muted">Inserisci l'origine come numero (es. 20230101).</small>
+  </div>
+  <div class="form-group">
+    <label for="birthdate">Data di Nascita:</label>
+    <input type="date" class="form-control" id="birthdate" name="birthdate" required="">
+  </div>
+  <div class="form-group">
+    <label for="smoker">Fumatore?</label>
+    <select class="form-control" id="smoker" name="smoker" required="">
+      <option value="No">No</option>
+      <option value="Sì">Sì</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="duration">Durata (Anni):</label>
+    <input type="number" class="form-control" id="duration" name="duration" required="" placeholder="Es. 10">
+  </div>
+  <div class="form-group">
+    <label for="coverage">Copertura (Importo):</label>
+    <input type="number" class="form-control" id="coverage" name="coverage" required="" placeholder="Es. 100000">
+  </div>
+  <div class="form-group">
+    <label for="height">Altezza (cm) - Opzionale:</label>
+    <input type="number" class="form-control" id="height" name="height" placeholder="Es. 170">
+  </div>
+  <div class="form-group">
+    <label for="weight">Peso (kg) - Opzionale:</label>
+    <input type="number" class="form-control" id="weight" name="weight" placeholder="Es. 70">
+  </div>
+  <button type="submit" class="btn btn-primary">Calcola Preventivo</button>
+</form>
+
+<div id="preventivo-risultato" class="mt-3">
+  <!-- Qui verrà mostrato il preventivo -->
+</div></div>
+
 <div id="custom-html-2n"><div class="form-container">
 <form id="insurance-form">
     
@@ -185,7 +225,7 @@
   
   
   
-
 <script>"use strict";if("loading"in HTMLImageElement.prototype){document.querySelectorAll('img[loading="lazy"]').forEach(e=>{e.src=e.dataset.src;if(e.getAttribute("style")){e.setAttribute("data-temp-style",e.getAttribute("style"))};if(e.getAttribute("data-aspectratio")){e.style.paddingTop=100*e.getAttribute("data-aspectratio")+"%";e.style.height=0;}e.onload=function(){if(e.getAttribute("data-temp-style")){e.setAttribute("style", e.getAttribute("data-temp-style"))}else{e.removeAttribute("style")};e.removeAttribute("data-temp-style")}})}else{const e=document.createElement("script");e.src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js";document.body.appendChild(e)}</script>
+
 </body>
 </html>
