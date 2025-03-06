@@ -2986,8 +2986,8 @@ a {
   text-align: center;
 }
 #custom-html-2n {
-  /* Stile Generale */
-  /* Contenitore del form */
+  /* Stile Generale - Centratura */
+  /* Contenitore del form - Centrato */
   /* Titolo */
   /* Etichette */
   /* Campi di input */
@@ -2995,16 +2995,15 @@ a {
   /* Pulsante */
   /* Stile per il risultato */
 }
-#custom-html-2n body {
-  font-family: 'Arial', sans-serif;
+#custom-html-2n body,
+#custom-html-2n html {
+  height: 100%;
+  margin: 0;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   background: #f4f4f4;
-  margin: 0;
-  padding: 20px;
+  font-family: 'Arial', sans-serif;
 }
 #custom-html-2n #preventivo-form {
   background: #ffffff;
@@ -3014,6 +3013,8 @@ a {
   width: 100%;
   max-width: 400px;
   text-align: left;
+  display: flex;
+  flex-direction: column;
 }
 #custom-html-2n #preventivo-form h2 {
   text-align: center;
@@ -3021,6 +3022,7 @@ a {
   text-transform: uppercase;
   margin-bottom: 20px;
   color: #007bff;
+  width: 100%;
 }
 #custom-html-2n #preventivo-form label {
   display: block;
