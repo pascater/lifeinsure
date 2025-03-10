@@ -21,8 +21,8 @@
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
   <link rel="stylesheet" href="assets/web/assets/gdpr-plugin/gdpr-styles.css">
-    <link rel="stylesheet" href="assets/popup-overlay-plugin/style.css">
-  <link rel="stylesheet" href="assets/dropdown/css/style.css">
+  <link rel="stylesheet" href="assets/popup-overlay-plugin/style.css">
+    <link rel="stylesheet" href="assets/dropdown/css/style.css">
   <link rel="stylesheet" href="assets/socicon/css/styles.css">
   <link rel="stylesheet" href="assets/theme/css/style.css">
   <link rel="preload" href="https://fonts.googleapis.com/css?family=Space+Grotesk:300,400,500,600,700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -91,73 +91,92 @@
     </div>
 </section>
 
-<div id="custom-html-36"><form id="premiumForm" action="javascript:void(0);">
-
-  <h2>Inserisci le tue informazioni</h2>
-
-  <label for="birthdate">📅 Data di nascita:</label>
-  <input type="date" id="birthdate" name="birthdate" required="">
-
-  <label for="smoker">🚬 Sei fumatore?</label>
-  <select id="smoker" name="smoker">
-    <option value="No">No</option>
-    <option value="Sì">Sì</option>
-  </select>
-
-  <label for="duration">📆 Durata (anni):</label>
-  <input type="number" id="duration" name="duration" required="" min="1" max="50">
-
-  <label for="coverage">💰 Capitale assicurato (CHF):</label>
-  <input type="number" id="coverage" name="coverage" required="" min="10000" step="1000">
-
-  <label for="height">📏 Altezza (cm):</label>
-  <input type="number" id="height" name="height" min="100" max="250">
-
-  <label for="weight">⚖️ Peso (kg):</label>
-  <input type="number" id="weight" name="weight" min="30" max="200">
-    
-
-  <button type="submit">📊 Calcola Premio</button>
-</form>
-
-
-<div id="result" style="margin-top: 20px; padding: 15px; border: 1px solid #ddd;"></div>
-
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  document.querySelector("form").addEventListener("submit", function(e) {
-    e.preventDefault();
-    
-    // Dati dal modulo
-    const data = {
-      origin: document.querySelector("[name='origin']").value.replace(/-/g, ''),
-      birthdate: document.querySelector("[name='birthdate']").value.replace(/-/g, ''),
-      smoker: document.querySelector("[name='smoker']").value === "Sì",
-      duration: document.querySelector("[name='duration']").value,
-      coverage: document.querySelector("[name='coverage']").value
-    };
-
-    // Usa un "ponte" per aggirare il blocco del browser
-    fetch("https://corsproxy.io/?https://squarelifetest.asp.lifeware.ch/squarelife_protection/api/v0/switzerland/life_insurance/premium", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-SQUARELIFE-APIKEY": "yra9qc9WffYaB8Klib8IrQwc2GRLdUCEJIzOo4uTfyc"
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(result => {
-      if(result.premium) {
-        alert("Preventivo: " + result.premium[0].yearly_gross_premium + " CHF/anno");
-      } else {
-        alert("Errore, riprova!");
-      }
-    });
-  });
-});
-</script></div>
+<div id="custom-html-36"><section class="mbr-section form-section" id="sezione-calcolo-premio">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm p-4">
+                    <h2 class="card-title text-center mb-4">Calcola il tuo premio assicurativo</h2>
+                    
+                    <form id="form-calcolo-premio">
+                        <!-- Data di nascita -->
+                        <div class="form-group mb-3">
+                            <label for="data-nascita" class="form-label">Data di nascita *</label>
+                            <input type="date" class="form-control" id="data-nascita" required="">
+                            <small class="form-text text-muted">Inserisci la tua data di nascita</small>
+                        </div>
+                        
+                        <!-- Fumatore -->
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="fumatore">
+                            <label class="form-check-label" for="fumatore">Fumatore</label>
+                            <small class="d-block form-text text-muted">Seleziona se sei un fumatore</small>
+                        </div>
+                        
+                        <!-- Durata -->
+                        <div class="form-group mb-3">
+                            <label for="durata" class="form-label">Durata (anni) *</label>
+                            <select class="form-select" id="durata" required="">
+                                <option value="" disabled="" selected="">Seleziona la durata</option>
+                                <option value="5">5 anni</option>
+                                <option value="10">10 anni</option>
+                                <option value="15">15 anni</option>
+                                <option value="20">20 anni</option>
+                                <option value="25">25 anni</option>
+                                <option value="30">30 anni</option>
+                            </select>
+                            <small class="form-text text-muted">Seleziona la durata della copertura assicurativa</small>
+                        </div>
+                        
+                        <!-- Copertura -->
+                        <div class="form-group mb-3">
+                            <label for="copertura" class="form-label">Copertura (CHF) *</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="copertura" min="10000" max="1000000" step="10000" value="100000" required="">
+                                <span class="input-group-text">CHF</span>
+                            </div>
+                            <small class="form-text text-muted">Importo della copertura assicurativa (minimo 10.000 CHF)</small>
+                        </div>
+                        
+                        <!-- Dati fisici: Altezza e Peso (opzionali) -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="altezza" class="form-label">Altezza (cm)</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="altezza" min="100" max="250" placeholder="Es. 175">
+                                        <span class="input-group-text">cm</span>
+                                    </div>
+                                    <small class="form-text text-muted">Opzionale</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="peso" class="form-label">Peso (kg)</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="peso" min="30" max="200" placeholder="Es. 70">
+                                        <span class="input-group-text">kg</span>
+                                    </div>
+                                    <small class="form-text text-muted">Opzionale</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pulsante Calcola -->
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg px-5">Calcola premio</button>
+                        </div>
+                    </form>
+                    
+                    <!-- Area risultati (inizialmente vuota) -->
+                    <div id="risultato-premio" class="mt-4 p-3 d-none">
+                        <!-- I risultati verranno inseriti qui via JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section></div>
 
 
 <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -167,51 +186,8 @@ document.addEventListener("DOMContentLoaded", function() {
   <script src="assets/theme/js/script.js"></script>
   
   
-  <script>
-document.getElementById('premiumForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  // Configurazione API
-  const apiUrl = 'https://squarelifetest.asp.lifeware.ch/squarelife_protection/api/v0/switzerland/life_insurance/premium';
-  const apiKey = 'yra9qc9WffYaB8Klib8IrQwc2GRLdUCEJIzOo4uTfyc';
+  <script src="assets/js/api-handler.js"></script>
 
-  // Formattazione dati
-  const formData = {
-    origin: parseInt(document.querySelector('[name="origin"]').value),
-    birthdate: document.querySelector('[name="birthdate"]').value.replace(/-/g, ''),
-    smoker: document.querySelector('[name="smoker"]').value === 'true',
-    duration: parseInt(document.querySelector('[name="duration"]').value),
-    coverage: parseInt(document.querySelector('[name="coverage"]').value),
-    height: parseInt(document.querySelector('[name="height"]').value) || undefined,
-    weight: parseInt(document.querySelector('[name="weight"]').value) || undefined
-  };
-
-  // Richiesta API con CORS Proxy
-  fetch('https://cors-anywhere.herokuapp.com/' + apiUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-SQUARELIFE-APIKEY': apiKey
-    },
-    body: JSON.stringify(formData)
-  })
-  .then(response => response.json())
-  .then(data => {
-    if(data.status === 'ok') {
-      document.getElementById('result').innerHTML = `
-        Premio annuale: ${data.premium[0].yearly_gross_premium} ${data.currency}
-      `;
-    } else {
-      document.getElementById('result').innerHTML = 'Errore nel calcolo';
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    document.getElementById('result').innerHTML = 'Errore di connessione';
-  });
-});
-</script>
 <script>"use strict";if("loading"in HTMLImageElement.prototype){document.querySelectorAll('img[loading="lazy"]').forEach(e=>{e.src=e.dataset.src;if(e.getAttribute("style")){e.setAttribute("data-temp-style",e.getAttribute("style"))};if(e.getAttribute("data-aspectratio")){e.style.paddingTop=100*e.getAttribute("data-aspectratio")+"%";e.style.height=0;}e.onload=function(){if(e.getAttribute("data-temp-style")){e.setAttribute("style", e.getAttribute("data-temp-style"))}else{e.removeAttribute("style")};e.removeAttribute("data-temp-style")}})}else{const e=document.createElement("script");e.src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js";document.body.appendChild(e)}</script>
-
 </body>
 </html>
