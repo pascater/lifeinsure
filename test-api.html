@@ -187,6 +187,80 @@
   
   
   <script src="assets/js/api-handler.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const formPremio = document.getElementById('form-calcolo-premio');
+    const risultatoPremio = document.getElementById('risultato-premio');
+    
+    if (formPremio) {
+        formPremio.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Mostra l'area risultati e aggiungi indicatore di caricamento
+            risultatoPremio.classList.remove('d-none');
+            risultatoPremio.innerHTML = '<div class="text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Calcolo in corso...</span></div><p class="mt-2">Calcolo del premio in corso...</p></div>';
+            
+            // Raccogli dati dal form
+            const dati = {
+                dataNascita: document.getElementById('data-nascita').value,
+                fumatore: document.getElementById('fumatore').checked,
+                durata: document.getElementById('durata').value,
+                copertura: document.getElementById('copertura').value,
+                altezza: document.getElementById('altezza').value || null,
+                peso: document.getElementById('peso').value || null
+            };
+            
+            try {
+                // Chiama l'API
+                const risultato = await calcolaPremio(dati);
+                
+                // Mostra il risultato
+                if (risultato.errore) {
+                    risultatoPremio.innerHTML = `
+                        <div class="alert alert-danger">
+                            <h5>Si è verificato un errore</h5>
+                            <p>${risultato.errore}</p>
+                        </div>`;
+                } else {
+                    // Estrai il premio dalla risposta
+                    const premio = risultato.premium[0].yearly_gross_premium;
+                    const currency = risultato.currency || 'CHF';
+                    
+                    risultatoPremio.innerHTML = `
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <h4 class="card-title">Il tuo preventivo</h4>
+                                <p class="card-text">In base ai dati forniti, il premio annuale è:</p>
+                                <h2 class="text-primary mb-4">${premio.toLocaleString()} ${currency}</h2>
+                                <p class="small text-muted mb-3">Copertura: ${parseInt(dati.copertura).toLocaleString()} ${currency} | Durata: ${dati.durata} anni</p>
+                                <button id="btn-richiedi-offerta" class="btn btn-success">Richiedi offerta completa</button>
+                            </div>
+                        </div>`;
+                        
+                    // Memorizza i dati per il passaggio successivo
+                    sessionStorage.setItem('datiPreventivo', JSON.stringify({
+                        ...dati,
+                        premio: premio,
+                        currency: currency
+                    }));
+                    
+                    // Aggiungi listener al pulsante "Richiedi offerta"
+                    document.getElementById('btn-richiedi-offerta').addEventListener('click', function() {
+                        window.location.href = 'richiesta-offerta.html'; // Cambia con il percorso corretto alla tua pagina di offerta
+                    });
+                }
+            } catch (errore) {
+                risultatoPremio.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h5>Si è verificato un errore durante la connessione</h5>
+                        <p>Non è stato possibile contattare il server. Riprova più tardi.</p>
+                        <p class="small text-muted">${errore.message}</p>
+                    </div>`;
+            }
+        });
+    }
+});
+</script>
 
 <script>"use strict";if("loading"in HTMLImageElement.prototype){document.querySelectorAll('img[loading="lazy"]').forEach(e=>{e.src=e.dataset.src;if(e.getAttribute("style")){e.setAttribute("data-temp-style",e.getAttribute("style"))};if(e.getAttribute("data-aspectratio")){e.style.paddingTop=100*e.getAttribute("data-aspectratio")+"%";e.style.height=0;}e.onload=function(){if(e.getAttribute("data-temp-style")){e.setAttribute("style", e.getAttribute("data-temp-style"))}else{e.removeAttribute("style")};e.removeAttribute("data-temp-style")}})}else{const e=document.createElement("script");e.src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js";document.body.appendChild(e)}</script>
 </body>
