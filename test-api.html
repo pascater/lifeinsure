@@ -21,8 +21,8 @@
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
   <link rel="stylesheet" href="assets/web/assets/gdpr-plugin/gdpr-styles.css">
-  <link rel="stylesheet" href="assets/popup-overlay-plugin/style.css">
-    <link rel="stylesheet" href="assets/dropdown/css/style.css">
+    <link rel="stylesheet" href="assets/popup-overlay-plugin/style.css">
+  <link rel="stylesheet" href="assets/dropdown/css/style.css">
   <link rel="stylesheet" href="assets/socicon/css/styles.css">
   <link rel="stylesheet" href="assets/theme/css/style.css">
   <link rel="preload" href="https://fonts.googleapis.com/css?family=Space+Grotesk:300,400,500,600,700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -176,7 +176,122 @@
             </div>
         </div>
     </div>
-</section></div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const formPremio = document.getElementById('form-premio');
+    const risultatoPremio = document.getElementById('risultato-premio');
+    
+    formPremio.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Mostra indicatore di caricamento
+        risultatoPremio.innerHTML = 'Calcolo in corso...';
+        
+        // Raccogli dati dal form
+        const dati = {
+            dataNascita: document.getElementById('data-nascita').value,
+            fumatore: document.getElementById('fumatore').checked,
+            durata: document.getElementById('durata').value,
+            copertura: document.getElementById('copertura').value,
+            altezza: document.getElementById('altezza').value,
+            peso: document.getElementById('peso').value
+        };
+        
+        // Chiama l'API
+        const risultato = await calcolaPremio(dati);
+        
+        // Mostra il risultato
+        if (risultato.errore) {
+            risultatoPremio.innerHTML = `<div class="alert alert-danger">Errore: ${risultato.errore}</div>`;
+        } else {
+            // Estrai il premio dalla risposta
+            const premio = risultato.premium[0].yearly_gross_premium;
+            risultatoPremio.innerHTML = `
+                <div class="alert alert-success">
+                    <h4>Premio annuale: ${premio} ${risultato.currency}</h4>
+                </div>
+                <button id="richiedi-offerta" class="btn btn-primary">Richiedi offerta</button>
+            `;
+        }
+    });
+});
+</script></div>
+
+<div id="custom-html-3h"><div class="container py-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Test API Squarelife</h4>
+                </div>
+                <div class="card-body">
+                    <form id="form-test-api">
+                        <div class="form-group mb-3">
+                            <label for="test-data-nascita">Data di nascita</label>
+                            <input type="date" id="test-data-nascita" class="form-control" value="1980-01-01">
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input type="checkbox" id="test-fumatore" class="form-check-input">
+                            <label for="test-fumatore" class="form-check-label">Fumatore</label>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="test-durata">Durata (anni)</label>
+                            <select id="test-durata" class="form-select">
+                                <option value="10" selected="">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="test-copertura">Copertura (CHF)</label>
+                            <input type="number" id="test-copertura" class="form-control" value="100000">
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="test-altezza">Altezza (cm)</label>
+                            <input type="number" id="test-altezza" class="form-control" value="175">
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="test-peso">Peso (kg)</label>
+                            <input type="number" id="test-peso" class="form-control" value="70">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Testa API</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4>Console di debug</h4>
+                    <button id="clear-console" class="btn btn-sm btn-outline-secondary">Pulisci</button>
+                </div>
+                <div class="card-body">
+                    <div id="api-console" class="bg-dark text-light p-3" style="height: 400px; overflow-y: auto; font-family: monospace; font-size: 14px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Stili per la console di debug */
+.text-property { color: #f92672; }
+.text-string { color: #a6e22e; }
+.text-number { color: #66d9ef; }
+.text-boolean { color: #ae81ff; }
+.text-null { color: #fd971f; }
+pre { white-space: pre-wrap; margin: 0; }
+</style>
+<script src="assets/js/api-test.js"></script></div>
 
 
 <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -261,7 +376,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
-
 <script>"use strict";if("loading"in HTMLImageElement.prototype){document.querySelectorAll('img[loading="lazy"]').forEach(e=>{e.src=e.dataset.src;if(e.getAttribute("style")){e.setAttribute("data-temp-style",e.getAttribute("style"))};if(e.getAttribute("data-aspectratio")){e.style.paddingTop=100*e.getAttribute("data-aspectratio")+"%";e.style.height=0;}e.onload=function(){if(e.getAttribute("data-temp-style")){e.setAttribute("style", e.getAttribute("data-temp-style"))}else{e.removeAttribute("style")};e.removeAttribute("data-temp-style")}})}else{const e=document.createElement("script");e.src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js";document.body.appendChild(e)}</script>
+
 </body>
 </html>
