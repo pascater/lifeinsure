@@ -167,6 +167,23 @@
       cursor: pointer;
       margin-left: 5px;
     }
+    .is-invalid {
+      border-color: #dc3545;
+    }
+    .invalid-feedback {
+      display: none;
+      color: #dc3545;
+      font-size: 0.875em;
+      margin-top: 0.25rem;
+    }
+    .show-error .is-invalid + .invalid-feedback {
+      display: block;
+    }
+    .show-error input:invalid,
+    .show-error select:invalid,
+    .show-error textarea:invalid {
+      border-color: #dc3545;
+    }
     @media (max-width: 767px) {
       .step-title {
         display: none;
@@ -203,7 +220,7 @@
               <div class="progress-bar" role="progressbar" style="width: 33%;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             
-            <form id="offer-request-form">
+            <form id="offer-request-form" novalidate="">
               <!-- STEP 1: Dati personali -->
               <div class="form-section active" id="section-1">
                 <div class="subtitle">Dati personali</div>
@@ -212,10 +229,12 @@
                   <div class="col-md-6">
                     <label for="firstname" class="form-label required-field">Nome</label>
                     <input type="text" class="form-control" id="firstname" name="firstname" required="">
+                    <div class="invalid-feedback">Inserisci il tuo nome</div>
                   </div>
                   <div class="col-md-6">
                     <label for="lastname" class="form-label required-field">Cognome</label>
                     <input type="text" class="form-control" id="lastname" name="lastname" required="">
+                    <div class="invalid-feedback">Inserisci il tuo cognome</div>
                   </div>
                 </div>
                 
@@ -227,26 +246,31 @@
                       <option value="M">Maschile</option>
                       <option value="F">Femminile</option>
                     </select>
+                    <div class="invalid-feedback">Seleziona il tuo genere</div>
                   </div>
                   <div class="col-md-6">
                     <label for="birthdate" class="form-label required-field">Data di nascita</label>
                     <input type="date" class="form-control" id="birthdate" name="birthdate" required="">
+                    <div class="invalid-feedback">Inserisci la tua data di nascita</div>
                   </div>
                 </div>
                 
                 <div class="mb-3">
                   <label for="street" class="form-label required-field">Indirizzo</label>
                   <input type="text" class="form-control" id="street" name="street" required="">
+                  <div class="invalid-feedback">Inserisci il tuo indirizzo</div>
                 </div>
                 
                 <div class="row mb-3">
                   <div class="col-md-4">
                     <label for="zip" class="form-label required-field">CAP</label>
                     <input type="text" class="form-control" id="zip" name="zip" required="">
+                    <div class="invalid-feedback">Inserisci il tuo CAP</div>
                   </div>
                   <div class="col-md-4">
                     <label for="city" class="form-label required-field">Città</label>
                     <input type="text" class="form-control" id="city" name="city" required="">
+                    <div class="invalid-feedback">Inserisci la tua città</div>
                   </div>
                   <div class="col-md-4">
                     <label for="country" class="form-label required-field">Paese</label>
@@ -257,6 +281,7 @@
                       <option value="FR">Francia</option>
                       <option value="AT">Austria</option>
                     </select>
+                    <div class="invalid-feedback">Seleziona il tuo paese</div>
                   </div>
                 </div>
                 
@@ -264,6 +289,7 @@
                   <div class="col-md-6">
                     <label for="email" class="form-label required-field">Email</label>
                     <input type="email" class="form-control" id="email" name="email" required="">
+                    <div class="invalid-feedback">Inserisci un indirizzo email valido</div>
                   </div>
                   <div class="col-md-6">
                     <label for="phone" class="form-label">Telefono</label>
@@ -285,6 +311,7 @@
                   <div class="col-md-6">
                     <label for="profession" class="form-label required-field">Professione</label>
                     <input type="text" class="form-control" id="profession" name="profession" required="">
+                    <div class="invalid-feedback">Inserisci la tua professione</div>
                   </div>
                 </div>
                 
@@ -294,6 +321,7 @@
                   <div class="col-md-6">
                     <label for="duration" class="form-label required-field">Durata (anni)</label>
                     <select class="form-select" id="duration" name="duration" required="">
+                      <option value="" disabled="">Seleziona la durata</option>
                       <option value="5">5 anni</option>
                       <option value="10" selected="">10 anni</option>
                       <option value="15">15 anni</option>
@@ -301,10 +329,12 @@
                       <option value="25">25 anni</option>
                       <option value="30">30 anni</option>
                     </select>
+                    <div class="invalid-feedback">Seleziona la durata della polizza</div>
                   </div>
                   <div class="col-md-6">
                     <label for="coverage" class="form-label required-field">Copertura (CHF)</label>
                     <input type="number" class="form-control" id="coverage" name="coverage" min="50000" max="1000000" step="10000" value="100000" required="">
+                    <div class="invalid-feedback">Inserisci un importo di copertura valido</div>
                   </div>
                 </div>
                 
@@ -315,6 +345,7 @@
                       <option value="annual" selected="">Annuale</option>
                       <option value="monthly">Mensile</option>
                     </select>
+                    <div class="invalid-feedback">Seleziona la modalità di pagamento</div>
                   </div>
                   <div class="col-md-6">
                     <label for="payment_type" class="form-label required-field">Tipo di pagamento</label>
@@ -322,6 +353,7 @@
                       <option value="invoice_esr" selected="">Fattura ESR</option>
                       <option value="manual">Manuale</option>
                     </select>
+                    <div class="invalid-feedback">Seleziona il tipo di pagamento</div>
                   </div>
                 </div>
                 
@@ -337,11 +369,13 @@
                 <div class="mb-3">
                   <label for="height" class="form-label required-field">Altezza (cm)</label>
                   <input type="number" class="form-control" id="height" name="height" min="100" max="250" required="">
+                  <div class="invalid-feedback">Inserisci un'altezza valida (tra 100 e 250 cm)</div>
                 </div>
                 
                 <div class="mb-3">
                   <label for="weight" class="form-label required-field">Peso (kg)</label>
                   <input type="number" class="form-control" id="weight" name="weight" min="30" max="200" required="">
+                  <div class="invalid-feedback">Inserisci un peso valido (tra 30 e 200 kg)</div>
                 </div>
                 
                 <div class="mb-3">
@@ -390,30 +424,6 @@
                     <div class="form-check">
                       <input class="form-check-input" type="radio" id="work_absence_resolved_no" name="work_absence_resolved" value="no">
                       <label class="form-check-label" for="work_absence_resolved_no">No</label>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="mb-3">
-                  <label class="form-label">Negli ultimi 5 anni, hai assunto farmaci per più di 4 settimane consecutive?</label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="medication_yes" name="medication" value="yes">
-                    <label class="form-check-label" for="medication_yes">Sì</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="medication_no" name="medication" value="no" checked="">
-                    <label class="form-check-label" for="medication_no">No</label>
-                  </div>
-                  
-                  <div id="medication_details" class="mt-3 d-none">
-                    <label class="form-label">La condizione è risolta da almeno 2 anni senza trattamenti?</label>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" id="medication_resolved_yes" name="medication_resolved" value="yes">
-                      <label class="form-check-label" for="medication_resolved_yes">Sì</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" id="medication_resolved_no" name="medication_resolved" value="no">
-                      <label class="form-check-label" for="medication_resolved_no">No</label>
                     </div>
                   </div>
                 </div>
@@ -480,156 +490,6 @@
                   </div>
                 </div>
                 
-                <div class="mb-3">
-                  <label class="form-label">Hai sofferto di ipertensione negli ultimi 5 anni?</label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="hypertension_yes" name="hypertension" value="yes">
-                    <label class="form-check-label" for="hypertension_yes">Sì</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="hypertension_no" name="hypertension" value="no" checked="">
-                    <label class="form-check-label" for="hypertension_no">No</label>
-                  </div>
-                  
-                  <div id="hypertension_details" class="mt-3 d-none">
-                    <label class="form-label">La tua pressione è attualmente sotto controllo?</label>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" id="hypertension_controlled_yes" name="hypertension_controlled" value="yes">
-                      <label class="form-check-label" for="hypertension_controlled_yes">Sì</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" id="hypertension_controlled_no" name="hypertension_controlled" value="no">
-                      <label class="form-check-label" for="hypertension_controlled_no">No</label>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="mb-3">
-                  <label class="form-label">Sei stato ricoverato in ospedale negli ultimi 10 anni?</label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="hospitalization_yes" name="hospitalization" value="yes">
-                    <label class="form-check-label" for="hospitalization_yes">Sì</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="hospitalization_no" name="hospitalization" value="no" checked="">
-                    <label class="form-check-label" for="hospitalization_no">No</label>
-                  </div>
-                  
-                  <div id="hospitalization_details" class="mt-3 d-none">
-                    <label class="form-label">La condizione è risolta da almeno 2 anni senza trattamenti?</label>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" id="hospitalization_resolved_yes" name="hospitalization_resolved" value="yes">
-                      <label class="form-check-label" for="hospitalization_resolved_yes">Sì</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" id="hospitalization_resolved_no" name="hospitalization_resolved" value="no">
-                      <label class="form-check-label" for="hospitalization_resolved_no">No</label>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="mb-3">
-                  <label class="form-label">Hai in programma esami medici o ricoveri ospedalieri?</label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="planned_treatment_yes" name="planned_treatment" value="yes">
-                    <label class="form-check-label" for="planned_treatment_yes">Sì</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="planned_treatment_no" name="planned_treatment" value="no" checked="">
-                    <label class="form-check-label" for="planned_treatment_no">No</label>
-                  </div>
-                </div>
-                
-                <div class="mb-3">
-                  <label class="form-label">Hai fatto uso di stupefacenti negli ultimi 5 anni?</label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="drugs_yes" name="drugs" value="yes">
-                    <label class="form-check-label" for="drugs_yes">Sì</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="drugs_no" name="drugs" value="no" checked="">
-                    <label class="form-check-label" for="drugs_no">No</label>
-                  </div>
-                </div>
-                
-                <div class="mb-3">
-                  <label class="form-label">Sei mai risultato positivo al test HIV o stai aspettando i risultati?</label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="hiv_yes" name="hiv" value="yes">
-                    <label class="form-check-label" for="hiv_yes">Sì</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="hiv_no" name="hiv" value="no" checked="">
-                    <label class="form-check-label" for="hiv_no">No</label>
-                  </div>
-                </div>
-                
-                <div class="subtitle">Stile di vita e rischi</div>
-                
-                <div class="mb-3">
-                  <label class="form-label">Prevedi di soggiornare all'estero per più di 6 settimane nei prossimi 12 mesi?</label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="foreign_travel_yes" name="foreign_travel" value="yes">
-                    <label class="form-check-label" for="foreign_travel_yes">Sì</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="foreign_travel_no" name="foreign_travel" value="no" checked="">
-                    <label class="form-check-label" for="foreign_travel_no">No</label>
-                  </div>
-                </div>
-                
-                <div class="mb-3">
-                  <label class="form-label">Pratichi attività o hobby ad alto rischio?</label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="risky_activities_yes" name="risky_activities" value="yes">
-                    <label class="form-check-label" for="risky_activities_yes">Sì</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="risky_activities_no" name="risky_activities" value="no" checked="">
-                    <label class="form-check-label" for="risky_activities_no">No</label>
-                  </div>
-                  
-                  <div id="risky_activities_details" class="mt-3 d-none">
-                    <label class="form-label">Seleziona le attività che pratichi:</label>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="activity_climbing" name="risky_activity_type[]" value="climbing">
-                      <label class="form-check-label" for="activity_climbing">Alpinismo/Arrampicata</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="activity_diving" name="risky_activity_type[]" value="diving">
-                      <label class="form-check-label" for="activity_diving">Immersioni subacquee</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="activity_extreme" name="risky_activity_type[]" value="extreme">
-                      <label class="form-check-label" for="activity_extreme">Sport estremi</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="activity_flying" name="risky_activity_type[]" value="flying">
-                      <label class="form-check-label" for="activity_flying">Sport aerei</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="activity_combat" name="risky_activity_type[]" value="combat">
-                      <label class="form-check-label" for="activity_combat">Sport da combattimento</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="activity_racing" name="risky_activity_type[]" value="racing">
-                      <label class="form-check-label" for="activity_racing">Gare motoristiche</label>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="mb-3">
-                  <label class="form-label">Percepisci una rendita o un'indennità per invalidità?</label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="disability_yes" name="disability" value="yes">
-                    <label class="form-check-label" for="disability_yes">Sì</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="disability_no" name="disability" value="no" checked="">
-                    <label class="form-check-label" for="disability_no">No</label>
-                  </div>
-                </div>
-                
                 <div class="d-flex justify-content-between mt-4">
                   <button type="button" id="prev-2" class="btn btn-secondary">Indietro</button>
                   <button type="button" id="next-2" class="btn btn-primary">Avanti</button>
@@ -652,11 +512,221 @@
                     <option value="individual">Nominativo individuale</option>
                     <option value="custom">Personalizzato</option>
                   </select>
+                  <div class="invalid-feedback">Seleziona il tipo di beneficiario</div>
                 </div>
                 
-                <div id="individual_beneficiaries" class="d-none">
-                  <div class="beneficiary-row mb-3 p-3 border rounded">
-                    <div class="row mb-2"></div></div></div></div></form></div></div></div></div></div></div>
+                <div id="beneficiary_details" class="d-none">
+                  <div class="alert alert-info">
+                    Per specificare i beneficiari individuali, completa i campi seguenti. Nella richiesta definitiva avrai la possibilità di aggiungere più beneficiari.
+                  </div>
+                  
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="beneficiary_firstname" class="form-label">Nome beneficiario</label>
+                      <input type="text" class="form-control" id="beneficiary_firstname" name="beneficiary_firstname">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="beneficiary_lastname" class="form-label">Cognome beneficiario</label>
+                      <input type="text" class="form-control" id="beneficiary_lastname" name="beneficiary_lastname">
+                    </div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="beneficiary_relation" class="form-label">Relazione</label>
+                    <select class="form-select" id="beneficiary_relation" name="beneficiary_relation">
+                      <option value="spouse">Coniuge</option>
+                      <option value="child">Figlio/a</option>
+                      <option value="parent">Genitore</option>
+                      <option value="sibling">Fratello/Sorella</option>
+                      <option value="other">Altro</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="subtitle">Privacy e consenso</div>
+                
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="privacy_consent" name="privacy_consent" required="">
+                    <label class="form-check-label required-field" for="privacy_consent">
+                      Ho letto e accettato l'informativa sulla privacy e acconsento al trattamento dei miei dati personali
+                    </label>
+                    <div class="invalid-feedback">Devi accettare l'informativa sulla privacy per procedere</div>
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="terms_consent" name="terms_consent" required="">
+                    <label class="form-check-label required-field" for="terms_consent">
+                      Confermo che le informazioni fornite sono complete e veritiere
+                    </label>
+                    <div class="invalid-feedback">Devi confermare la veridicità delle informazioni</div>
+                  </div>
+                </div>
+                
+                <div class="d-flex justify-content-between mt-4">
+                  <button type="button" id="prev-3" class="btn btn-secondary">Indietro</button>
+                  <button type="submit" class="btn btn-success">Invia richiesta</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Elementi del form
+      const form = document.getElementById('offer-request-form');
+      const sections = document.querySelectorAll('.form-section');
+      const progressBar = document.querySelector('.progress-bar');
+      const steps = document.querySelectorAll('.step');
+      
+      // Pulsanti di navigazione
+      const next1Button = document.getElementById('next-1');
+      const next2Button = document.getElementById('next-2');
+      const prev2Button = document.getElementById('prev-2');
+      const prev3Button = document.getElementById('prev-3');
+      
+      // Campi condizionali
+      const existingInsuranceRadios = document.querySelectorAll('input[name="existing_insurance"]');
+      const existingInsuranceDetails = document.getElementById('existing_insurance_details');
+      
+      const workAbsenceRadios = document.querySelectorAll('input[name="work_absence"]');
+      const workAbsenceDetails = document.getElementById('work_absence_details');
+      
+      const riskyActivitiesRadios = document.querySelectorAll('input[name="risky_activities"]');
+      const riskyActivitiesDetails = document.getElementById('risky_activities_details');
+      
+      const beneficiaryTypeSelect = document.getElementById('beneficiary_type');
+      const beneficiaryDetails = document.getElementById('beneficiary_details');
+      
+      // Funzione per validare una sezione
+      function validateSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        section.classList.add('show-error');
+        
+        const requiredFields = section.querySelectorAll('input[required], select[required], textarea[required]');
+        let valid = true;
+        
+        requiredFields.forEach(field => {
+          if (!field.checkValidity()) {
+            valid = false;
+            field.classList.add('is-invalid');
+          } else {
+            field.classList.remove('is-invalid');
+          }
+        });
+        
+        return valid;
+      }
+      
+      // Funzione per passare alla sezione successiva
+      function goToSection(currentSection, nextSection) {
+        document.getElementById(currentSection).classList.remove('active');
+        document.getElementById(nextSection).classList.add('active');
+        
+        // Aggiorna indicatore di progresso
+        if (nextSection === 'section-2') {
+          progressBar.style.width = '66%';
+          progressBar.setAttribute('aria-valuenow', '66');
+          steps[0].classList.add('completed');
+          steps[0].classList.remove('active');
+          steps[1].classList.add('active');
+        } else if (nextSection === 'section-3') {
+          progressBar.style.width = '100%';
+          progressBar.setAttribute('aria-valuenow', '100');
+          steps[1].classList.add('completed');
+          steps[1].classList.remove('active');
+          steps[2].classList.add('active');
+        } else if (nextSection === 'section-1') {
+          progressBar.style.width = '33%';
+          progressBar.setAttribute('aria-valuenow', '33');
+          steps[1].classList.remove('active');
+          steps[0].classList.remove('completed');
+          steps[0].classList.add('active');
+        }
+      }
+      
+      // Gestione dei campi condizionali
+      existingInsuranceRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+          if (this.value === 'yes' && this.checked) {
+            existingInsuranceDetails.classList.remove('d-none');
+          } else {
+            existingInsuranceDetails.classList.add('d-none');
+          }
+        });
+      });
+      
+      workAbsenceRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+          if (this.value === 'yes' && this.checked) {
+            workAbsenceDetails.classList.remove('d-none');
+          } else {
+            workAbsenceDetails.classList.add('d-none');
+          }
+        });
+      });
+      
+      riskyActivitiesRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+          if (this.value === 'yes' && this.checked) {
+            riskyActivitiesDetails.classList.remove('d-none');
+          } else {
+            riskyActivitiesDetails.classList.add('d-none');
+          }
+        });
+      });
+      
+      beneficiaryTypeSelect.addEventListener('change', function() {
+        if (this.value === 'individual' || this.value === 'custom') {
+          beneficiaryDetails.classList.remove('d-none');
+        } else {
+          beneficiaryDetails.classList.add('d-none');
+        }
+      });
+      
+      // Navigazione tra le sezioni
+      next1Button.addEventListener('click', function() {
+        if (validateSection('section-1')) {
+          goToSection('section-1', 'section-2');
+        }
+      });
+      
+      next2Button.addEventListener('click', function() {
+        if (validateSection('section-2')) {
+          goToSection('section-2', 'section-3');
+        }
+      });
+      
+      prev2Button.addEventListener('click', function() {
+        goToSection('section-2', 'section-1');
+      });
+      
+      prev3Button.addEventListener('click', function() {
+        goToSection('section-3', 'section-2');
+      });
+      
+      // Gestione invio form
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        if (validateSection('section-3')) {
+          // Simulazione invio dati (in produzione qui ci sarebbe la chiamata API)
+          alert('Richiesta inviata con successo! Riceverai presto una email con la tua offerta.');
+          
+          // Qui si potrebbe reindirizzare l'utente a una pagina di conferma
+          // window.location.href = 'conferma.html';
+        }
+      });
+    });
+  </script>
+
+</div>
 
 
 <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
