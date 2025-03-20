@@ -1298,10 +1298,13 @@
               ];
               const response = await richiediOfferta(values);
               console.log(response);
-
-              alert(
-                "Richiesta inviata con successo! Riceverai presto una email con la tua offerta."
-              );
+              if (response.status === "ok") {
+                alert(
+                  "Richiesta inviata con successo! Riceverai presto una email con la tua offerta."
+                );
+              } else {
+                alert("Errore");
+              }
 
               // Qui si potrebbe reindirizzare l'utente a una pagina di conferma
               // window.location.href = 'conferma.html';

@@ -88,8 +88,8 @@ async function richiediOfferta(dati) {
       birthdate: Number(dati.birthdate.replace(/-/g, "")),
       profession: dati.profession,
       gender: dati.gender,
-      phone: "",
-      language: "en-gb", //optional
+      phone: dati.phone || "",
+      language: dati.nationality || "en-gb", //optional
     },
     beneficiaries: {
       type: dati.beneficiary_type, //individual custom ==> beneficiary_firstname beneficiary_lastname beneficiary_relation
