@@ -129,6 +129,7 @@ async function richiediOfferta(dati) {
     },
     acquisitionAgent: "lifeInsureBroker",
   };
+
   console.log(datiOfferta);
 
   // if (dati.phone) {
