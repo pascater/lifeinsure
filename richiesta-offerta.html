@@ -1282,9 +1282,8 @@
             if (validateSection("section-3")) {
               // Simulazione invio dati (in produzione qui ci sarebbe la chiamata API)
               const formOfertaData = new FormData(form);
-              console.log("formOfertaData", formOfertaData);
+
               let values = Object.fromEntries(formOfertaData.entries());
-              console.log("values", values);
 
               values.health_questions = [
                 document.getElementById("heart_disease"),
@@ -1296,6 +1295,7 @@
                 document.getElementById("multiple_sclerosis"),
                 document.getElementById("mental_health"),
               ];
+
               const response = await richiediOfferta(values);
               console.log(response);
               if (response.status === "ok") {
