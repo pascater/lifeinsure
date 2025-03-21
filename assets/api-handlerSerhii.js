@@ -102,23 +102,13 @@ async function richiediOfferta(dati) {
       coverage: parseInt(dati.coverage),
       accident_coverage: 0, //sempre 0?
       general_condition: 20201101, //? sempre 20201101?
-      mode: dati.mode || "annual",
-      smoker: dati.smoker || false,
+      mode: dati.mode,
+      smoker: dati.smoker ? true : false,
       height: parseInt(dati.height),
       weight: parseInt(dati.weight),
     },
     payment_type: dati.payment_type,
     "health questions": [
-      // ...[
-      // dati.heart_disease,
-      // dati.stroke,
-      // dati.diabetes,
-      // dati.cancer,
-      // dati.epilepsy,
-      // dati.kidney_disease,
-      // dati.multiple_sclerosis,
-      // dati.mental_health,
-      // ],
       // ...dati.health_questions
       //   .filter((item) => item.checked)
       //   .map((item) => item.value),
@@ -127,19 +117,14 @@ async function richiediOfferta(dati) {
     "other underwriting": {
       "privacy questions": [],
     },
-    acquisitionAgent: "lifeInsureBroker",
+    // acquisitionAgent: "lifeInsureBroker",
   };
 
-  console.log(datiOfferta);
-
-  // if (dati.phone) {
-  //   datiOfferta.holder.phone = dati.phone;
-  // }
   // if (dati.nationality) {
   //   datiOfferta.holder.nationality = dati.nationality;
   // }
 
-  console.log("datiOfferta", datiOfferta);
+  console.log("datiOffertatt", datiOfferta);
 
   // Effettua la chiamata API
   const risposta = await fetch(`${API_BASE_URL}/offer`, {
