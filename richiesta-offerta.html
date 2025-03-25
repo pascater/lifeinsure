@@ -856,7 +856,7 @@
                           class="form-check-input"
                           type="checkbox"
                           id="heart_disease"
-                          name="conditions[]"
+                          name="Problemi cardiaci o infarto"
                           value="heart_disease"
                         />
                         <label class="form-check-label" for="heart_disease">
@@ -869,7 +869,7 @@
                           class="form-check-input"
                           type="checkbox"
                           id="stroke"
-                          name="conditions[]"
+                          name="Ictus"
                           value="stroke"
                         />
                         <label class="form-check-label" for="stroke">
@@ -882,7 +882,7 @@
                           class="form-check-input"
                           type="checkbox"
                           id="diabetes"
-                          name="conditions[]"
+                          name="Diabete"
                           value="diabetes"
                         />
                         <label class="form-check-label" for="diabetes">
@@ -895,7 +895,7 @@
                           class="form-check-input"
                           type="checkbox"
                           id="cancer"
-                          name="conditions[]"
+                          name="Tumore"
                           value="cancer"
                         />
                         <label class="form-check-label" for="cancer">
@@ -908,7 +908,7 @@
                           class="form-check-input"
                           type="checkbox"
                           id="epilepsy"
-                          name="conditions[]"
+                          name="Epilessia"
                           value="epilepsy"
                         />
                         <label class="form-check-label" for="epilepsy">
@@ -921,7 +921,7 @@
                           class="form-check-input"
                           type="checkbox"
                           id="kidney_disease"
-                          name="conditions[]"
+                          name="Malattie renali"
                           value="kidney_disease"
                         />
                         <label class="form-check-label" for="kidney_disease">
@@ -934,7 +934,7 @@
                           class="form-check-input"
                           type="checkbox"
                           id="multiple_sclerosis"
-                          name="conditions[]"
+                          name="Sclerosi multipla"
                           value="multiple_sclerosis"
                         />
                         <label
@@ -950,7 +950,7 @@
                           class="form-check-input"
                           type="checkbox"
                           id="mental_health"
-                          name="conditions[]"
+                          name="Problemi di salute mentale"
                           value="mental_health"
                         />
                         <label class="form-check-label" for="mental_health">
@@ -1297,7 +1297,7 @@
               ];
 
               const response = await richiediOfferta(values);
-              console.log(response);
+              // console.log(response);
               if (response.status === "ok") {
                 alert(
                   "Richiesta inviata con successo! Riceverai presto una email con la tua offerta."
