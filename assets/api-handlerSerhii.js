@@ -139,22 +139,24 @@ async function richiediOfferta(dati) {
       });
     }
     if (dati.work_absence === "yes") {
-      datiOfferta["health questions"].push({
-        "single health question": {
-          type: "health",
-          text: "Negli ultimi 5 anni, hai avuto assenze dal lavoro di oltre un mese per malattia?",
-          comment: "",
-          answer: dati.work_absence === "yes" ? true : false,
+      datiOfferta["health questions"].push(
+        {
+          "single health question": {
+            type: "health",
+            text: "Negli ultimi 5 anni, hai avuto assenze dal lavoro di oltre un mese per malattia?",
+            comment: "",
+            answer: dati.work_absence === "yes" ? true : false,
+          },
         },
-      });
-      datiOfferta["health questions"].push({
-        "single health question": {
-          type: "health",
-          text: "La condizione è risolta da almeno 2 anni senza trattamenti?",
-          comment: "",
-          answer: dati.work_absence_resolved === "yes" ? true : false,
-        },
-      });
+        {
+          "single health question": {
+            type: "health",
+            text: "La condizione è risolta da almeno 2 anni senza trattamenti?",
+            comment: "",
+            answer: dati.work_absence_resolved === "yes" ? true : false,
+          },
+        }
+      );
     }
 
     if (
