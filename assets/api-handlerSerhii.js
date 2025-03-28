@@ -156,10 +156,7 @@ async function richiediOfferta(dati) {
         },
       });
     }
-    // existing_coverage:"222"
-    // existing_insurance:"yes"
-    // work_absence:"no"
-    // work_absence_resolved:"no"
+
     if (
       dati.beneficiary_type === "individual" ||
       dati.beneficiary_type === "custom"

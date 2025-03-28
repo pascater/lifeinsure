@@ -1123,10 +1123,98 @@
           </div>
         </div>
       </div>
+      <script>
+        function setDataFromSessionStorage() {
+          // Recupera i dati salvati dalla pagina di preventivazione
+          const datiPreventivoString = sessionStorage.getItem("datiPreventivo");
 
+          if (datiPreventivoString) {
+            try {
+              const datiPreventivo = JSON.parse(datiPreventivoString);
+
+              // Compila i campi della sezione "Dettagli polizza" con i dati recuperati
+              if (datiPreventivo.durata) {
+                const durataSelect = document.getElementById("duration");
+                if (durataSelect) {
+                  durataSelect.value = datiPreventivo.durata;
+                }
+              }
+
+              if (datiPreventivo.copertura) {
+                const coperturaInput = document.getElementById("coverage");
+                if (coperturaInput) {
+                  coperturaInput.value = datiPreventivo.copertura;
+                }
+              }
+
+              // Compila anche i campi relativi ai dati fisici
+              if (datiPreventivo.altezza) {
+                const altezzaInput = document.getElementById("height");
+                if (altezzaInput) {
+                  altezzaInput.value = datiPreventivo.altezza;
+                }
+              }
+
+              if (datiPreventivo.peso) {
+                const pesoInput = document.getElementById("weight");
+                if (pesoInput) {
+                  pesoInput.value = datiPreventivo.peso;
+                }
+              }
+
+              if (datiPreventivo.fumatore !== undefined) {
+                const fumatoreCheckbox = document.getElementById("smoker");
+                if (fumatoreCheckbox) {
+                  fumatoreCheckbox.checked = datiPreventivo.fumatore;
+                }
+              }
+
+              // Compila il campo data di nascita
+              if (datiPreventivo.dataNascita) {
+                const dataNascitaInput = document.getElementById("birthdate");
+                if (dataNascitaInput) {
+                  dataNascitaInput.value = datiPreventivo.dataNascita;
+                }
+              }
+
+              // Mostra un messaggio informativo sui dati recuperati
+              const alertPlaceholder = document.querySelector(".card-body");
+              if (alertPlaceholder) {
+                const alertDiv = document.createElement("div");
+                alertDiv.className =
+                  "alert alert-info alert-dismissible fade show mb-4";
+                alertDiv.innerHTML = `
+                        <strong>Dati preventivo importati:</strong> Copertura: ${
+                          datiPreventivo.copertura
+                        } ${datiPreventivo.currency || "CHF"}, 
+                        Durata: ${datiPreventivo.durata} anni, Premio: ${
+                  datiPreventivo.premio
+                } ${datiPreventivo.currency || "CHF"}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Chiudi"></button>
+                    `;
+
+                // Inserisci l'alert all'inizio della card-body, prima dell'indicatore di progressione
+                const progressIndicator =
+                  document.querySelector(".step-indicator");
+                if (progressIndicator) {
+                  alertPlaceholder.insertBefore(alertDiv, progressIndicator);
+                } else {
+                  alertPlaceholder.prepend(alertDiv);
+                }
+              }
+            } catch (error) {
+              console.error(
+                "Errore durante il parsing dei dati preventivo:",
+                error
+              );
+            }
+          }
+        }
+      </script>
       <script>
         document.addEventListener("DOMContentLoaded", function () {
           // Elementi del form
+          setDataFromSessionStorage();
           const form = document.getElementById("offer-request-form");
           const sections = document.querySelectorAll(".form-section");
           const progressBar = document.querySelector(".progress-bar");
@@ -1278,7 +1366,8 @@
           // Gestione invio form
           form.addEventListener("submit", async function (event) {
             event.preventDefault();
-
+            const buttonSubmit = document.querySelector(".btn-success");
+            buttonSubmit.disabled = true;
             if (validateSection("section-3")) {
               // Simulazione invio dati (in produzione qui ci sarebbe la chiamata API)
               const formOfertaData = new FormData(form);
@@ -1299,10 +1388,12 @@
               const response = await richiediOfferta(values);
               // console.log(response);
               if (response.status === "ok") {
+                buttonSubmit.disabled = false;
                 alert(
                   "Richiesta inviata con successo! Riceverai presto una email con la tua offerta."
                 );
               } else {
+                buttonSubmit.disabled = false;
                 alert("Errore");
               }
 
