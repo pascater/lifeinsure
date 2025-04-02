@@ -1513,6 +1513,7 @@
                         <label
                           class="form-check-label required-field"
                           for="privacy_consent"
+                          id="privacy_consent_label"
                         >
                           Ho letto e acconsento all'informativa sulla privacy e
                           al trattamento dei miei dati personali per le finalità
@@ -1536,6 +1537,7 @@
                         <label
                           class="form-check-label required-field"
                           for="terms_consent"
+                          id="terms_consent_label"
                         >
                           Dichiaro che le informazioni fornite sono veritiere e
                           complete e acconsento ai termini e condizioni del
@@ -1559,6 +1561,7 @@
                         <label
                           class="form-check-label required-field"
                           for="mandate_consent"
+                          id="mandate_consent_label"
                         >
                           Conferisco mandato fiduciario per mediazione di
                           servizi assicurativi a Lifensure SA.
@@ -1577,7 +1580,11 @@
                           id="marketing_consent"
                           name="marketing_consent"
                         />
-                        <label class="form-check-label" for="marketing_consent">
+                        <label
+                          class="form-check-label"
+                          for="marketing_consent"
+                          id="marketing_consent_label"
+                        >
                           Acconsento a ricevere comunicazioni commerciali e
                           promozionali anche da terze parti.
                         </label>
@@ -2003,6 +2010,34 @@
                   true
                 );
               }
+
+              values.privacy_questions = [
+                {
+                  question: document.getElementById("privacy_consent_label")
+                    .textContent,
+                  answer: document.getElementById("privacy_consent").checked,
+                  comment: "",
+                },
+
+                {
+                  question: document.getElementById("terms_consent_label")
+                    .textContent,
+                  answer: document.getElementById("terms_consent").checked,
+                  comment: "",
+                },
+                {
+                  question: document.getElementById("mandate_consent_label")
+                    .textContent,
+                  answer: document.getElementById("mandate_consent").checked,
+                  comment: "",
+                },
+                {
+                  question: document.getElementById("marketing_consent_label")
+                    .textContent,
+                  answer: document.getElementById("marketing_consent").checked,
+                  comment: "",
+                },
+              ];
 
               const response = await richiediOfferta(values);
 

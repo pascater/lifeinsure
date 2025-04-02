@@ -76,7 +76,6 @@ async function richiediOfferta(dati) {
   console.log(dati);
 
   try {
-    // Prepara i dati per l'API (esempio semplificato)
     const datiOfferta = {
       id: crypto.randomUUID(),
       holder: {
@@ -91,7 +90,7 @@ async function richiediOfferta(dati) {
         profession: dati.profession,
         gender: dati.gender,
         phone: dati.phone || "",
-        language: dati.nationality || "en-gb", //optional
+        language: dati.nationality || "en-gb",
       },
       beneficiaries: {
         type: dati.beneficiary_type,
@@ -108,6 +107,7 @@ async function richiediOfferta(dati) {
         smoker: dati.smoker === "no" ? false : true,
         height: parseInt(dati.height),
         weight: parseInt(dati.weight),
+        comment: dati.notes || "",
       },
       payment_type: dati.payment_type,
       "health questions": [
@@ -134,7 +134,18 @@ async function richiediOfferta(dati) {
       ],
 
       "other underwriting": {
-        "privacy questions": [],
+        "privacy questions": [
+          ...dati.privacy_questions.map((item) => {
+            return {
+              "single privacy question": {
+                type: "agreements",
+                text: item.question,
+                comment: item.comment,
+                answer: item.answer,
+              },
+            };
+          }),
+        ],
       },
       // acquisitionAgent: "lifeInsureBroker",
     };
