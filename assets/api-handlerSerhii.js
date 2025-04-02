@@ -94,11 +94,11 @@ async function richiediOfferta(dati) {
         language: dati.nationality || "en-gb", //optional
       },
       beneficiaries: {
-        type: dati.beneficiary_type, //individual custom ==> beneficiary_firstname beneficiary_lastname beneficiary_relation
+        type: dati.beneficiary_type,
         comment: "",
       },
       policy_information: {
-        tariff: "protection_retail", // sempre protection_retail ?
+        tariff: "protection_retail",
         origin: Number(new Date().toISOString().slice(0, 10).replace(/-/g, "")),
         duration: parseInt(dati.duration),
         coverage: parseInt(dati.coverage),
@@ -138,41 +138,8 @@ async function richiediOfferta(dati) {
       },
       // acquisitionAgent: "lifeInsureBroker",
     };
-    if (dati.existing_insurance === "yes") {
-      datiOfferta["health questions"].push({
-        "single health question": {
-          type: "health",
-          text: `Hai già altre assicurazioni sulla vita?`,
-          comment: `Copertura totale esistente (CHF): ${dati.existing_coverage}`,
-          answer: dati.existing_insurance === "yes" ? true : false,
-        },
-      });
-    }
-    if (dati.work_absence === "yes") {
-      datiOfferta["health questions"].push(
-        {
-          "single health question": {
-            type: "health",
-            text: "Negli ultimi 5 anni, hai avuto assenze dal lavoro di oltre un mese per malattia?",
-            comment: "",
-            answer: dati.work_absence === "yes" ? true : false,
-          },
-        },
-        {
-          "single health question": {
-            type: "health",
-            text: "La condizione è risolta da almeno 2 anni senza trattamenti?",
-            comment: "",
-            answer: dati.work_absence_resolved === "yes" ? true : false,
-          },
-        }
-      );
-    }
 
-    if (
-      dati.beneficiary_type === "individual" ||
-      dati.beneficiary_type === "custom"
-    ) {
+    if (dati.beneficiary_type === "custom") {
       datiOfferta.beneficiaries.individual_beneficiaries = [
         {
           individual_type: "person",
