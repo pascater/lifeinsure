@@ -105,7 +105,7 @@ async function richiediOfferta(dati) {
         accident_coverage: 0, //sempre 0?
         general_condition: 20201101, //? sempre 20201101?
         mode: dati.mode,
-        smoker: dati.smoker ? true : false,
+        smoker: dati.smoker === "no" ? false : true,
         height: parseInt(dati.height),
         weight: parseInt(dati.weight),
       },
@@ -118,6 +118,16 @@ async function richiediOfferta(dati) {
               text: `Negli ultimi 5 anni, hai sofferto di ${item.name}?`,
               comment: "",
               answer: item.checked || false,
+            },
+          };
+        }),
+        ...dati.health_questions_new.map((item) => {
+          return {
+            "single health question": {
+              type: "health",
+              text: item.question,
+              comment: item.comment,
+              answer: item.answer,
             },
           };
         }),

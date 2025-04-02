@@ -322,7 +322,7 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="altezza" class="form-label"
-                          >Altezza (cm)</label
+                          >Altezza (cm) *</label
                         >
                         <div class="input-group">
                           <input
@@ -332,15 +332,18 @@
                             min="100"
                             max="250"
                             placeholder="Es. 175"
+                            required=""
                           />
                           <span class="input-group-text">cm</span>
                         </div>
-                        <small class="form-text text-muted">Opzionale</small>
+                        <small class="form-text text-muted"
+                          >Inserisci la tua altezza</small
+                        >
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label for="peso" class="form-label">Peso (kg)</label>
+                        <label for="peso" class="form-label">Peso (kg) *</label>
                         <div class="input-group">
                           <input
                             type="number"
@@ -349,10 +352,13 @@
                             min="30"
                             max="200"
                             placeholder="Es. 70"
+                            required=""
                           />
                           <span class="input-group-text">kg</span>
                         </div>
-                        <small class="form-text text-muted">Opzionale</small>
+                        <small class="form-text text-muted"
+                          >Inserisci il tuo peso</small
+                        >
                       </div>
                     </div>
                   </div>
@@ -375,7 +381,7 @@
         </div>
       </section>
 
-      <script>
+      <!-- <script>
         document.addEventListener("DOMContentLoaded", function () {
           const formPremio = document.getElementById("form-calcolo-premio");
           const risultatoPremio = document.getElementById("risultato-premio");
@@ -414,7 +420,7 @@
             }
           });
         });
-      </script>
+      </script> -->
     </div>
 
     <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
