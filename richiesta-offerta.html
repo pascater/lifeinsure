@@ -1656,9 +1656,7 @@
                   </div>
                   <p>
                     Numero di riferimento:
-                    <strong id="reference-number">
-                      sto cercando quale numero inserire qui</strong
-                    >
+                    <strong id="reference-number"> ABCD1234</strong>
                   </p>
                   <button
                     type="button"
@@ -1769,7 +1767,9 @@
           const sections = document.querySelectorAll(".form-section");
           const progressBar = document.querySelector(".progress-bar");
           const steps = document.querySelectorAll(".step");
-
+          const newRequestBtn = document.getElementById("new-request");
+          const thankYouMessage = document.getElementById("thank-you");
+          const submitBtn = document.querySelector(".btn-success");
           // Pulsanti di navigazione
           const next1Button = document.getElementById("next-1");
           const next2Button = document.getElementById("next-2");
@@ -1852,6 +1852,43 @@
             }
           }
 
+          if (newRequestBtn) {
+            newRequestBtn.addEventListener("click", function () {
+              // Resetta il form
+              form.reset();
+
+              // Nascondi tutti i campi condizionali
+              existingInsuranceDetails.classList.add("d-none");
+              workAbsenceDetails.classList.add("d-none");
+              // conditionDetails.classList.add("d-none");
+              // otherBeneficiary.classList.add("d-none");
+              medicationDetails.classList.add("d-none");
+              // hospitalizationDetails.classList.add("d-none");
+
+              // Ripristina lo stato iniziale
+              form.style.display = "block";
+              thankYouMessage.classList.remove("active");
+              document.querySelector(".step-indicator").style.display = "flex";
+              document.querySelector(".progress").style.display = "flex";
+
+              // Torna al primo step
+
+              // goToSection("section-1", "section-1");
+              steps[0].classList.remove("completed");
+              steps[0].classList.add("active");
+              steps[1].classList.remove("completed");
+              steps[1].classList.remove("active");
+              steps[2].classList.remove("completed");
+              steps[2].classList.remove("active");
+              progressBar.style.width = "33%";
+              document.getElementById("section-3").classList.remove("active");
+              document.getElementById("section-2").classList.remove("active");
+              document.getElementById("section-1").classList.add("active");
+              // Riabilita il pulsante di invio
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = "Invia richiesta";
+            });
+          }
           // Gestione dei campi condizionali
           existingInsuranceRadios.forEach((radio) => {
             radio.addEventListener("change", function () {
@@ -1929,11 +1966,10 @@
           // Gestione invio form
           form.addEventListener("submit", async function (event) {
             event.preventDefault();
-            const buttonSubmit = document.querySelector(".btn-success");
 
             if (validateSection("section-3")) {
-              buttonSubmit.disabled = true;
-              buttonSubmit.innerHTML =
+              submitBtn.disabled = true;
+              submitBtn.innerHTML =
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Invio in corso...';
 
               // Simulazione invio dati (in produzione qui ci sarebbe la chiamata API)
@@ -2093,18 +2129,20 @@
               console.log("response", response);
 
               if (response.status === "ok") {
-                buttonSubmit.disabled = false;
+                submitBtn.disabled = false;
                 form.style.display = "none";
-                document.querySelector(".alert-info").style.display = "none";
+                if (document.querySelector(".alert-info")) {
+                  document.querySelector(".alert-info").style.display = "none";
+                }
                 // Nascondi gli indicatori di step
                 document.querySelector(".step-indicator").style.display =
                   "none";
 
                 document.querySelector(".progress").style.display = "none";
                 // Mostra il messaggio di ringraziamento
-                document.getElementById("thank-you").classList.add("active");
+                thankYouMessage.classList.add("active");
               } else {
-                buttonSubmit.disabled = false;
+                submitBtn.disabled = false;
                 alert("Errore");
               }
 
