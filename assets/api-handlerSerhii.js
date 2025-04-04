@@ -31,6 +31,7 @@ async function calcolaPremio(dati) {
         (oggi.getMonth() + 1).toString().padStart(2, "0") +
         oggi.getDate().toString().padStart(2, "0")
     );
+    console.log(dati);
 
     const datiAPI = {
       origin: origin,

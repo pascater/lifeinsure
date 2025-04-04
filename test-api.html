@@ -273,10 +273,8 @@
                   </div>
 
                   <!-- Durata -->
-                  <div class="form-group mb-3">
-                    <label for="durata" class="form-label"
-                      >Durata (anni) *</label
-                    >
+                  <!-- <div class="form-group mb-3">
+                   
                     <select class="form-select" id="durata" required="">
                       <option value="" disabled="" selected="">
                         Seleziona la durata
@@ -288,6 +286,47 @@
                       <option value="25">25 anni</option>
                       <option value="30">30 anni</option>
                     </select>
+                  
+                  </div> -->
+                  <div class="form-group mb-3">
+                    <label for="durata" class="form-label"
+                      >Durata (anni) *</label
+                    >
+                    <select
+                      class="form-select"
+                      id="durata-select"
+                      onchange="toggleDurataPersonalizzata()"
+                    >
+                      <option value="" disabled="" selected="">
+                        Seleziona la durata
+                      </option>
+                      <option value="5">5 anni</option>
+                      <option value="10">10 anni</option>
+                      <option value="15">15 anni</option>
+                      <option value="20">20 anni</option>
+                      <option value="25">25 anni</option>
+                      <option value="30">30 anni</option>
+                      <option value="custom">Scegli tu la durata</option>
+                    </select>
+                    <div id="durata-custom-container" class="mt-2 d-none">
+                      <div class="input-group">
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="durata-custom"
+                          min="5"
+                          max="30"
+                          placeholder="Inserisci durata (1-30 anni)"
+                        />
+                        <span class="input-group-text">anni</span>
+                      </div>
+                    </div>
+                    <input
+                      type="hidden"
+                      id="durata"
+                      name="durata"
+                      required=""
+                    />
                     <small class="form-text text-muted"
                       >Seleziona la durata della copertura assicurativa</small
                     >
@@ -303,7 +342,7 @@
                         type="number"
                         class="form-control"
                         id="copertura"
-                        min="10000"
+                        min="20000"
                         max="1000000"
                         step="10000"
                         value="100000"
@@ -433,6 +472,25 @@
 
     <!-- <script src="assets/js/api-handler.js"></script> -->
     <script>
+      function toggleDurataPersonalizzata() {
+        const durataSelect = document.getElementById("durata-select");
+        const durataCustomContainer = document.getElementById(
+          "durata-custom-container"
+        );
+        const durataCustomInput = document.getElementById("durata-custom");
+        const durataHidden = document.getElementById("durata");
+
+        if (durataSelect.value === "custom") {
+          durataCustomContainer.classList.remove("d-none");
+          durataCustomInput.required = true;
+          durataCustomInput.focus();
+          durataHidden.value = "";
+        } else {
+          durataCustomContainer.classList.add("d-none");
+          durataCustomInput.required = false;
+          durataHidden.value = durataSelect.value;
+        }
+      }
       document.addEventListener("DOMContentLoaded", function () {
         const formPremio = document.getElementById("form-calcolo-premio");
         const risultatoPremio = document.getElementById("risultato-premio");
@@ -450,11 +508,15 @@
             const dati = {
               dataNascita: document.getElementById("data-nascita").value,
               fumatore: document.getElementById("fumatore").checked,
-              durata: document.getElementById("durata").value,
+              durata: document.getElementById("durata-select").value,
               copertura: document.getElementById("copertura").value,
               altezza: document.getElementById("altezza").value || null,
               peso: document.getElementById("peso").value || null,
             };
+            if (document.getElementById("durata-select").value === "custom") {
+              dati.durata = document.getElementById("durata-custom").value;
+              console.log(document.getElementById("durata-select").value);
+            }
 
             try {
               // Chiama l'API
