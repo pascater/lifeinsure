@@ -336,6 +336,25 @@
             display: none;
           }
         }
+        .conditional-field {
+          margin-top: 1rem;
+          padding: 1rem;
+          border-left: 3px solid #0d6efd;
+          background-color: #f8f9fa;
+        }
+        @media (max-width: 767px) {
+          .step-title {
+            display: none;
+          }
+        }
+        .thank-you-message {
+          display: none;
+          text-align: center;
+          padding: 30px 0;
+        }
+        .thank-you-message.active {
+          display: block;
+        }
       </style>
 
       <div class="container py-5">
@@ -621,7 +640,7 @@
                           class="form-control"
                           id="coverage"
                           name="coverage"
-                          min="50000"
+                          min="20000"
                           max="1000000"
                           step="10000"
                           value="100000"
@@ -1621,6 +1640,32 @@
                     </div>
                   </div>
                 </form>
+                <!-- Messaggio di ringraziamento -->
+                <div class="thank-you-message" id="thank-you">
+                  <div class="alert alert-success mb-4">
+                    <h4 class="alert-heading">Grazie per la tua richiesta!</h4>
+                    <p>
+                      La tua richiesta di offerta è stata inviata con successo.
+                      Riceverai un'email di conferma all'indirizzo fornito.
+                    </p>
+                    <hr />
+                    <p class="mb-0">
+                      Un nostro consulente ti contatterà entro 48 ore
+                      lavorative.
+                    </p>
+                  </div>
+                  <p>
+                    Numero di riferimento:
+                    <strong id="reference-number">-</strong>
+                  </p>
+                  <button
+                    type="button"
+                    id="new-request"
+                    class="btn btn-primary mt-3"
+                  >
+                    Nuova richiesta
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -1666,7 +1711,7 @@
               }
 
               if (datiPreventivo.fumatore !== undefined) {
-                const fumatoreCheckbox = document.getElementById("smoker");
+                const fumatoreCheckbox = document.getElementById("smoker_yes");
                 if (fumatoreCheckbox) {
                   fumatoreCheckbox.checked = datiPreventivo.fumatore;
                 }
@@ -1886,6 +1931,9 @@
 
             if (validateSection("section-3")) {
               buttonSubmit.disabled = true;
+              buttonSubmit.innerHTML =
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Invio in corso...';
+
               // Simulazione invio dati (in produzione qui ci sarebbe la chiamata API)
               const formOfertaData = new FormData(form);
 
@@ -2040,12 +2088,19 @@
               ];
 
               const response = await richiediOfferta(values);
+              console.log("response", response);
 
               if (response.status === "ok") {
                 buttonSubmit.disabled = false;
-                alert(
-                  "Richiesta inviata con successo! Riceverai presto una email con la tua offerta."
-                );
+                form.style.display = "none";
+                document.querySelector(".alert-info").style.display = "none";
+                // Nascondi gli indicatori di step
+                document.querySelector(".step-indicator").style.display =
+                  "none";
+
+                document.querySelector(".progress").style.display = "none";
+                // Mostra il messaggio di ringraziamento
+                document.getElementById("thank-you").classList.add("active");
               } else {
                 buttonSubmit.disabled = false;
                 alert("Errore");
