@@ -202,9 +202,9 @@ async function emettiPolizza(id) {
       body: JSON.stringify(datiEmissione),
     });
 
-    if (!risposta.ok) {
-      throw new Error("Errore nell'emissione della polizza");
-    }
+    // if (!risposta.ok) {
+    //   throw new Error("Errore nell'emissione della polizza");
+    // }
 
     return await risposta.json();
   } catch (errore) {
