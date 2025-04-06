@@ -202,9 +202,9 @@ async function emettiPolizza(id) {
       body: JSON.stringify(datiEmissione),
     });
 
-    if (!risposta.ok) {
-      throw new Error("Errore nell'emissione della polizza");
-    }
+    // if (!risposta.ok) {
+    //   throw new Error("Errore nell'emissione della polizza");
+    // }
 
     return await risposta.json();
   } catch (errore) {
@@ -214,8 +214,28 @@ async function emettiPolizza(id) {
 }
 
 // Funzione per recuperare un documento
-function recuperaDocumento(documentPointer) {
-  return `${API_BASE_URL}/document_pointer/${documentPointer}`;
+
+async function recuperaDocumento(pointer, filename = "documento.pdf") {
+  try {
+    const response = await fetch(`${API_BASE_URL}/document_pointer/${pointer}`);
+
+    if (!response.ok) {
+      throw new Error("Errore durante il download");
+    }
+
+    const blob = await response.blob();
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `${filename}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(link.href);
+  } catch (err) {
+    console.error(err);
+    alert("❌ Impossibile scaricare il documento.");
+  }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
