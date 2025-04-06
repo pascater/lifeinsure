@@ -352,7 +352,9 @@
               </div>
               <div style="color: #6c757d; font-size: 14px; margin-top: 5px">
                 Inserisci l'ID dell'offerta che hai ricevuto al termine del
-                processo di richiesta
+                processo di richiesta <br />
+                Attenzione: l’ID può essere utilizzato una sola volta per
+                attivare il contratto.
               </div>
             </div>
 
@@ -989,6 +991,8 @@
       </div>
 
       <script>
+        let datiVerificaOfferta = { document_pointers: [] };
+
         (function () {
           // Funzione per la gestione sicura del log
           function safeLog(message) {
@@ -1243,7 +1247,7 @@
                   debugInfo("Errore nella chiusura del modal: " + err.message);
                 }
               }
-              let datiVerificaOfferta;
+
               // Funzioni per gestire le operazioni principali
               async function verificaOfferta() {
                 try {
@@ -1398,7 +1402,7 @@
                       confermaPagamentoBtn.disabled = false;
 
                       // Dati policy di esempio
-                      var polizzaData = {
+                      let polizzaData = {
                         policy_number: datiVerificaOfferta.policy_number,
                         document_pointers: [
                           {
@@ -1411,11 +1415,11 @@
                             pointer:
                               datiVerificaOfferta.document_pointers[0].pointer,
                           },
-                          {
-                            description: "Condizioni Generali di Assicurazione",
-                            document_id: "1",
-                            pointer: "52616E646F6D495679FD78397",
-                          },
+                          //   {
+                          //     description: "Condizioni Generali di Assicurazione",
+                          //     document_id: "1",
+                          //     pointer: "52616E646F6D495679FD78397",
+                          //   },
                         ],
                       };
 
@@ -1440,10 +1444,11 @@
                         documentiHTML += `
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                     <span>${doc.description}</span>
-                    <a href="#" onclick="window.lifensureDownloadDocument('${doc.pointer}', '${doc.description}'); return false;" 
+                    <button type="button"   id="btn-scarica"
+                    onclick="lifensureDownloadDocument('${doc.pointer}', '${doc.description}')"
                        style="background-color: #f8f9fa; color: #0d6efd; border: 1px solid #0d6efd; padding: 5px 10px; border-radius: 4px; font-size: 14px; text-decoration: none; display: inline-block;">
                       &#8595; Scarica
-                    </a>
+                    </button>
                   </div>
                 `;
 
@@ -1509,7 +1514,7 @@
               }
 
               // Funzione per il download del documento (simulata)
-              window.lifensureDownloadDocument = function (
+              window.lifensureDownloadDocument = async function (
                 pointer,
                 description
               ) {
@@ -1517,6 +1522,7 @@
                   alert(
                     'Download del documento "' + description + '" avviato.'
                   );
+                  await recuperaDocumento(pointer, description);
                   // In un'implementazione reale, qui andrebbe la chiamata API per il download effettivo
                 } catch (err) {
                   debugInfo(
