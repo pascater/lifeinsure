@@ -1263,18 +1263,19 @@
                     console.log("Verifica offerta con ID: " + offertaId.value);
 
                     const response = await emettiPolizza(offertaId.value);
-                    if (response.error) {
-                      alert(
-                        `La richiesta non può essere completata perché il contratto risulta già attivo. Se hai bisogno di assistenza o desideri ricevere una copia della tua polizza, contattaci.`
-                      );
+                    // const response = "await emettiPolizza(offertaId.value)";
+                    console.log(response);
+
+                    if (response.status === "error") {
+                      debugInfo(response.error[0].error);
                       verificaBtn.innerHTML = "Verifica offerta";
                       verificaBtn.disabled = false;
                       return;
-                    } else {
+                    } else if (response.status === "ok") {
                       alert("Offerta verificata con successo!");
                       datiVerificaOfferta = response;
                     }
-                    console.log("response:", response);
+                    // console.log("response:", response);
                   } catch (error) {
                     alert("Errore durante la verifica dell'offerta: " + error);
                   }
@@ -1285,15 +1286,22 @@
                       // Ripristina il bottone
                       verificaBtn.innerHTML = "Verifica offerta";
                       verificaBtn.disabled = false;
+                      const datiPreventivo = JSON.parse(
+                        sessionStorage.getItem("datiPreventivo")
+                      );
 
+                      const datiUtente = JSON.parse(
+                        sessionStorage.getItem("datiUtente")
+                      );
                       // Dati offerta di esempio
-                      var offertaData = {
-                        nome: "Mario Rossi",
-                        durata: 10,
-                        copertura: 100000,
-                        premioAnnuale: 145.5,
-                        modalitaPagamento: "annual",
+                      let offertaData = {
+                        nome: datiUtente.firstname + " " + datiUtente.lastname,
+                        durata: datiUtente.duration,
+                        copertura: datiUtente.coverage,
+                        premioAnnuale: Number(datiPreventivo.premio),
+                        modalitaPagamento: datiUtente.mode,
                       };
+                      console.log(offertaData);
 
                       // Mostra riepilogo
                       var riepilogoContent = document.getElementById(
@@ -1343,7 +1351,7 @@
                         "Si è verificato un errore durante la verifica dell'offerta. Riprova più tardi.";
                       goToStep(4); // Step di errore
                     }
-                  }, 1500);
+                  }, 0);
                 } catch (err) {
                   debugInfo(
                     "Errore nella verifica dell'offerta: " + err.message
@@ -1656,85 +1664,22 @@
     <script src="assets/api-handlerSerhii.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const formPremio = document.getElementById("form-calcolo-premio");
-        const risultatoPremio = document.getElementById("risultato-premio");
+        const datiPreventivo = JSON.parse(
+          sessionStorage.getItem("datiPreventivo")
+        );
+        const idOfferta = sessionStorage.getItem("reference-number");
 
-        if (formPremio) {
-          formPremio.addEventListener("submit", async function (e) {
-            e.preventDefault();
+        const datiUtente = JSON.parse(sessionStorage.getItem("datiUtente"));
 
-            // Mostra l'area risultati e aggiungi indicatore di caricamento
-            risultatoPremio.classList.remove("d-none");
-            risultatoPremio.innerHTML =
-              '<div class="text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Calcolo in corso...</span></div><p class="mt-2">Calcolo del premio in corso...</p></div>';
-
-            // Raccogli dati dal form
-            const dati = {
-              dataNascita: document.getElementById("data-nascita").value,
-              fumatore: document.getElementById("fumatore").checked,
-              durata: document.getElementById("durata").value,
-              copertura: document.getElementById("copertura").value,
-              altezza: document.getElementById("altezza").value || null,
-              peso: document.getElementById("peso").value || null,
-            };
-
-            try {
-              // Chiama l'API
-              const risultato = await calcolaPremio(dati);
-
-              // Mostra il risultato
-              if (risultato.errore) {
-                risultatoPremio.innerHTML = `
-                        <div class="alert alert-danger">
-                            <h5>Si è verificato un errore</h5>
-                            <p>${risultato.errore}</p>
-                        </div>`;
-              } else {
-                // Estrai il premio dalla risposta
-                const premio = risultato.premium[0].yearly_gross_premium;
-                const currency = risultato.currency || "CHF";
-
-                risultatoPremio.innerHTML = `
-                        <div class="card bg-light">
-                            <div class="card-body text-center">
-                                <h4 class="card-title">Il tuo preventivo</h4>
-                                <p class="card-text">In base ai dati forniti, il premio annuale è:</p>
-                                <h2 class="text-primary mb-4">${premio.toLocaleString()} ${currency}</h2>
-                                <p class="small text-muted mb-3">Copertura: ${parseInt(
-                                  dati.copertura
-                                ).toLocaleString()} ${currency} | Durata: ${
-                  dati.durata
-                } anni</p>
-                                <button id="btn-richiedi-offerta" class="btn btn-success">Richiedi offerta completa</button>
-                            </div>
-                        </div>`;
-
-                // Memorizza i dati per il passaggio successivo
-                sessionStorage.setItem(
-                  "datiPreventivo",
-                  JSON.stringify({
-                    ...dati,
-                    premio: premio,
-                    currency: currency,
-                  })
-                );
-
-                // Aggiungi listener al pulsante "Richiedi offerta"
-                document
-                  .getElementById("btn-richiedi-offerta")
-                  .addEventListener("click", function () {
-                    window.location.href = "richiesta-offerta.html"; // Cambia con il percorso corretto alla tua pagina di offerta
-                  });
-              }
-            } catch (errore) {
-              risultatoPremio.innerHTML = `
-                    <div class="alert alert-danger">
-                        <h5>Si è verificato un errore durante la connessione</h5>
-                        <p>Non è stato possibile contattare il server. Riprova più tardi.</p>
-                        <p class="small text-muted">${errore.message}</p>
-                    </div>`;
-            }
-          });
+        console.log(datiPreventivo);
+        console.log(idOfferta);
+        console.log(datiUtente);
+        if (idOfferta) {
+          document.getElementById("lifensure-offerta-id").value = idOfferta;
+        }
+        if (datiUtente) {
+          document.getElementById("lifensure-email-conferma").value =
+            datiUtente.email;
         }
       });
     </script>

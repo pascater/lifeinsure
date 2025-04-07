@@ -508,13 +508,14 @@
             const dati = {
               dataNascita: document.getElementById("data-nascita").value,
               fumatore: document.getElementById("fumatore").checked,
-              durata: document.getElementById("durata-select").value,
+              durata_select: document.getElementById("durata-select").value,
               copertura: document.getElementById("copertura").value,
               altezza: document.getElementById("altezza").value || null,
               peso: document.getElementById("peso").value || null,
             };
             if (document.getElementById("durata-select").value === "custom") {
-              dati.durata = document.getElementById("durata-custom").value;
+              dati.durata_custom =
+                document.getElementById("durata-custom").value;
               console.log(document.getElementById("durata-select").value);
             }
 
@@ -543,7 +544,7 @@
                                 <p class="small text-muted mb-3">Copertura: ${parseInt(
                                   dati.copertura
                                 ).toLocaleString()} ${currency} | Durata: ${
-                  dati.durata
+                  dati.durata_select || dati.durata_custom
                 } anni</p>
                                 <button id="btn-richiedi-offerta" class="btn btn-success">Richiedi offerta completa</button>
                             </div>
