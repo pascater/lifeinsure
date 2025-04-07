@@ -86,12 +86,13 @@ async function richiediOfferta(dati) {
         zip: dati.zip,
         city: dati.city,
         country: dati.country,
+        // nationality: dati.nationality || "CH",
         email: dati.email,
         birthdate: Number(dati.birthdate.replace(/-/g, "")),
+        phone: dati.phone || "",
         profession: dati.profession,
         gender: dati.gender,
-        phone: dati.phone || "",
-        language: dati.nationality || "en-gb",
+        // language: dati.nationality || "en-gb",
       },
       beneficiaries: {
         type: dati.beneficiary_type,
@@ -149,6 +150,7 @@ async function richiediOfferta(dati) {
           }),
         ],
       },
+
       // acquisitionAgent: "lifeInsureBroker",
     };
 
