@@ -96,6 +96,7 @@ async function richiediOfferta(dati) {
       beneficiaries: {
         type: dati.beneficiary_type,
         comment: "",
+        individual_beneficiaries: [],
       },
       policy_information: {
         tariff: "protection_retail",
@@ -139,7 +140,7 @@ async function richiediOfferta(dati) {
           ...dati.privacy_questions.map((item) => {
             return {
               "single privacy question": {
-                type: "agreements",
+                type: "assicurazioni",
                 text: item.question,
                 comment: item.comment,
                 answer: item.answer,
@@ -165,7 +166,7 @@ async function richiediOfferta(dati) {
       ];
     }
 
-    console.log("datiOffertatt", datiOfferta);
+    console.log("datiOfferta>>", datiOfferta);
 
     // Effettua la chiamata API
     const risposta = await fetch(`${API_BASE_URL}/offer`, {
@@ -176,9 +177,9 @@ async function richiediOfferta(dati) {
       body: JSON.stringify(datiOfferta),
     });
 
-    // if (!risposta.ok) {
-    //   throw new Error("Errore nella richiesta dell'offerta");
-    // }
+    console.log(document.getElementById("reference-number"));
+    sessionStorage.setItem("reference-number", datiOfferta.id);
+    document.getElementById("reference-number").textContent = datiOfferta.id;
 
     return await risposta.json();
   } catch (errore) {
