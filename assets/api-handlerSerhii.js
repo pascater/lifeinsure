@@ -107,14 +107,27 @@ async function richiediOfferta(dati) {
       policy_information: {
         tariff: "protection_retail",
         origin: Number(new Date().toISOString().slice(0, 10).replace(/-/g, "")),
-        duration: parseInt(dati.duration),
+        duration:
+          //  Number(
+          parseInt(
+            dati["durata-select"] === "custom"
+              ? dati["durata-custom"]
+              : dati["durata-select"]
+          ),
+        // ),
         coverage: parseInt(dati.coverage),
         accident_coverage: 0, //sempre 0?
         general_condition: 20201101, //? sempre 20201101?
         mode: dati.mode,
         smoker: dati.smoker === "no" ? false : true,
-        height: parseInt(dati.height),
-        weight: parseInt(dati.weight),
+        height:
+          // Number        (
+          parseInt(dati.height),
+        // ),
+        weight:
+          //  Number(
+          parseInt(dati.weight),
+        // ),
         comment: dati.notes || "",
       },
       payment_type: dati.payment_type,
