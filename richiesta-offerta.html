@@ -1892,43 +1892,7 @@
 
           if (newRequestBtn) {
             newRequestBtn.addEventListener("click", function () {
-              // const formOfertaData = new FormData(form);
-
-              // let values = Object.fromEntries(formOfertaData.entries());
-              // sessionStorage.setItem("datiUtente", values);
               window.location.href = "page8.html";
-              // form.reset();
-              // window.location.href = "page8.html";
-              // Nascondi tutti i campi condizionali
-              // existingInsuranceDetails.classList.add("d-none");
-              // workAbsenceDetails.classList.add("d-none");
-              // // conditionDetails.classList.add("d-none");
-              // // otherBeneficiary.classList.add("d-none");
-              // medicationDetails.classList.add("d-none");
-              // // hospitalizationDetails.classList.add("d-none");
-
-              // // Ripristina lo stato iniziale
-              // form.style.display = "block";
-              // thankYouMessage.classList.remove("active");
-              // document.querySelector(".step-indicator").style.display = "flex";
-              // document.querySelector(".progress").style.display = "flex";
-
-              // // Torna al primo step
-
-              // // goToSection("section-1", "section-1");
-              // steps[0].classList.remove("completed");
-              // steps[0].classList.add("active");
-              // steps[1].classList.remove("completed");
-              // steps[1].classList.remove("active");
-              // steps[2].classList.remove("completed");
-              // steps[2].classList.remove("active");
-              // progressBar.style.width = "33%";
-              // document.getElementById("section-3").classList.remove("active");
-              // document.getElementById("section-2").classList.remove("active");
-              // document.getElementById("section-1").classList.add("active");
-              // // Riabilita il pulsante di invio
-              // submitBtn.disabled = false;
-              // submitBtn.innerHTML = "Invia richiesta";
             });
           }
           // Gestione dei campi condizionali
@@ -2166,7 +2130,8 @@
                   comment: "",
                 },
               ];
-
+              values["durata-custom"] =
+                document.getElementById("durata-custom").value;
               const response = await richiediOfferta(values);
               console.log("response", response);
               console.log(values);
