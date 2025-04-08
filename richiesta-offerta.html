@@ -1711,7 +1711,7 @@
           if (datiPreventivoString) {
             try {
               const datiPreventivo = JSON.parse(datiPreventivoString);
-
+              console.log(datiPreventivo);
               // Compila i campi della sezione "Dettagli polizza" con i dati recuperati
               if (datiPreventivo.durata_select) {
                 const durataSelect = document.getElementById("durata-select");
@@ -1773,9 +1773,13 @@
                         <strong>Dati preventivo importati:</strong> Copertura: ${
                           datiPreventivo.copertura
                         } ${datiPreventivo.currency || "CHF"}, 
-                        Durata: ${datiPreventivo.durata} anni, Premio: ${
-                  datiPreventivo.premio
-                } ${datiPreventivo.currency || "CHF"}
+                        Durata: ${
+                          datiPreventivo["durata_select"] === "custom"
+                            ? datiPreventivo["durata_custom"]
+                            : datiPreventivo["durata_select"]
+                        } anni, Premio: ${datiPreventivo.premio} ${
+                  datiPreventivo.currency || "CHF"
+                }
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Chiudi"></button>
                     `;
 

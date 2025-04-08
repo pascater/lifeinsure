@@ -544,7 +544,9 @@
                                 <p class="small text-muted mb-3">Copertura: ${parseInt(
                                   dati.copertura
                                 ).toLocaleString()} ${currency} | Durata: ${
-                  dati.durata_select || dati.durata_custom
+                  dati.durata_select === "custom"
+                    ? dati.durata_custom
+                    : dati.durata_select
                 } anni</p>
                                 <button id="btn-richiedi-offerta" class="btn btn-success">Richiedi offerta completa</button>
                             </div>
