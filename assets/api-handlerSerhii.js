@@ -31,24 +31,29 @@ async function calcolaPremio(dati) {
         (oggi.getMonth() + 1).toString().padStart(2, "0") +
         oggi.getDate().toString().padStart(2, "0")
     );
-    console.log(dati);
 
     const datiAPI = {
       origin: origin,
       birthdate: birthdate,
       smoker: dati.fumatore,
-      duration: parseInt(dati.durata),
-      coverage: parseInt(dati.copertura),
+      duration: Number(
+        parseInt(
+          dati.durata_select === "custom"
+            ? dati.durata_custom
+            : dati.durata_select
+        )
+      ),
+      coverage: Number(dati.copertura),
     };
 
     if (dati.altezza) {
-      datiAPI.height = parseInt(dati.altezza);
+      datiAPI.height = Number(dati.altezza);
     }
 
     if (dati.peso) {
-      datiAPI.weight = parseInt(dati.peso);
+      datiAPI.weight = Number(dati.peso);
     }
-
+    console.log(datiAPI);
     // console.log("Tentativo di chiamata fetch...");
     const risposta = await fetch(`${API_BASE_URL}/premium`, {
       method: "POST",

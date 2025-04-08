@@ -613,20 +613,35 @@
                         >
                         <select
                           class="form-select"
-                          id="duration"
-                          name="duration"
+                          id="durata-select"
+                          onchange="toggleDurataPersonalizzata()"
+                          name="durata-select"
                           required=""
                         >
-                          <option value="" disabled="">
+                          <option value="" disabled="" selected="">
                             Seleziona la durata
                           </option>
                           <option value="5">5 anni</option>
-                          <option value="10" selected="">10 anni</option>
+                          <option value="10">10 anni</option>
                           <option value="15">15 anni</option>
                           <option value="20">20 anni</option>
                           <option value="25">25 anni</option>
                           <option value="30">30 anni</option>
+                          <option value="custom">Scegli tu la durata</option>
                         </select>
+                        <div id="durata-custom-container" class="mt-2 d-none">
+                          <div class="input-group">
+                            <input
+                              type="number"
+                              class="form-control"
+                              id="durata-custom"
+                              min="5"
+                              max="30"
+                              placeholder="Inserisci durata (5-30 anni)"
+                            />
+                            <span class="input-group-text">anni</span>
+                          </div>
+                        </div>
                         <div class="invalid-feedback">
                           Seleziona la durata della polizza
                         </div>
@@ -1673,6 +1688,22 @@
         </div>
       </div>
       <script>
+        function toggleDurataPersonalizzata() {
+          const durataSelect = document.getElementById("durata-select");
+          const durataCustomContainer = document.getElementById(
+            "durata-custom-container"
+          );
+          const durataCustomInput = document.getElementById("durata-custom");
+
+          if (durataSelect.value === "custom") {
+            durataCustomContainer.classList.remove("d-none");
+            durataCustomInput.required = true;
+            durataCustomInput.focus();
+          } else {
+            durataCustomContainer.classList.add("d-none");
+            durataCustomInput.required = false;
+          }
+        }
         function setDataFromSessionStorage() {
           // Recupera i dati salvati dalla pagina di preventivazione
           const datiPreventivoString = sessionStorage.getItem("datiPreventivo");
@@ -1682,10 +1713,16 @@
               const datiPreventivo = JSON.parse(datiPreventivoString);
 
               // Compila i campi della sezione "Dettagli polizza" con i dati recuperati
-              if (datiPreventivo.durata) {
-                const durataSelect = document.getElementById("duration");
+              if (datiPreventivo.durata_select) {
+                const durataSelect = document.getElementById("durata-select");
+                const durataCustom = document.getElementById("durata-custom");
+
                 if (durataSelect) {
-                  durataSelect.value = datiPreventivo.durata;
+                  durataSelect.value = datiPreventivo.durata_select;
+                }
+                if (durataCustom && datiPreventivo.durata_select === "custom") {
+                  toggleDurataPersonalizzata();
+                  durataCustom.value = datiPreventivo.durata_custom;
                 }
               }
 
