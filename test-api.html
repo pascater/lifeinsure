@@ -222,9 +222,9 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-12 col-lg-11">
-            <h2 class="mbr-section-subtitle mbr-fonts-style mb-3 display-2">
+            <!-- <h2 class="mbr-section-subtitle mbr-fonts-style mb-3 display-2">
               test api
-            </h2>
+            </h2> -->
           </div>
         </div>
       </div>
@@ -251,6 +251,8 @@
                       class="form-control"
                       id="data-nascita"
                       required=""
+                      min="1960-01-01"
+                      max="2007-09-30"
                     />
                     <small class="form-text text-muted"
                       >Inserisci la tua data di nascita</small
@@ -343,7 +345,7 @@
                         class="form-control"
                         id="copertura"
                         min="20000"
-                        max="1000000"
+                        max="600000"
                         step="10000"
                         value="100000"
                         required=""
@@ -351,7 +353,7 @@
                       <span class="input-group-text">CHF</span>
                     </div>
                     <small class="form-text text-muted"
-                      >Importo della copertura assicurativa (minimo 10.000
+                      >Importo della copertura assicurativa (minimo 20.000
                       CHF)</small
                     >
                   </div>
@@ -544,7 +546,9 @@
                                 <p class="small text-muted mb-3">Copertura: ${parseInt(
                                   dati.copertura
                                 ).toLocaleString()} ${currency} | Durata: ${
-                  dati.durata_select || dati.durata_custom
+                  dati.durata_select === "custom"
+                    ? dati.durata_custom
+                    : dati.durata_select
                 } anni</p>
                                 <button id="btn-richiedi-offerta" class="btn btn-success">Richiedi offerta completa</button>
                             </div>
