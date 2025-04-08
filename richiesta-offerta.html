@@ -461,6 +461,8 @@
                           id="birthdate"
                           name="birthdate"
                           required=""
+                          min="1960-01-01"
+                          max="2007-09-30"
                         />
                         <div class="invalid-feedback">
                           Inserisci la tua data di nascita
@@ -578,11 +580,11 @@
                           name="nationality"
                           required=""
                         >
-                          <option value="CH" selected="">Svizzera</option>
-                          <option value="IT">Italiana</option>
-                          <option value="DE">Tedesca</option>
-                          <option value="FR">Francese</option>
-                          <option value="AT">Austriaca</option>
+                          <option value="it-CH" selected>Svizzera</option>
+                          <option value="it-IT">Italiana</option>
+                          <option value="de-DE">Tedesca</option>
+                          <option value="fr-FR">Francese</option>
+                          <option value="de-AT">Austriaca</option>
                         </select>
                       </div>
                       <div class="col-md-6">
@@ -657,7 +659,7 @@
                           id="coverage"
                           name="coverage"
                           min="20000"
-                          max="1000000"
+                          max="600000"
                           step="10000"
                           value="100000"
                           required=""
@@ -701,7 +703,7 @@
                           <option value="invoice_esr" selected="">
                             E-Bill
                           </option>
-                          <option value="manual">Bonifico</option>
+                          <option value="manual">Fattura con QR code</option>
                         </select>
                         <div class="invalid-feedback">
                           Seleziona il tipo di pagamento

@@ -79,7 +79,7 @@ async function calcolaPremio(dati) {
 }
 
 async function richiediOfferta(dati) {
-  console.log(dati);
+  // console.log(dati);
 
   try {
     const datiOfferta = {
@@ -97,7 +97,7 @@ async function richiediOfferta(dati) {
         phone: dati.phone || "",
         profession: dati.profession,
         gender: dati.gender,
-        // language: dati.nationality || "en-gb",
+        language: dati.nationality || "en-gb",
       },
       beneficiaries: {
         type: dati.beneficiary_type,
@@ -186,7 +186,7 @@ async function richiediOfferta(dati) {
       ];
     }
 
-    console.log("datiOfferta>>", datiOfferta);
+    // console.log("datiOfferta>>", datiOfferta);
 
     // Effettua la chiamata API
     const risposta = await fetch(`${API_BASE_URL}/offer`, {
@@ -197,7 +197,6 @@ async function richiediOfferta(dati) {
       body: JSON.stringify(datiOfferta),
     });
 
-    console.log(document.getElementById("reference-number"));
     sessionStorage.setItem("reference-number", datiOfferta.id);
     document.getElementById("reference-number").textContent = datiOfferta.id;
 
@@ -209,23 +208,15 @@ async function richiediOfferta(dati) {
 }
 
 // Funzione per emettere una polizza
-async function emettiPolizza(id) {
+async function emettiPolizza(id, email) {
   try {
-    const datiEmissione = {
-      id: id,
-    };
-
     const risposta = await fetch(`${API_BASE_URL}/application`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(datiEmissione),
+      body: JSON.stringify({ id, email }),
     });
-
-    // if (!risposta.ok) {
-    //   throw new Error("Errore nell'emissione della polizza");
-    // }
 
     return await risposta.json();
   } catch (errore) {
