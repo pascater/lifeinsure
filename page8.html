@@ -636,7 +636,7 @@
                   Seleziona il metodo di pagamento...
                 </option>
                 <option value="e-bill">E-Bill</option>
-                <option value="bonifico">Bonifico bancario</option>
+                <option value="bonifico">Fattura con QR code</option>
               </select>
               <div
                 id="lifensure-pagamento-error"
@@ -1254,16 +1254,20 @@
                   if (!validateInputs(0)) {
                     return;
                   }
-
+                  const datiUtente = JSON.parse(
+                    sessionStorage.getItem("datiUtente")
+                  );
+                  const datiPreventivo = JSON.parse(
+                    sessionStorage.getItem("datiPreventivo")
+                  );
+                  console.log(datiPreventivo);
                   // Modifica il bottone durante il caricamento
                   verificaBtn.innerHTML =
                     '<span style="display: inline-block; width: 16px; height: 16px; border: 2px solid white; border-radius: 50%; border-top-color: transparent; animation: lifensure-spin 1s linear infinite;"></span> Verifica in corso...';
                   verificaBtn.disabled = true;
                   try {
                     console.log("Verifica offerta con ID: " + offertaId.value);
-                    const datiUtente = JSON.parse(
-                      sessionStorage.getItem("datiUtente")
-                    );
+
                     const response = await emettiPolizza(
                       offertaId.value,
                       emailConferma.value
@@ -1279,6 +1283,9 @@
                     } else if (response.status === "ok") {
                       alert("Offerta verificata con successo!");
                       datiVerificaOfferta = response;
+                      document.getElementById(
+                        "lifensure-causale-bonifico"
+                      ).textContent = `Polizza ${response.policy_number}`;
                     }
                     // console.log("response:", response);
                   } catch (error) {
@@ -1291,9 +1298,6 @@
                       // Ripristina il bottone
                       verificaBtn.innerHTML = "Verifica offerta";
                       verificaBtn.disabled = false;
-                      const datiPreventivo = JSON.parse(
-                        sessionStorage.getItem("datiPreventivo")
-                      );
 
                       const datiUtente = JSON.parse(
                         sessionStorage.getItem("datiUtente")
@@ -1301,11 +1305,15 @@
                       // Dati offerta di esempio
                       let offertaData = {
                         nome: datiUtente.firstname + " " + datiUtente.lastname,
-                        durata: datiUtente.duration,
+                        durata:
+                          datiPreventivo.durata_select === "custom"
+                            ? datiPreventivo.durata_custom
+                            : datiPreventivo.durata_select,
                         copertura: datiUtente.coverage,
                         premioAnnuale: Number(datiPreventivo.premio),
                         modalitaPagamento: datiUtente.mode,
                       };
+                      console.log(offertaData);
 
                       // Mostra riepilogo
                       var riepilogoContent = document.getElementById(
@@ -1378,7 +1386,7 @@
                   riepilogoPagamento.innerHTML = `
             <div style="display: flex; flex-wrap: wrap;">
               <div style="flex: 1; min-width: 200px; margin-bottom: 10px;">
-                <p style="margin-bottom: 5px;"><strong>Premio da pagare:</strong> CHF 145.50</p>
+                <p style="margin-bottom: 5px;"><strong>Premio da pagare:</strong> {datiPreventivo.premio}</p>
               </div>
               <div style="flex: 1; min-width: 200px; margin-bottom: 10px;">
                 <p style="margin-bottom: 5px;"><strong>Scadenza pagamento:</strong> 7 giorni</p>
@@ -1512,10 +1520,10 @@
                     datiEbill.style.display = "block";
                   } else if (metodo === "bonifico") {
                     datiBonifico.style.display = "block";
-                    var causaleBonifico = document.getElementById(
-                      "lifensure-causale-bonifico"
-                    );
-                    causaleBonifico.textContent = "Polizza SPP-0010-XXX";
+                    // let causaleBonifico = document.getElementById(
+                    //   "lifensure-causale-bonifico"
+                    // );
+                    // causaleBonifico.textContent = "Polizza SPP-0010-XXX";
                   }
                 } catch (err) {
                   debugInfo(
@@ -1668,16 +1676,10 @@
     <script src="assets/api-handlerSerhii.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const datiPreventivo = JSON.parse(
-          sessionStorage.getItem("datiPreventivo")
-        );
         const idOfferta = sessionStorage.getItem("reference-number");
 
         const datiUtente = JSON.parse(sessionStorage.getItem("datiUtente"));
 
-        console.log(datiPreventivo);
-        console.log(idOfferta);
-        console.log(datiUtente);
         if (idOfferta) {
           document.getElementById("lifensure-offerta-id").value = idOfferta;
         }
