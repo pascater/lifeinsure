@@ -1254,39 +1254,43 @@
                   if (!validateInputs(0)) {
                     return;
                   }
-                  const datiUtente = JSON.parse(
-                    sessionStorage.getItem("datiUtente")
+                  //   let datiUtente = JSON.parse(
+                  //     sessionStorage.getItem("datiOfferta")
+                  //   );
+                  let datiPreventivo = JSON.parse(
+                    sessionStorage.getItem("datiOfferta")
                   );
-                  const datiPreventivo = JSON.parse(
-                    sessionStorage.getItem("datiPreventivo")
+                  console.log(
+                    "datiPreventivo",
+                    datiPreventivo || "empty storage"
                   );
-                  console.log(datiPreventivo);
                   // Modifica il bottone durante il caricamento
                   verificaBtn.innerHTML =
                     '<span style="display: inline-block; width: 16px; height: 16px; border: 2px solid white; border-radius: 50%; border-top-color: transparent; animation: lifensure-spin 1s linear infinite;"></span> Verifica in corso...';
                   verificaBtn.disabled = true;
                   try {
-                    console.log("Verifica offerta con ID: " + offertaId.value);
+                    // console.log("Verifica offerta con ID: " + offertaId.value);
+                    datiPreventivo.id = offertaId.value;
+                    datiPreventivo.email = emailConferma.value;
 
-                    const response = await emettiPolizza(
-                      offertaId.value,
-                      emailConferma.value
-                    );
+                    // const response = await richiediOfferta(datiPreventivo);
+                    const response = {
+                      status: "ok",
+                      policy_number: "123456789",
+                    }; // Simulazione di risposta API
 
-                    console.log(response);
-
-                    if (response.status === "error") {
-                      debugInfo(response.error[0].error);
-                      verificaBtn.innerHTML = "Verifica offerta";
-                      verificaBtn.disabled = false;
-                      return;
-                    } else if (response.status === "ok") {
-                      alert("Offerta verificata con successo!");
-                      datiVerificaOfferta = response;
-                      document.getElementById(
-                        "lifensure-causale-bonifico"
-                      ).textContent = `Polizza ${response.policy_number}`;
-                    }
+                    // if (response.status === "error") {
+                    //   debugInfo(response.error[0].error);
+                    //   verificaBtn.innerHTML = "Verifica offerta";
+                    //   verificaBtn.disabled = false;
+                    //   return;
+                    // } else if (response.status === "ok") {
+                    //   //   alert("Offerta verificata con successo!");
+                    //   datiVerificaOfferta = response;
+                    //   //   document.getElementById(
+                    //   //     "lifensure-causale-bonifico"
+                    //   //   ).textContent = `Polizza ${response.policy_number}`;
+                    // }
                     // console.log("response:", response);
                   } catch (error) {
                     alert("Errore durante la verifica dell'offerta: " + error);
@@ -1300,23 +1304,27 @@
                       verificaBtn.disabled = false;
 
                       const datiUtente = JSON.parse(
-                        sessionStorage.getItem("datiUtente")
+                        sessionStorage.getItem("datiOfferta")
                       );
+                      const datiPreventivo = JSON.parse(
+                        sessionStorage.getItem("datiPreventivo")
+                      );
+
                       // Dati offerta di esempio
                       let offertaData = {
-                        nome: datiUtente.firstname + " " + datiUtente.lastname,
-                        durata:
-                          datiPreventivo.durata_select === "custom"
-                            ? datiPreventivo.durata_custom
-                            : datiPreventivo.durata_select,
-                        copertura: datiUtente.coverage,
-                        premioAnnuale: Number(datiPreventivo.premio),
-                        modalitaPagamento: datiUtente.mode,
+                        nome:
+                          datiUtente.holder.firstname +
+                            " " +
+                            datiUtente.holder.lastname || "",
+                        durata: datiUtente.policy_information.duration || "",
+                        copertura: datiUtente.policy_information.coverage || "",
+                        premioAnnuale: Number(datiPreventivo.premio) || "",
+                        modalitaPagamento:
+                          datiUtente.policy_information.mode || "",
                       };
-                      console.log(offertaData);
 
                       // Mostra riepilogo
-                      var riepilogoContent = document.getElementById(
+                      let riepilogoContent = document.getElementById(
                         "lifensure-riepilogo-content"
                       );
                       riepilogoContent.innerHTML = `
@@ -1380,13 +1388,16 @@
                   }
 
                   // Prepara il riepilogo del pagamento
-                  var riepilogoPagamento = document.getElementById(
+                  const riepilogoPagamento = document.getElementById(
                     "lifensure-riepilogo-pagamento"
+                  );
+                  const datiPreventivo = JSON.parse(
+                    sessionStorage.getItem("datiPreventivo")
                   );
                   riepilogoPagamento.innerHTML = `
             <div style="display: flex; flex-wrap: wrap;">
               <div style="flex: 1; min-width: 200px; margin-bottom: 10px;">
-                <p style="margin-bottom: 5px;"><strong>Premio da pagare:</strong> {datiPreventivo.premio}</p>
+                <p style="margin-bottom: 5px;"><strong>Premio da pagare:</strong> ${datiPreventivo.premio}</p>
               </div>
               <div style="flex: 1; min-width: 200px; margin-bottom: 10px;">
                 <p style="margin-bottom: 5px;"><strong>Scadenza pagamento:</strong> 7 giorni</p>
@@ -1520,10 +1531,10 @@
                     datiEbill.style.display = "block";
                   } else if (metodo === "bonifico") {
                     datiBonifico.style.display = "block";
-                    // let causaleBonifico = document.getElementById(
-                    //   "lifensure-causale-bonifico"
-                    // );
-                    // causaleBonifico.textContent = "Polizza SPP-0010-XXX";
+                    let causaleBonifico = document.getElementById(
+                      "lifensure-causale-bonifico"
+                    );
+                    causaleBonifico.textContent = "Polizza SPP-0010-XXX";
                   }
                 } catch (err) {
                   debugInfo(
@@ -1676,16 +1687,15 @@
     <script src="assets/api-handlerSerhii.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const idOfferta = sessionStorage.getItem("reference-number");
+        const datiOfferta = JSON.parse(sessionStorage.getItem("datiOfferta"));
 
-        const datiUtente = JSON.parse(sessionStorage.getItem("datiUtente"));
+        console.log("datiOfferta", datiOfferta || "storage empty");
 
-        if (idOfferta) {
-          document.getElementById("lifensure-offerta-id").value = idOfferta;
-        }
-        if (datiUtente) {
+        if (datiOfferta) {
+          document.getElementById("lifensure-offerta-id").value =
+            datiOfferta.id || "";
           document.getElementById("lifensure-email-conferma").value =
-            datiUtente.email;
+            datiOfferta.holder.email || "";
         }
       });
     </script>

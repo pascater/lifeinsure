@@ -79,11 +79,11 @@ async function calcolaPremio(dati) {
 }
 
 async function richiediOfferta(dati) {
-  // console.log(dati);
+  console.log(dati);
 
   try {
     const datiOfferta = {
-      id: crypto.randomUUID(),
+      id: dati.id || crypto.randomUUID(),
       holder: {
         firstname: dati.firstname,
         lastname: dati.lastname,
@@ -176,7 +176,7 @@ async function richiediOfferta(dati) {
       datiOfferta.beneficiaries.individual_beneficiaries = [
         {
           individual_type: "person",
-          percentage: 0.2,
+          percentage: 1,
           insured_relationship: dati.beneficiary_relation,
           beneficiary_person: {
             beneficiary_firstname: dati.beneficiary_firstname,
@@ -197,7 +197,7 @@ async function richiediOfferta(dati) {
       body: JSON.stringify(datiOfferta),
     });
 
-    sessionStorage.setItem("reference-number", datiOfferta.id);
+    sessionStorage.setItem("datiOfferta", JSON.stringify(datiOfferta));
     document.getElementById("reference-number").textContent = datiOfferta.id;
 
     return await risposta.json();
