@@ -3043,8 +3043,10 @@
           // !!! NEL MONDO REALE: Qui invieresti i dati del form al TUO backend !!!
           const formData = new FormData(form);
           const response = await richiediOfferta(formData);
+          console.log("Risposta backend:", response);
+
           // if (!response.ok) { throw new Error('Errore invio dati al backend'); }
-          const result = await response.json();
+          // const result = await response.json();
           // const referenceNumber = result.referenceNumber; // Ottieni il vero ref number dal backend
 
           // --- INIZIO SIMULAZIONE ---
@@ -3053,11 +3055,11 @@
           // --- FINE SIMULAZIONE ---
 
           // Salva riferimento (anche se placeholder) per recupero documenti simulato
-          if (sessionStorageAvailable) {
-            sessionStorage.setItem("referenceNumber", referenceNumber);
-          }
-          // document.getElementById("reference-number").textContent =
-          //   referenceNumber;
+          // if (sessionStorageAvailable) {
+          //   sessionStorage.setItem("referenceNumber", referenceNumber);
+          // }
+          document.getElementById("reference-number").textContent =
+            referenceNumber;
 
           // Nascondi form e mostra messaggio thank you
           form.style.display = "none";
