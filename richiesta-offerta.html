@@ -1881,7 +1881,7 @@
       <!-- Fine row -->
     </div>
     <!-- Fine container -->
-
+    <script src="assets/api-handlerSerhii.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -3041,14 +3041,14 @@
             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Invio in corso...';
 
           // !!! NEL MONDO REALE: Qui invieresti i dati del form al TUO backend !!!
-          // const formData = new FormData(form);
-          // const response = await fetch('/api/submit-offer-request', { method: 'POST', body: formData });
+          const formData = new FormData(form);
+          const response = await richiediOfferta(formData);
           // if (!response.ok) { throw new Error('Errore invio dati al backend'); }
-          // const result = await response.json();
+          const result = await response.json();
           // const referenceNumber = result.referenceNumber; // Ottieni il vero ref number dal backend
 
           // --- INIZIO SIMULAZIONE ---
-          await new Promise((resolve) => setTimeout(resolve, 1500)); // Simula attesa backend
+          //  await new Promise((resolve) => setTimeout(resolve, 1500)); // Simula attesa backend
           const referenceNumber = generateUniqueIdPlaceholder(); // Usa placeholder
           // --- FINE SIMULAZIONE ---
 
@@ -3056,8 +3056,8 @@
           if (sessionStorageAvailable) {
             sessionStorage.setItem("referenceNumber", referenceNumber);
           }
-          document.getElementById("reference-number").textContent =
-            referenceNumber;
+          // document.getElementById("reference-number").textContent =
+          //   referenceNumber;
 
           // Nascondi form e mostra messaggio thank you
           form.style.display = "none";
