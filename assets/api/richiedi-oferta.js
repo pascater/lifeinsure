@@ -13,7 +13,9 @@ function getFormData(form) {
     document.getElementById("multiple_sclerosis"),
     document.getElementById("mental_health"),
   ];
+
   values.health_questions_new = [];
+
   function addHealthQuestion(question, answer, comment = "") {
     values.health_questions_new.push({
       question,
@@ -34,80 +36,77 @@ function getFormData(form) {
 
   if (document.getElementById("smoker_yes").checked) {
     addHealthQuestion(
-      document.getElementById("smoker_yes_lable").textContent,
+      document.getElementById("smoker_legend").textContent,
       true
     );
   }
 
   if (document.getElementById("medication_yes").checked) {
     addHealthQuestion(
-      document.getElementById("medication_yes_label").textContent,
+      document.getElementById("medication_legend").textContent,
       true
     );
 
-    addHealthQuestion(
-      document.getElementById("medication_resolved_label").textContent,
-      document.getElementById("medication_resolved_yes").checked ? true : false,
-      document.getElementById("medication_description").value || ""
-    );
+    // addHealthQuestion(
+    //   document.getElementById("medication_resolved_label").textContent,
+    //   document.getElementById("medication_resolved_yes").checked ? true : false,
+    //   document.getElementById("medication_description").value || ""
+    // );
   }
 
   if (document.getElementById("hypertension_yes").checked) {
     addHealthQuestion(
-      document.getElementById("hypertension_yes_label").textContent,
+      document.getElementById("hypertension_legend").textContent,
       true
     );
   }
 
   if (document.getElementById("hospitalization_yes").checked) {
     addHealthQuestion(
-      document.getElementById("hospitalization_yes_label").textContent,
+      document.getElementById("hospitalization_legend").textContent,
       true
     );
-    addHealthQuestion(
-      document.getElementById("hospitalization_resolved_yes_label").textContent,
-      document.getElementById("hospitalization_resolved_yes").checked
-    );
+    // addHealthQuestion(
+    //   document.getElementById("hospitalization_resolved_yes_label").textContent,
+    //   document.getElementById("hospitalization_resolved_yes").checked
+    // );
   }
 
   if (document.getElementById("planned_exam_yes").checked) {
     addHealthQuestion(
-      document.getElementById("planned_exam_yes").textContent,
+      document.getElementById("planned_exam_legend").textContent,
       true
     );
   }
 
   if (document.getElementById("drugs_yes").checked) {
     addHealthQuestion(
-      document.getElementById("drugs_yes_label").textContent,
+      document.getElementById("drugs_legend").textContent,
       true
     );
   }
 
   if (document.getElementById("hiv_yes").checked) {
-    addHealthQuestion(
-      document.getElementById("hiv_yes_label").textContent,
-      true
-    );
+    addHealthQuestion(document.getElementById("hiv_legend").textContent, true);
   }
 
   if (document.getElementById("foreign_stay_yes").checked) {
     addHealthQuestion(
-      document.getElementById("foreign_stay_yes_label").textContent,
+      document.getElementById("foreign_stay_legend").textContent,
       true
     );
   }
 
   if (document.getElementById("dangerous_hobby_yes").checked) {
     addHealthQuestion(
-      document.getElementById("dangerous_hobby_yes_label").textContent,
+      document.getElementById("dangerous_hobby_legend").textContent,
       true
     );
   }
 
   if (document.getElementById("pension_yes").checked) {
     addHealthQuestion(
-      document.getElementById("pension_yes_label").textContent,
+      document.getElementById("pension_legend").textContent,
       true
     );
   }
@@ -257,6 +256,25 @@ async function richiediOfferta(formOfertaData) {
     const datiRisposta = await risposta.json();
     // Controlla se la risposta è ok
     console.log("risposta dati>>", datiRisposta);
+
+    const conditionNotes = document.getElementById("condition_notes");
+
+    console.log("conditionNotes>>", conditionNotes);
+
+    if (risposta.status === 200) {
+      const sendDocument = await fetch(`${API_BASE_URL}/send_documents`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: datiOfferta.id,
+          email: datiOfferta.holder.email,
+          documentsPointer: datiRisposta.document_pointers,
+        }),
+      });
+      console.log("sendDocument>>", sendDocument);
+      const sendDocumentResponse = await sendDocument.json();
+      console.log("sendDocumentResponse>>", sendDocumentResponse);
+    }
 
     sessionStorage.setItem("reference-number", datiOfferta.id);
     document.getElementById("reference-number").textContent = datiOfferta.id;
