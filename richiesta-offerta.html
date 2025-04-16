@@ -595,7 +595,7 @@
                         name="payment_type"
                         required
                       >
-                        <option value="e-bill" selected>E-Bill</option>
+                        <option value="invoice_esr" selected>E-Bill</option>
                         <option value="manual">Fattura con QR code</option>
                       </select>
                       <div class="invalid-feedback">
@@ -1242,7 +1242,7 @@
                         class="form-check-input condition-checkbox"
                         type="checkbox"
                         id="heart_disease"
-                        name="conditions[]"
+                        name="Problemi cardiaci o infarto"
                         value="heart_disease"
                       />
                       <label class="form-check-label" for="heart_disease">
@@ -1255,7 +1255,7 @@
                         class="form-check-input condition-checkbox"
                         type="checkbox"
                         id="stroke"
-                        name="conditions[]"
+                        name="Ictus"
                         value="stroke"
                       />
                       <label class="form-check-label" for="stroke">
@@ -1268,7 +1268,7 @@
                         class="form-check-input condition-checkbox"
                         type="checkbox"
                         id="diabetes"
-                        name="conditions[]"
+                        name="Diabete"
                         value="diabetes"
                       />
                       <label class="form-check-label" for="diabetes">
@@ -1281,7 +1281,7 @@
                         class="form-check-input condition-checkbox"
                         type="checkbox"
                         id="cancer"
-                        name="conditions[]"
+                        name="Tumore"
                         value="cancer"
                       />
                       <label class="form-check-label" for="cancer">
@@ -1294,7 +1294,7 @@
                         class="form-check-input condition-checkbox"
                         type="checkbox"
                         id="respiratory"
-                        name="conditions[]"
+                        name="Problemi respiratori cronici (es. BPCO, enfisema)"
                         value="respiratory"
                       />
                       <label class="form-check-label" for="respiratory">
@@ -1307,7 +1307,7 @@
                         class="form-check-input condition-checkbox"
                         type="checkbox"
                         id="liver"
-                        name="conditions[]"
+                        name="Malattie del fegato"
                         value="liver"
                       />
                       <label class="form-check-label" for="liver">
@@ -1320,7 +1320,7 @@
                         class="form-check-input condition-checkbox"
                         type="checkbox"
                         id="kidney"
-                        name="conditions[]"
+                        name="Malattie renali"
                         value="kidney"
                       />
                       <label class="form-check-label" for="kidney">
@@ -1333,7 +1333,7 @@
                         class="form-check-input condition-checkbox"
                         type="checkbox"
                         id="epilepsy"
-                        name="conditions[]"
+                        name="Epilessia"
                         value="epilepsy"
                       />
                       <label class="form-check-label" for="epilepsy">
@@ -1346,7 +1346,7 @@
                         class="form-check-input condition-checkbox"
                         type="checkbox"
                         id="multiple_sclerosis"
-                        name="conditions[]"
+                        name="Sclerosi multipla"
                         value="multiple_sclerosis"
                       />
                       <label class="form-check-label" for="multiple_sclerosis">
@@ -1359,7 +1359,7 @@
                         class="form-check-input condition-checkbox"
                         type="checkbox"
                         id="mental_health"
-                        name="conditions[]"
+                        name="Problemi di salute mentale"
                         value="mental_health"
                       />
                       <label class="form-check-label" for="mental_health">
@@ -1416,14 +1416,12 @@
                         required
                       >
                         <option value="" selected disabled>Seleziona...</option>
-                        <option value="spouse">Coniuge</option>
-                        <option value="children">
-                          Figli (collettivamente)
-                        </option>
+                        <option value="legal">Coniuge</option>
+                        <option value="child">Figli (collettivamente)</option>
                         <option value="parents">
                           Genitori (collettivamente)
                         </option>
-                        <option value="other">Altro (specificare)</option>
+                        <option value="custom">Altro (specificare)</option>
                       </select>
                       <div class="invalid-feedback">
                         Seleziona il tipo di beneficiario
@@ -1649,6 +1647,7 @@
                       required
                     />
                     <label
+                      id="privacy_consent_label"
                       class="form-check-label required-field"
                       for="privacy_consent"
                     >
@@ -1670,6 +1669,7 @@
                       required
                     />
                     <label
+                      id="terms_consent_label"
                       class="form-check-label required-field"
                       for="terms_consent"
                     >
@@ -1691,6 +1691,7 @@
                       required
                     />
                     <label
+                      id="mandate_consent_label"
                       class="form-check-label required-field"
                       for="mandate_consent"
                     >
@@ -1709,7 +1710,11 @@
                       id="marketing_consent"
                       name="marketing_consent"
                     />
-                    <label class="form-check-label" for="marketing_consent">
+                    <label
+                      id="marketing_consent_label"
+                      class="form-check-label"
+                      for="marketing_consent"
+                    >
                       Acconsento a ricevere comunicazioni commerciali e
                       promozionali anche da terze parti (facoltativo).
                     </label>
@@ -1881,7 +1886,8 @@
       <!-- Fine row -->
     </div>
     <!-- Fine container -->
-    <script src="assets/api-handlerSerhii.js"></script>
+    <script src="assets/api/test-connection.js"></script>
+    <script src="assets/api/richiedi-oferta.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -3045,19 +3051,21 @@
           const response = await richiediOfferta(formData);
           console.log("Risposta backend:", response);
 
-          // if (!response.ok) { throw new Error('Errore invio dati al backend'); }
+          if (!response.status === "ok") {
+            throw new Error("Errore invio dati al backend");
+          }
           // const result = await response.json();
-          // const referenceNumber = result.referenceNumber; // Ottieni il vero ref number dal backend
+          const referenceNumber = response.id; // Ottieni il vero ref number dal backend
 
           // --- INIZIO SIMULAZIONE ---
           //  await new Promise((resolve) => setTimeout(resolve, 1500)); // Simula attesa backend
-          const referenceNumber = generateUniqueIdPlaceholder(); // Usa placeholder
+          // const referenceNumber = generateUniqueIdPlaceholder(); // Usa placeholder
           // --- FINE SIMULAZIONE ---
 
           // Salva riferimento (anche se placeholder) per recupero documenti simulato
-          // if (sessionStorageAvailable) {
-          //   sessionStorage.setItem("referenceNumber", referenceNumber);
-          // }
+          if (sessionStorageAvailable) {
+            sessionStorage.setItem("referenceNumber", referenceNumber);
+          }
           document.getElementById("reference-number").textContent =
             referenceNumber;
 
