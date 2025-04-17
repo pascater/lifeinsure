@@ -290,7 +290,7 @@
                   <div class="step-title">Beneficiari e conferma</div>
                 </div>
               </div>
-
+              <div id="alert-placeholder"></div>
               <div class="progress">
                 <div
                   class="progress-bar"
@@ -3414,11 +3414,27 @@
                 datiPreventivo.altezza || "";
               document.getElementById("weight").value =
                 datiPreventivo.peso || "";
-              // if (datiPreventivo.fumatore !== undefined) {
-              //   document.getElementById(
-              //     datiPreventivo.fumatore ? "smoker_yes" : "smoker_no"
-              //   ).checked = true;
-              // }
+              if (datiPreventivo.fumatore !== undefined) {
+                document.getElementById(
+                  datiPreventivo.fumatore ? "smoker_yes" : "smoker_no"
+                ).checked = true;
+              }
+              const alertPlaceholder =
+                document.getElementById("alert-placeholder");
+              // Pulisci alert precedente
+              if (alertPlaceholder) {
+                alertPlaceholder.className =
+                  "alert alert-info alert-dismissible fade show mb-4";
+                alertPlaceholder.innerHTML = `
+                        <strong>Dati preventivo importati:</strong> Copertura: ${
+                          datiPreventivo.copertura
+                        } ${datiPreventivo.currency || "CHF"}, 
+                        Durata: ${datiPreventivo.durata} anni, Premio: ${
+                  datiPreventivo.premio
+                } ${datiPreventivo.currency || "CHF"}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Chiudi"></button>
+                    `;
+              }
             }
           } catch (error) {
             console.error(
