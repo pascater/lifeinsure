@@ -1937,6 +1937,7 @@
     <!-- Fine container -->
     <script src="assets/api/test-connection.js"></script>
     <script src="assets/api/richiedi-oferta.js"></script>
+    <script src="assets/api/recupera-documento.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -2068,6 +2069,7 @@
          * @param {object} userData - Dati utente per personalizzazione.
          * @returns {Promise<Array>} - Promise che risolve con un array di oggetti documento.
          */
+        let pointerDocuments = [];
         async function fetchDocumentsFromAPI(referenceNumber, userData) {
           console.log(
             "Simulazione chiamata API per recuperare documenti per:",
@@ -2121,7 +2123,11 @@
          * @param {string} referenceNumber - Numero di riferimento.
          * @returns {Promise<string>} - Promise con il contenuto HTML (simulato).
          */
-        async function getDocumentContentFromAPI(documentId, referenceNumber) {
+        async function getDocumentContentFromAPI(
+          documentId,
+          referenceNumber,
+          pointer
+        ) {
           console.log(
             "Simulazione chiamata API per contenuto documento:",
             documentId,
@@ -2155,27 +2161,27 @@
          * @param {string} referenceNumber - Numero di riferimento.
          * @returns {Promise<string>} - Promise con un URL di download (simulato).
          */
-        async function downloadDocumentFromAPI(documentId, referenceNumber) {
-          console.log(
-            "Simulazione chiamata API per download documento:",
-            documentId,
-            "per ref:",
-            referenceNumber
-          );
-          // !!! IMPORTANTE: NESSUNA CHIAVE API QUI !!!
+        // async function downloadDocumentFromAPI(documentId, referenceNumber) {
+        //   console.log(
+        //     "Simulazione chiamata API per download documento:",
+        //     documentId,
+        //     "per ref:",
+        //     referenceNumber
+        //   );
+        //   // !!! IMPORTANTE: NESSUNA CHIAVE API QUI !!!
 
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              // Simula un URL di download. Potrebbe essere un link a un file statico o un blob URL generato.
-              // Per semplicit�, usiamo un URL fittizio che non funzioner� realmente.
-              const simulatedUrl = `data:text/plain;charset=utf-8,Contenuto%20simulato%20del%20documento%20${documentId}%20per%20${referenceNumber}.txt`;
-              // In alternativa, per simulare un PDF:
-              // const pdfBlob = new Blob(['Simulated PDF content for ' + documentId], { type: 'application/pdf' });
-              // const simulatedUrl = URL.createObjectURL(pdfBlob);
-              resolve(simulatedUrl);
-            }, 800); // Simula ritardo
-          });
-        }
+        //   return new Promise((resolve) => {
+        //     setTimeout(() => {
+        //       // Simula un URL di download. Potrebbe essere un link a un file statico o un blob URL generato.
+        //       // Per semplicit�, usiamo un URL fittizio che non funzioner� realmente.
+        //       const simulatedUrl = `data:text/plain;charset=utf-8,Contenuto%20simulato%20del%20documento%20${documentId}%20per%20${referenceNumber}.txt`;
+        //       // In alternativa, per simulare un PDF:
+        //       // const pdfBlob = new Blob(['Simulated PDF content for ' + documentId], { type: 'application/pdf' });
+        //       // const simulatedUrl = URL.createObjectURL(pdfBlob);
+        //       resolve(simulatedUrl);
+        //     }, 800); // Simula ritardo
+        //   });
+        // }
 
         // --- FUNZIONI GESTIONE DOCUMENTI ---
 
@@ -2217,14 +2223,14 @@
               </div>
             </div>
             <div class="document-actions">
-              <button class="btn btn-primary btn-sm view-document" data-doc-id="${
-                doc.id
-              }">
+              <button class="btn btn-primary btn-sm view-document" data-pointer=${
+                doc.pointer
+              } data-doc-id="${doc.id}">
                 <i class="bi bi-eye"></i> Visualizza
               </button>
-              <button class="btn btn-success btn-sm download-document" data-doc-id="${
-                doc.id
-              }" disabled> <!-- Inizia disabilitato -->
+              <button class="btn btn-success btn-sm download-document" data-pointer=${
+                doc.pointer
+              } data-doc-id="${doc.id}" disabled> <!-- Inizia disabilitato -->
                 <i class="bi bi-download"></i> Scarica
               </button>
             </div>
@@ -2250,19 +2256,23 @@
           document.querySelectorAll(".view-document").forEach((button) => {
             button.addEventListener("click", function () {
               const docId = this.dataset.docId;
-              showDocumentInModal(docId);
+              const pointer = this.dataset.pointer;
+              showDocumentInModal(docId, pointer);
             });
           });
 
           document.querySelectorAll(".download-document").forEach((button) => {
             button.addEventListener("click", function () {
               const docId = this.dataset.docId;
-              downloadDocument(docId);
+              const pointer = this.dataset.pointer;
+              console.log("Pointer:", pointer);
+
+              downloadDocument(docId, pointer);
             });
           });
         }
 
-        async function showDocumentInModal(docId) {
+        async function showDocumentInModal(docId, pointer) {
           const documentData = documentTypes.find((doc) => doc.id === docId);
           if (!documentData) return;
 
@@ -2287,7 +2297,8 @@
 
             const content = await getDocumentContentFromAPI(
               docId,
-              referenceNumber
+              referenceNumber,
+              pointer
             );
             documentContent.innerHTML = content;
 
@@ -2305,7 +2316,7 @@
               modalDownloadBtn
             );
             newModalDownloadBtn.addEventListener("click", function () {
-              downloadDocument(docId);
+              downloadDocument(docId, pointer);
               documentModal.hide();
             });
 
@@ -2332,7 +2343,7 @@
           }
         }
 
-        async function downloadDocument(docId) {
+        async function downloadDocument(docId, pointer, filename) {
           const documentData = documentTypes.find((doc) => doc.id === docId);
           if (!documentData || documentData.downloaded) return;
 
@@ -2354,7 +2365,9 @@
 
             const downloadData = await downloadDocumentFromAPI(
               docId,
-              referenceNumber
+              referenceNumber,
+              pointer,
+              filename
             );
 
             if (typeof downloadData === "string") {
@@ -3098,18 +3111,18 @@
 
           // !!! NEL MONDO REALE: Qui invieresti i dati del form al TUO backend !!!
           const formData = new FormData(form);
-          const response = await richiediOfferta(
+          const responseRichiediOfferta = await richiediOfferta(
             formData,
             requiresManualVerification
           );
-          console.log("Risposta backend:", response);
+          console.log("Risposta backend:", responseRichiediOfferta);
           // console.log("requiresManualVerification", requiresManualVerification);
 
-          if (!response.status === "ok") {
+          if (!responseRichiediOfferta.status === "ok") {
             throw new Error("Errore invio dati al backend");
           }
           // const result = await response.json();
-          const referenceNumber = response.id; // Ottieni il vero ref number dal backend
+          const referenceNumber = responseRichiediOfferta.id; // Ottieni il vero ref number dal backend
 
           // --- INIZIO SIMULAZIONE ---
           //  await new Promise((resolve) => setTimeout(resolve, 1500)); // Simula attesa backend
@@ -3158,21 +3171,33 @@
                   document.getElementById("firstname")
                     .value /* ... altri dati ... */,
               };
-              const apiDocuments = await fetchDocumentsFromAPI(
-                referenceNumber,
-                userData
-              );
+              // const apiDocuments = await fetchDocumentsFromAPI(
+              //   referenceNumber,
+              //   userData
+              // );
 
               // Popola e inizializza stato documenti
-              documentTypes = apiDocuments.map((doc) => ({
-                id: doc.id,
-                title: doc.title,
-                description: doc.description,
-                url: doc.url, // URL per download diretto (simulato)
-                contentUrl: doc.contentUrl, // URL per contenuto modal (simulato)
-                viewed: false,
-                downloaded: false,
-              }));
+              // documentTypes = apiDocuments.map((doc) => ({
+              //   id: doc.id,
+              //   title: doc.title,
+              //   description: doc.description,
+              //   url: doc.url, // URL per download diretto (simulato)
+              //   contentUrl: doc.contentUrl, // URL per contenuto modal (simulato)
+              //   viewed: false,
+              //   downloaded: false,
+              // }));
+              documentTypes = responseRichiediOfferta.document_pointers.map(
+                (doc) => ({
+                  id: doc.document_id,
+                  title: doc.description,
+                  description: doc.description,
+                  pointer: doc.pointer,
+                  url: doc.url || "", // URL per download diretto (simulato)
+                  contentUrl: doc.contentUrl || "", // URL per contenuto modal (simulato)
+                  viewed: false,
+                  downloaded: false,
+                })
+              );
               totalDocuments = documentTypes.length;
               documentsViewed = 0;
               documentsDownloaded = 0;
@@ -3428,7 +3453,7 @@
                 alertPlaceholder.innerHTML = `
                         <strong>Dati preventivo importati:</strong> Copertura: ${
                           datiPreventivo.copertura
-                        } ${datiPreventivo.currency || "CHF"}, 
+                        } ${datiPreventivo.currency || "CHF"},
                         Durata: ${datiPreventivo.durata} anni, Premio: ${
                   datiPreventivo.premio
                 } ${datiPreventivo.currency || "CHF"}
