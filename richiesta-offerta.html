@@ -794,7 +794,10 @@
                       class="conditional-field d-none mt-2"
                     >
                       <fieldset class="mb-2">
-                        <legend class="form-label required-field">
+                        <legend
+                          class="form-label required-field"
+                          id="medication_resolved_legend"
+                        >
                           La malattia sottostante &egrave; guarita senza
                           conseguenze da almeno 2 anni?
                         </legend>
@@ -924,7 +927,10 @@
                       class="conditional-field d-none mt-2"
                     >
                       <fieldset>
-                        <legend class="form-label required-field">
+                        <legend
+                          class="form-label required-field"
+                          id="hospitalization_resolved_legend"
+                        >
                           La malattia sottostante &egrave; guarita senza
                           conseguenze da almeno 2 anni?
                         </legend>
@@ -1181,7 +1187,10 @@
                   </fieldset>
 
                   <fieldset class="mb-3">
-                    <legend class="form-label required-field">
+                    <legend
+                      class="form-label required-field"
+                      id="work_absence_legend"
+                    >
                       Negli ultimi 5 anni, hai avuto assenze dal lavoro di oltre
                       un mese per malattia?
                     </legend>
@@ -1218,7 +1227,10 @@
                       class="conditional-field d-none mt-2"
                     >
                       <fieldset>
-                        <legend class="form-label required-field">
+                        <legend
+                          class="form-label required-field"
+                          id="work_absence_resolved_legend"
+                        >
                           La condizione &egrave; risolta da almeno 2 anni senza
                           trattamenti?
                         </legend>
@@ -1401,6 +1413,7 @@
                     >
                       <label
                         for="condition_notes"
+                        id="condition_notes_label"
                         class="form-label required-field"
                         >Fornisci dettagli sulle condizioni selezionate:</label
                       >
@@ -1488,6 +1501,7 @@
                               class="form-control"
                               id="beneficiary_firstname_0"
                               name="beneficiary_firstname_0"
+                              data-beneficiary-firstname
                             />
                             <div class="invalid-feedback">
                               Inserisci il nome del beneficiario.
@@ -1504,6 +1518,7 @@
                               class="form-control"
                               id="beneficiary_lastname_0"
                               name="beneficiary_lastname_0"
+                              data-beneficiary-lastname
                             />
                             <div class="invalid-feedback">
                               Inserisci il cognome del beneficiario.
@@ -1523,6 +1538,7 @@
                               class="form-control"
                               id="beneficiary_relation_0"
                               name="beneficiary_relation_0"
+                              data-beneficiary-relation
                             />
                             <!-- Non obbligatorio di default, ma potrebbe esserlo a seconda delle regole -->
                           </div>
@@ -1541,6 +1557,7 @@
                               max="100"
                               value="100"
                               required
+                              data-beneficiary-percentage
                             />
                             <div class="invalid-feedback">
                               Inserisci una percentuale valida (1-100).
@@ -1580,6 +1597,7 @@
                               id="beneficiary_firstname_{INDEX}"
                               name="beneficiary_firstname_{INDEX}"
                               required
+                              data-beneficiary-firstname
                             />
                             <div class="invalid-feedback">
                               Inserisci il nome del beneficiario.
@@ -1597,6 +1615,7 @@
                               id="beneficiary_lastname_{INDEX}"
                               name="beneficiary_lastname_{INDEX}"
                               required
+                              data-beneficiary-lastname
                             />
                             <div class="invalid-feedback">
                               Inserisci il cognome del beneficiario.
@@ -1616,6 +1635,7 @@
                               class="form-control"
                               id="beneficiary_relation_{INDEX}"
                               name="beneficiary_relation_{INDEX}"
+                              data-beneficiary-relation
                             />
                           </div>
                           <div class="col-md-4">
@@ -1632,6 +1652,7 @@
                               min="1"
                               max="100"
                               required
+                              data-beneficiary-percentage
                             />
                             <div class="invalid-feedback">
                               Inserisci una percentuale valida (1-100).
@@ -2683,7 +2704,8 @@
 
           // Validazione specifica per beneficiari step 3
           if (stepNumber === 3) {
-            if (beneficiaryTypeSelect.value === "other") {
+            if (beneficiaryTypeSelect.value === "custom") {
+              //custom
               const totalPercentage = calculateTotalPercentage();
               if (totalPercentage !== 100) {
                 percentageInfoAlert.classList.remove(
@@ -2817,7 +2839,7 @@
         }
 
         function updateTotalPercentageDisplay() {
-          if (beneficiaryTypeSelect.value !== "other") return; // Aggiorna solo se la sezione � attiva
+          if (beneficiaryTypeSelect.value !== "custom") return; // Aggiorna solo se la sezione � attiva
 
           const total = calculateTotalPercentage();
           totalPercentageDisplay.textContent = total;
@@ -3076,8 +3098,12 @@
 
           // !!! NEL MONDO REALE: Qui invieresti i dati del form al TUO backend !!!
           const formData = new FormData(form);
-          const response = await richiediOfferta(formData);
+          const response = await richiediOfferta(
+            formData,
+            requiresManualVerification
+          );
           console.log("Risposta backend:", response);
+          // console.log("requiresManualVerification", requiresManualVerification);
 
           if (!response.status === "ok") {
             throw new Error("Errore invio dati al backend");
@@ -3252,7 +3278,7 @@
 
         // Gestione beneficiari
         beneficiaryTypeSelect?.addEventListener("change", function () {
-          const isOther = this.value === "other";
+          const isOther = this.value === "custom";
           otherBeneficiarySection.classList.toggle("d-none", !isOther);
           // Rendi obbligatori i campi del primo beneficiario solo se 'other' � selezionato
           const firstBeneficiaryInputs = beneficiaryList
@@ -3388,11 +3414,11 @@
                 datiPreventivo.altezza || "";
               document.getElementById("weight").value =
                 datiPreventivo.peso || "";
-              if (datiPreventivo.fumatore !== undefined) {
-                document.getElementById(
-                  datiPreventivo.fumatore ? "smoker_yes" : "smoker_no"
-                ).checked = true;
-              }
+              // if (datiPreventivo.fumatore !== undefined) {
+              //   document.getElementById(
+              //     datiPreventivo.fumatore ? "smoker_yes" : "smoker_no"
+              //   ).checked = true;
+              // }
             }
           } catch (error) {
             console.error(

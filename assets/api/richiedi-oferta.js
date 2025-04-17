@@ -24,90 +24,113 @@ function getFormData(form) {
     });
   }
 
-  if (document.getElementById("existing_insurance_yes").checked) {
+  if (document.getElementById("existing_insurance_yes")) {
     addHealthQuestion(
-      document.getElementById("existing_insurance_label").textContent,
-      true,
+      document.getElementById("existing_insurance_legend").textContent,
+      document.getElementById("existing_insurance_yes").checked,
       `Copertura totale esistente (CHF): ${
         document.getElementById("existing_coverage").value || "non specificato"
       }`
     );
   }
 
-  if (document.getElementById("smoker_yes").checked) {
+  if (document.getElementById("smoker_yes")) {
     addHealthQuestion(
       document.getElementById("smoker_legend").textContent,
-      true
+      document.getElementById("smoker_yes").checked
     );
   }
 
-  if (document.getElementById("medication_yes").checked) {
+  if (document.getElementById("medication_yes")) {
     addHealthQuestion(
       document.getElementById("medication_legend").textContent,
-      true
+      document.getElementById("medication_yes").checked
     );
 
-    // addHealthQuestion(
-    //   document.getElementById("medication_resolved_label").textContent,
-    //   document.getElementById("medication_resolved_yes").checked ? true : false,
-    //   document.getElementById("medication_description").value || ""
-    // );
+    addHealthQuestion(
+      document.getElementById("medication_resolved_legend").textContent,
+      document.getElementById("medication_resolved_yes").checked,
+      `Riguardo alla domanda: ${
+        document.getElementById("medication_legend").textContent
+      }. Comment: ${
+        document.getElementById("medication_description").value || ""
+      }`
+    );
   }
 
-  if (document.getElementById("hypertension_yes").checked) {
+  if (document.getElementById("hypertension_yes")) {
     addHealthQuestion(
       document.getElementById("hypertension_legend").textContent,
-      true
+      document.getElementById("hypertension_yes").checked
     );
   }
 
-  if (document.getElementById("hospitalization_yes").checked) {
+  if (document.getElementById("hospitalization_yes")) {
     addHealthQuestion(
       document.getElementById("hospitalization_legend").textContent,
-      true
+      document.getElementById("hospitalization_yes").checked
     );
-    // addHealthQuestion(
-    //   document.getElementById("hospitalization_resolved_yes_label").textContent,
-    //   document.getElementById("hospitalization_resolved_yes").checked
-    // );
+    addHealthQuestion(
+      document.getElementById("hospitalization_resolved_legend").textContent,
+      document.getElementById("hospitalization_resolved_yes").checked,
+      `Riguardo alla domanda: ${
+        document.getElementById("hospitalization_legend").textContent
+      }`
+    );
   }
 
-  if (document.getElementById("planned_exam_yes").checked) {
+  if (document.getElementById("planned_exam_yes")) {
     addHealthQuestion(
       document.getElementById("planned_exam_legend").textContent,
-      true
+      document.getElementById("planned_exam_yes").checked
     );
   }
 
-  if (document.getElementById("drugs_yes").checked) {
+  if (document.getElementById("drugs_yes")) {
     addHealthQuestion(
       document.getElementById("drugs_legend").textContent,
-      true
+      document.getElementById("drugs_yes").checked
     );
   }
 
-  if (document.getElementById("hiv_yes").checked) {
-    addHealthQuestion(document.getElementById("hiv_legend").textContent, true);
+  if (document.getElementById("hiv_yes")) {
+    addHealthQuestion(
+      document.getElementById("hiv_legend").textContent,
+      document.getElementById("hiv_yes").checked
+    );
   }
 
-  if (document.getElementById("foreign_stay_yes").checked) {
+  if (document.getElementById("foreign_stay_yes")) {
     addHealthQuestion(
       document.getElementById("foreign_stay_legend").textContent,
-      true
+      document.getElementById("foreign_stay_yes").checked
     );
   }
 
-  if (document.getElementById("dangerous_hobby_yes").checked) {
+  if (document.getElementById("dangerous_hobby_yes")) {
     addHealthQuestion(
       document.getElementById("dangerous_hobby_legend").textContent,
-      true
+      document.getElementById("dangerous_hobby_yes").checked
     );
   }
 
-  if (document.getElementById("pension_yes").checked) {
+  if (document.getElementById("pension_yes")) {
     addHealthQuestion(
       document.getElementById("pension_legend").textContent,
-      true
+      document.getElementById("pension_yes").checked
+    );
+  }
+  if (document.getElementById("work_absence_yes")) {
+    addHealthQuestion(
+      document.getElementById("work_absence_legend").textContent,
+      document.getElementById("work_absence_yes").checked
+    );
+    addHealthQuestion(
+      document.getElementById("work_absence_resolved_legend").textContent,
+      document.getElementById("work_absence_resolved_yes").checked,
+      `Riguardo alla domanda: ${
+        document.getElementById("work_absence_legend").textContent
+      } `
     );
   }
 
@@ -134,12 +157,12 @@ function getFormData(form) {
       comment: "",
     },
   ];
-  // values["durata-custom"] = document.getElementById("durata-custom").value;
+
   console.log("form values>>", values);
   return values;
 }
 
-async function richiediOfferta(formOfertaData) {
+async function richiediOfferta(formOfertaData, requiresManualVerification) {
   const dati = getFormData(formOfertaData);
   try {
     const datiOfferta = {
@@ -151,13 +174,13 @@ async function richiediOfferta(formOfertaData) {
         zip: dati.zip,
         city: dati.city,
         country: "CH",
-        // nationality: dati.nationality || "CH",
+        nationality: dati.nationality || "CH",
         email: dati.email,
         birthdate: Number(dati.birthdate.replace(/-/g, "")),
         phone: dati.phone || "",
         profession: dati.profession,
         gender: dati.gender,
-        language: dati.nationality || "en-gb",
+        // language: dati.nationality || "en-gb",
       },
       beneficiaries: {
         type: dati.beneficiary_type,
@@ -188,6 +211,18 @@ async function richiediOfferta(formOfertaData) {
       },
       payment_type: dati.payment_type,
       "health questions": [
+        {
+          "single health question": {
+            type: "health",
+            text:
+              document.getElementById("condition_notes_label").textContent ||
+              "",
+            comment: document.getElementById("condition_notes").value || "",
+            answer: document.getElementById("condition_notes").value
+              ? true
+              : false,
+          },
+        },
         ...dati.health_questions.map((item) => {
           return {
             "single health question": {
@@ -229,17 +264,42 @@ async function richiediOfferta(formOfertaData) {
     };
 
     if (dati.beneficiary_type === "custom") {
-      datiOfferta.beneficiaries.individual_beneficiaries = [
-        {
+      const beneficiaries = Array.from(
+        document.querySelectorAll(".beneficiary-container")
+      );
+      console.log(beneficiaries);
+
+      beneficiaries.map((item) => {
+        const firstname = item.querySelector(
+          "[data-beneficiary-firstname]"
+        ).value;
+        const lastname = item.querySelector(
+          "[data-beneficiary-lastname]"
+        ).value;
+        const relation = item.querySelector(
+          "[data-beneficiary-relation]"
+        ).value;
+        const percentage = item.querySelector(
+          "[data-beneficiary-percentage]"
+        ).value;
+
+        console.log("benef", {
+          firstname,
+          lastname,
+          relation,
+          percentage,
+        });
+
+        datiOfferta.beneficiaries.individual_beneficiaries.push({
           individual_type: "person",
-          percentage: 0.2,
-          insured_relationship: dati.beneficiary_relation,
+          percentage: parseInt(percentage) / 100,
+          insured_relationship: relation,
           beneficiary_person: {
-            beneficiary_firstname: dati.beneficiary_firstname,
-            beneficiary_lastname: dati.beneficiary_lastname,
+            beneficiary_firstname: firstname,
+            beneficiary_lastname: lastname,
           },
-        },
-      ];
+        });
+      });
     }
 
     console.log("datiOfferta>>", datiOfferta);
@@ -261,7 +321,8 @@ async function richiediOfferta(formOfertaData) {
 
     console.log("conditionNotes>>", conditionNotes);
 
-    if (risposta.status === 200) {
+    if (risposta.status === 200 && !requiresManualVerification) {
+      sessionStorage.removeItem("datiPreventivo");
       const sendDocument = await fetch(`${API_BASE_URL}/send_documents`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
