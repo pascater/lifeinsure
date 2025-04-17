@@ -509,7 +509,7 @@
               '<div class="text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Calcolo in corso...</span></div><p class="mt-2">Calcolo del premio in corso...</p></div>';
 
             // Raccogli dati dal form
-            const dati = {
+            let dati = {
               dataNascita: document.getElementById("data-nascita").value,
               fumatore: document.getElementById("fumatore").checked,
               durata_select: document.getElementById("durata-select").value,
@@ -549,8 +549,8 @@
                                   dati.copertura
                                 ).toLocaleString()} ${currency} | Durata: ${
                   dati.durata_select === "custom"
-                    ? dati.durata_custom
-                    : dati.durata_select
+                    ? (dati["durata"] = dati.durata_custom)
+                    : (dati["durata"] = dati.durata_select)
                 } anni</p>
                                 <button id="btn-richiedi-offerta" class="btn btn-success">Richiedi Polizza >> </button>
                             </div>
