@@ -2123,11 +2123,7 @@
          * @param {string} referenceNumber - Numero di riferimento.
          * @returns {Promise<string>} - Promise con il contenuto HTML (simulato).
          */
-        async function getDocumentContentFromAPI(
-          documentId,
-          referenceNumber,
-          pointer
-        ) {
+        async function getDocumentContentFromAPI(documentId, referenceNumber) {
           console.log(
             "Simulazione chiamata API per contenuto documento:",
             documentId,
@@ -2135,23 +2131,24 @@
             referenceNumber
           );
           // !!! IMPORTANTE: NESSUNA CHIAVE API QUI !!!
-
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              // Simula contenuto HTML diverso per ogni documento
-              let simulatedContent = `<p>Contenuto simulato per il documento <strong>${documentId}</strong>.</p>`;
-              simulatedContent += `<p>Numero di riferimento: ${referenceNumber}</p>`;
-              simulatedContent += `<p>Questo � un testo segnaposto generato dalla simulazione frontend. In un'applicazione reale, qui verrebbe visualizzato il contenuto effettivo del documento recuperato tramite il backend dall'API Squarelife.</p>`;
-              if (documentId === "summary") {
-                simulatedContent +=
-                  "<h4>Dettagli Riepilogo (Simulati)</h4><ul><li>Nome: Mario Rossi</li><li>Copertura: 100'000 CHF</li><li>Durata: 10 anni</li></ul>";
-              } else if (documentId === "terms") {
-                simulatedContent +=
-                  "<h4>Estratto Termini (Simulati)</h4><p>Art. 1: Definizioni...</p><p>Art. 2: Obblighi dell'assicurato...</p>";
-              }
-              resolve(simulatedContent);
-            }, 500); // Simula ritardo minore per il contenuto
-          });
+          const url = await loadDocumentFromAPI(documentId);
+          return `<embed src="${url}" type="application/pdf" width="100%" height="80vh" />`;
+          // new Promise((resolve) => {
+          //   setTimeout(() => {
+          //     // Simula contenuto HTML diverso per ogni documento
+          //     let simulatedContent = `<p>Contenuto simulato per il documento <strong>${documentId}</strong>.</p>`;
+          //     simulatedContent += `<p>Numero di riferimento: ${referenceNumber}</p>`;
+          //     simulatedContent += `<p>Questo � un testo segnaposto generato dalla simulazione frontend. In un'applicazione reale, qui verrebbe visualizzato il contenuto effettivo del documento recuperato tramite il backend dall'API Squarelife.</p>`;
+          //     if (documentId === "summary") {
+          //       simulatedContent +=
+          //         "<h4>Dettagli Riepilogo (Simulati)</h4><ul><li>Nome: Mario Rossi</li><li>Copertura: 100'000 CHF</li><li>Durata: 10 anni</li></ul>";
+          //     } else if (documentId === "terms") {
+          //       simulatedContent +=
+          //         "<h4>Estratto Termini (Simulati)</h4><p>Art. 1: Definizioni...</p><p>Art. 2: Obblighi dell'assicurato...</p>";
+          //     }
+          //     resolve(simulatedContent);
+          //   }, 500); // Simula ritardo minore per il contenuto
+          // });
         }
 
         /**
@@ -2161,27 +2158,29 @@
          * @param {string} referenceNumber - Numero di riferimento.
          * @returns {Promise<string>} - Promise con un URL di download (simulato).
          */
-        // async function downloadDocumentFromAPI(documentId, referenceNumber) {
-        //   console.log(
-        //     "Simulazione chiamata API per download documento:",
-        //     documentId,
-        //     "per ref:",
-        //     referenceNumber
-        //   );
-        //   // !!! IMPORTANTE: NESSUNA CHIAVE API QUI !!!
+        async function downloadDocumentFromAPI(documentId, referenceNumber) {
+          console.log(
+            "Simulazione chiamata API per download documento:",
+            documentId,
+            "per ref:",
+            referenceNumber
+          );
+          // !!! IMPORTANTE: NESSUNA CHIAVE API QUI !!!
 
-        //   return new Promise((resolve) => {
-        //     setTimeout(() => {
-        //       // Simula un URL di download. Potrebbe essere un link a un file statico o un blob URL generato.
-        //       // Per semplicit�, usiamo un URL fittizio che non funzioner� realmente.
-        //       const simulatedUrl = `data:text/plain;charset=utf-8,Contenuto%20simulato%20del%20documento%20${documentId}%20per%20${referenceNumber}.txt`;
-        //       // In alternativa, per simulare un PDF:
-        //       // const pdfBlob = new Blob(['Simulated PDF content for ' + documentId], { type: 'application/pdf' });
-        //       // const simulatedUrl = URL.createObjectURL(pdfBlob);
-        //       resolve(simulatedUrl);
-        //     }, 800); // Simula ritardo
-        //   });
-        // }
+          const simulatedUrl = loadDocumentFromAPI(documentId);
+          // return new Promise((resolve) => {
+          //   setTimeout(() => {
+          //     // Simula un URL di download. Potrebbe essere un link a un file statico o un blob URL generato.
+          //     // Per semplicit�, usiamo un URL fittizio che non funzioner� realmente.
+          //     const simulatedUrl = `data:text/plain;charset=utf-8,Contenuto%20simulato%20del%20documento%20${documentId}%20per%20${referenceNumber}.txt`;
+          //     // In alternativa, per simulare un PDF:
+          //     // const pdfBlob = new Blob(['Simulated PDF content for ' + documentId], { type: 'application/pdf' });
+          //     // const simulatedUrl = URL.createObjectURL(pdfBlob);
+          //     resolve(simulatedUrl);
+          //   }, 800); // Simula ritardo
+          // });
+          return simulatedUrl;
+        }
 
         // --- FUNZIONI GESTIONE DOCUMENTI ---
 
@@ -2223,14 +2222,14 @@
               </div>
             </div>
             <div class="document-actions">
-              <button class="btn btn-primary btn-sm view-document" data-pointer=${
-                doc.pointer
-              } data-doc-id="${doc.id}">
+              <button class="btn btn-primary btn-sm view-document" data-doc-id="${
+                doc.id
+              }">
                 <i class="bi bi-eye"></i> Visualizza
               </button>
-              <button class="btn btn-success btn-sm download-document" data-pointer=${
-                doc.pointer
-              } data-doc-id="${doc.id}" disabled> <!-- Inizia disabilitato -->
+              <button class="btn btn-success btn-sm download-document" data-doc-id="${
+                doc.id
+              }" disabled> <!-- Inizia disabilitato -->
                 <i class="bi bi-download"></i> Scarica
               </button>
             </div>
@@ -2256,23 +2255,19 @@
           document.querySelectorAll(".view-document").forEach((button) => {
             button.addEventListener("click", function () {
               const docId = this.dataset.docId;
-              const pointer = this.dataset.pointer;
-              showDocumentInModal(docId, pointer);
+              showDocumentInModal(docId);
             });
           });
 
           document.querySelectorAll(".download-document").forEach((button) => {
             button.addEventListener("click", function () {
               const docId = this.dataset.docId;
-              const pointer = this.dataset.pointer;
-              console.log("Pointer:", pointer);
-
-              downloadDocument(docId, pointer);
+              downloadDocument(docId);
             });
           });
         }
 
-        async function showDocumentInModal(docId, pointer) {
+        async function showDocumentInModal(docId) {
           const documentData = documentTypes.find((doc) => doc.id === docId);
           if (!documentData) return;
 
@@ -2297,8 +2292,7 @@
 
             const content = await getDocumentContentFromAPI(
               docId,
-              referenceNumber,
-              pointer
+              referenceNumber
             );
             documentContent.innerHTML = content;
 
@@ -2310,13 +2304,29 @@
               : '<i class="bi bi-download"></i> Scarica';
 
             // Rimuovi e riaggiungi listener per evitare duplicati
-            const newModalDownloadBtn = modalDownloadBtn.cloneNode(true);
-            modalDownloadBtn.parentNode.replaceChild(
-              newModalDownloadBtn,
-              modalDownloadBtn
-            );
-            newModalDownloadBtn.addEventListener("click", function () {
-              downloadDocument(docId, pointer);
+            // const newModalDownloadBtn = modalDownloadBtn.cloneNode(true);
+            // console.log("Nuovo pulsante download:", newModalDownloadBtn);
+            // console.log("Vecchio pulsante download:", modalDownloadBtn);
+
+            // modalDownloadBtn.parentNode.replaceChild(
+            //   newModalDownloadBtn,
+            //   modalDownloadBtn
+            // );
+            // newModalDownloadBtn.addEventListener("click", function () {
+            //   downloadDocument(docId);
+            //   documentModal.hide();
+            // });
+            modalDownloadBtn.replaceWith(modalDownloadBtn.cloneNode(true));
+            const refreshedModalDownloadBtn =
+              document.getElementById("modal-download-btn");
+            refreshedModalDownloadBtn.dataset.docId = docId;
+            refreshedModalDownloadBtn.disabled = documentData.downloaded;
+            refreshedModalDownloadBtn.innerHTML = documentData.downloaded
+              ? '<i class="bi bi-check"></i> Già scaricato'
+              : '<i class="bi bi-download"></i> Scarica';
+
+            refreshedModalDownloadBtn.addEventListener("click", function () {
+              downloadDocument(docId);
               documentModal.hide();
             });
 
@@ -2343,7 +2353,7 @@
           }
         }
 
-        async function downloadDocument(docId, pointer, filename) {
+        async function downloadDocument(docId) {
           const documentData = documentTypes.find((doc) => doc.id === docId);
           if (!documentData || documentData.downloaded) return;
 
@@ -2365,9 +2375,7 @@
 
             const downloadData = await downloadDocumentFromAPI(
               docId,
-              referenceNumber,
-              pointer,
-              filename
+              referenceNumber
             );
 
             if (typeof downloadData === "string") {
@@ -2377,7 +2385,7 @@
               link.download = `${(documentData.title || docId).replace(
                 /\s+/g,
                 "_"
-              )}.txt`; // o .pdf se si simula pdf
+              )}.pdf`; // o .pdf se si simula pdf
               // Per blob URL funzionerebbe meglio: link.download = ...
               document.body.appendChild(link);
               link.click();
@@ -2485,48 +2493,75 @@
               '<i class="bi bi-check-circle-fill text-success"></i> <span class="highlight-text">Tutti i documenti sono stati scaricati</span>. Puoi procedere.';
           }
         }
-
+        proceedButton.addEventListener("click", handleProceedClick);
         function checkAllDocumentsDownloaded() {
           if (totalDocuments > 0 && documentsDownloaded === totalDocuments) {
+            proceedButton.disabled = false;
             proceedButton.classList.remove("disabled");
-            proceedButton.disabled = false; // Rimuovi attributo disabled
             proceedButton.classList.add("pulse-animation");
             proceedButton.innerHTML =
               '<i class="bi bi-arrow-right-circle"></i> Procedi con l\'emissione della polizza';
-
-            // Aggiungi event listener (rimuovendo prima eventuali vecchi)
-            const newProceedButton = proceedButton.cloneNode(true);
-            proceedButton.parentNode.replaceChild(
-              newProceedButton,
-              proceedButton
-            );
-            newProceedButton.addEventListener("click", function () {
-              // Salva dati necessari per il prossimo step, se serve
-              if (sessionStorageAvailable) {
-                const refNum = sessionStorage.getItem("referenceNumber");
-                sessionStorage.setItem(
-                  "finalOfferData",
-                  JSON.stringify({ reference: refNum })
-                );
-              }
-              // Reindirizza alla pagina successiva (assicurati che esista)
-              window.location.href = "emissione-polizza.html"; // Assicurati che questa pagina esista!
-            });
           } else {
-            // Assicurati che sia disabilitato se non tutti sono scaricati
-            proceedButton.classList.add("disabled");
             proceedButton.disabled = true;
+            proceedButton.classList.add("disabled");
             proceedButton.classList.remove("pulse-animation");
             proceedButton.innerHTML =
               '<i class="bi bi-lock-fill proceed-lock"></i> Procedi con l\'emissione della polizza';
-            // Rimuovi listener se presente
-            const newProceedButton = proceedButton.cloneNode(true);
-            proceedButton.parentNode.replaceChild(
-              newProceedButton,
-              proceedButton
-            );
           }
         }
+        function handleProceedClick() {
+          if (proceedButton.disabled) return;
+
+          if (sessionStorageAvailable) {
+            const refNum = sessionStorage.getItem("referenceNumber");
+            sessionStorage.setItem(
+              "finalOfferData",
+              JSON.stringify({ reference: refNum })
+            );
+          }
+          window.location.href = "emissione-polizza.html";
+        }
+        // function checkAllDocumentsDownloaded() {
+        //   if (totalDocuments > 0 && documentsDownloaded === totalDocuments) {
+        //     proceedButton.classList.remove("disabled");
+        //     proceedButton.disabled = false; // Rimuovi attributo disabled
+        //     proceedButton.classList.add("pulse-animation");
+        //     proceedButton.innerHTML =
+        //       '<i class="bi bi-arrow-right-circle"></i> Procedi con l\'emissione della polizza';
+
+        //     // Aggiungi event listener (rimuovendo prima eventuali vecchi)
+        //     const newProceedButton = proceedButton.cloneNode(true);
+        //     proceedButton.parentNode.replaceChild(
+        //       newProceedButton,
+        //       proceedButton
+        //     );
+        //     newProceedButton.addEventListener("click", function () {
+        //       // Salva dati necessari per il prossimo step, se serve
+        //       if (sessionStorageAvailable) {
+        //         const refNum = sessionStorage.getItem("referenceNumber");
+        //         sessionStorage.setItem(
+        //           "finalOfferData",
+        //           JSON.stringify({ reference: refNum })
+        //         );
+        //       }
+        //       // Reindirizza alla pagina successiva (assicurati che esista)
+        //       window.location.href = "emissione-polizza.html"; // Assicurati che questa pagina esista!
+        //     });
+        //   } else {
+        //     // Assicurati che sia disabilitato se non tutti sono scaricati
+        //     proceedButton.classList.add("disabled");
+        //     proceedButton.disabled = true;
+        //     proceedButton.classList.remove("pulse-animation");
+        //     proceedButton.innerHTML =
+        //       '<i class="bi bi-lock-fill proceed-lock"></i> Procedi con l\'emissione della polizza';
+        //     // Rimuovi listener se presente
+        //     const newProceedButton = proceedButton.cloneNode(true);
+        //     proceedButton.parentNode.replaceChild(
+        //       newProceedButton,
+        //       proceedButton
+        //     );
+        //   }
+        // }
 
         function saveDocumentState() {
           if (!sessionStorageAvailable) return;
@@ -3188,10 +3223,9 @@
               // }));
               documentTypes = responseRichiediOfferta.document_pointers.map(
                 (doc) => ({
-                  id: doc.document_id,
+                  id: doc.pointer,
                   title: doc.description,
                   description: doc.description,
-                  pointer: doc.pointer,
                   url: doc.url || "", // URL per download diretto (simulato)
                   contentUrl: doc.contentUrl || "", // URL per contenuto modal (simulato)
                   viewed: false,
