@@ -1092,7 +1092,8 @@
         </div>
       </div>
       <!-- Fine lifensure-emission-module -->
-
+      <script src="assets/api/test-connection.js"></script>
+      <script src="assets/api/emetti-polizza.js"></script>
       <script>
         // Scope isolato per evitare conflitti
         (function () {
@@ -1467,9 +1468,8 @@
           /** Popola il riepilogo offerta nello Step 2 */
           function populateOfferSummary() {
             const datiUtente = getSessionData("datiUtente");
-            const datiPreventivo = getSessionData("datiPreventivo");
 
-            if (!datiUtente || !datiPreventivo || !datiVerificaOfferta) {
+            if (!datiUtente || !datiVerificaOfferta) {
               riepilogoContent.innerHTML =
                 '<p style="color: red;">Errore: Dati necessari per il riepilogo non trovati.</p>';
               debugInfo("Dati mancanti per populateOfferSummary");
@@ -1480,14 +1480,11 @@
               const nomeCompleto = `${datiUtente.firstname || ""} ${
                 datiUtente.lastname || ""
               }`.trim();
-              const durata =
-                datiPreventivo.durata_select === "custom"
-                  ? datiPreventivo.durata_custom
-                  : datiPreventivo.durata_select;
+              const durata = datiUtente.durata;
               const copertura = parseFloat(
                 datiUtente.coverage || 0
               ).toLocaleString("it-CH"); // Formatta come valuta CH
-              const premio = parseFloat(datiPreventivo.premio || 0).toFixed(2);
+              const premio = parseFloat(datiUtente.premio || 0).toFixed(2);
               const modalita =
                 datiUtente.mode === "annual" ? "Annuale" : "Mensile";
 
@@ -1526,7 +1523,7 @@
 
           /** Popola il riepilogo pagamento nello Step 3 */
           function populatePaymentSummary() {
-            const datiPreventivo = getSessionData("datiPreventivo");
+            const datiPreventivo = getSessionData("datiUtente");
 
             if (!datiPreventivo || !datiVerificaOfferta) {
               riepilogoPagamentoDiv.innerHTML =
@@ -1631,10 +1628,8 @@
             setButtonLoading(verificaBtn, true, "Verifica in corso...");
 
             try {
-              // !!! CHIAMATA API REALE (sostituire simulazione) !!!
-              // const response = await emettiPolizza(offertaIdInput.value, emailConfermaInput.value);
               // Dati simulati per test
-              const response = await simulateApi_emettiPolizza(
+              const response = await emettiPolizza(
                 offertaIdInput.value,
                 emailConfermaInput.value
               );
@@ -1748,17 +1743,24 @@
             setButtonLoading(downloadButton, true, "..."); // Spinner piccolo
 
             try {
-              // !!! CHIAMATA API REALE (sostituire simulazione) !!!
-              // const fileData = await recuperaDocumento(pointer); // Dovrebbe restituire Blob o URL
-              const fileData = await simulateApi_recuperaDocumento(pointer);
-              // !!! FINE CHIAMATA API REALE !!!
+              //  const fileData = await loadDocumentFromAPI(pointer); // Dovrebbe restituire Blob o URL
+              const response = await fetch(
+                `${API_BASE_URL}/document_pointer/${pointer}`
+              );
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              const fileData = await response.blob();
 
               if (fileData instanceof Blob) {
                 const url = window.URL.createObjectURL(fileData);
                 const a = document.createElement("a");
                 a.style.display = "none";
                 a.href = url;
-                a.download = `${description.replace(/[^a-z0-9]/gi, "_")}.pdf`; // Nome file pulito
+                a.download = `${(description || "Documento").replace(
+                  /[^a-z0-9]/gi,
+                  "_"
+                )}.pdf`; // Nome file pulito
                 document.body.appendChild(a);
                 a.click();
                 window.URL.revokeObjectURL(url);
@@ -1795,53 +1797,53 @@
           // --- FUNZIONI API SIMULATE (per test senza backend) ---
 
           /** @param {string} offertaId @param {string} email */
-          async function simulateApi_emettiPolizza(offertaId, email) {
-            debugInfo(
-              `SIMULAZIONE: Chiamata emettiPolizza con ID: ${offertaId}, Email: ${email}`
-            );
-            await new Promise((resolve) => setTimeout(resolve, 1500)); // Simula attesa
+          // async function simulateApi_emettiPolizza(offertaId, email) {
+          //   debugInfo(
+          //     `SIMULAZIONE: Chiamata emettiPolizza con ID: ${offertaId}, Email: ${email}`
+          //   );
+          //   await new Promise((resolve) => setTimeout(resolve, 1500)); // Simula attesa
 
-            // Simula successo o errore
-            if (
-              offertaId &&
-              email &&
-              offertaId.startsWith("REQ-") &&
-              email.includes("@")
-            ) {
-              // Simula successo
-              const policyNum =
-                "SLP-" + Math.random().toString(10).substring(2, 8);
-              return {
-                status: "ok",
-                policy_number: policyNum,
-                document_pointers: [
-                  {
-                    description: "Certificato di Polizza",
-                    document_id: "DOC001",
-                    pointer: "PTR_" + policyNum + "_CERT",
-                  },
-                  {
-                    description: "Condizioni Generali",
-                    document_id: "DOC002",
-                    pointer: "PTR_CGA_V1",
-                  },
-                  {
-                    description: "Informativa Privacy",
-                    document_id: "DOC003",
-                    pointer: "PTR_PRIVACY_V2",
-                  },
-                ],
-              };
-            } else {
-              // Simula errore
-              return {
-                status: "error",
-                error: [
-                  { error: "ID Offerta non valido, scaduto o già utilizzato." },
-                ],
-              };
-            }
-          }
+          //   // Simula successo o errore
+          //   if (
+          //     offertaId &&
+          //     email &&
+          //     offertaId.startsWith("REQ-") &&
+          //     email.includes("@")
+          //   ) {
+          //     // Simula successo
+          //     const policyNum =
+          //       "SLP-" + Math.random().toString(10).substring(2, 8);
+          //     return {
+          //       status: "ok",
+          //       policy_number: policyNum,
+          //       document_pointers: [
+          //         {
+          //           description: "Certificato di Polizza",
+          //           document_id: "DOC001",
+          //           pointer: "PTR_" + policyNum + "_CERT",
+          //         },
+          //         {
+          //           description: "Condizioni Generali",
+          //           document_id: "DOC002",
+          //           pointer: "PTR_CGA_V1",
+          //         },
+          //         {
+          //           description: "Informativa Privacy",
+          //           document_id: "DOC003",
+          //           pointer: "PTR_PRIVACY_V2",
+          //         },
+          //       ],
+          //     };
+          //   } else {
+          //     // Simula errore
+          //     return {
+          //       status: "error",
+          //       error: [
+          //         { error: "ID Offerta non valido, scaduto o già utilizzato." },
+          //       ],
+          //     };
+          //   }
+          // }
 
           /** @param {string} policyNumber @param {string} paymentMethod */
           async function simulateApi_confermaPagamento(

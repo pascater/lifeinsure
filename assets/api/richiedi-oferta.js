@@ -180,7 +180,7 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
         phone: dati.phone || "",
         profession: dati.profession,
         gender: dati.gender,
-        // language: dati.nationality || "en-gb",
+        language: "it-ch",
       },
       beneficiaries: {
         type: dati.beneficiary_type,
@@ -338,6 +338,19 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
     }
 
     sessionStorage.setItem("reference-number", datiOfferta.id);
+    sessionStorage.setItem(
+      "datiUtente",
+      JSON.stringify({
+        firstname: datiOfferta.holder.firstname,
+        lastname: datiOfferta.holder.lastname,
+        email: datiOfferta.holder.email,
+        coverage: datiOfferta.policy_information.coverage,
+        mode: datiOfferta.policy_information.mode,
+        durata: datiOfferta.policy_information.duration,
+        premio: datiRisposta.premium,
+      })
+    );
+
     document.getElementById("reference-number").textContent = datiOfferta.id;
     return { id: datiOfferta.id, ...datiRisposta };
   } catch (errore) {

@@ -2070,51 +2070,6 @@
          * @returns {Promise<Array>} - Promise che risolve con un array di oggetti documento.
          */
         let pointerDocuments = [];
-        async function fetchDocumentsFromAPI(referenceNumber, userData) {
-          console.log(
-            "Simulazione chiamata API per recuperare documenti per:",
-            referenceNumber
-          );
-          // !!! IMPORTANTE: NON USARE CHIAVI API QUI !!!
-          // Questa � solo una simulazione. La chiamata reale deve avvenire nel backend.
-
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              // Simula una risposta API con 4 documenti
-              const simulatedDocuments = [
-                {
-                  id: "summary",
-                  title: "Riepilogo Dati Personali",
-                  description: "Dati personali e dettagli polizza",
-                  url: `simulated_download/${referenceNumber}/summary.pdf`,
-                  contentUrl: `simulated_content/${referenceNumber}/summary`,
-                },
-                {
-                  id: "terms",
-                  title: "Termini e Condizioni",
-                  description: "Termini generali del servizio",
-                  url: `simulated_download/${referenceNumber}/terms.pdf`,
-                  contentUrl: `simulated_content/${referenceNumber}/terms`,
-                },
-                {
-                  id: "privacy",
-                  title: "Informativa Privacy",
-                  description: "Trattamento dati personali",
-                  url: `simulated_download/${referenceNumber}/privacy.pdf`,
-                  contentUrl: `simulated_content/${referenceNumber}/privacy`,
-                },
-                {
-                  id: "conditions",
-                  title: "Condizioni Assicurazione",
-                  description: "Condizioni contrattuali polizza",
-                  url: `simulated_download/${referenceNumber}/conditions.pdf`,
-                  contentUrl: `simulated_content/${referenceNumber}/conditions`,
-                },
-              ];
-              resolve(simulatedDocuments);
-            }, 1000); // Simula ritardo di rete
-          });
-        }
 
         /**
          * SIMULAZIONE: Ottiene il contenuto di un documento per il modal.
@@ -2520,49 +2475,9 @@
               JSON.stringify({ reference: refNum })
             );
           }
+
           window.location.href = "emissione-polizza.html";
         }
-        // function checkAllDocumentsDownloaded() {
-        //   if (totalDocuments > 0 && documentsDownloaded === totalDocuments) {
-        //     proceedButton.classList.remove("disabled");
-        //     proceedButton.disabled = false; // Rimuovi attributo disabled
-        //     proceedButton.classList.add("pulse-animation");
-        //     proceedButton.innerHTML =
-        //       '<i class="bi bi-arrow-right-circle"></i> Procedi con l\'emissione della polizza';
-
-        //     // Aggiungi event listener (rimuovendo prima eventuali vecchi)
-        //     const newProceedButton = proceedButton.cloneNode(true);
-        //     proceedButton.parentNode.replaceChild(
-        //       newProceedButton,
-        //       proceedButton
-        //     );
-        //     newProceedButton.addEventListener("click", function () {
-        //       // Salva dati necessari per il prossimo step, se serve
-        //       if (sessionStorageAvailable) {
-        //         const refNum = sessionStorage.getItem("referenceNumber");
-        //         sessionStorage.setItem(
-        //           "finalOfferData",
-        //           JSON.stringify({ reference: refNum })
-        //         );
-        //       }
-        //       // Reindirizza alla pagina successiva (assicurati che esista)
-        //       window.location.href = "emissione-polizza.html"; // Assicurati che questa pagina esista!
-        //     });
-        //   } else {
-        //     // Assicurati che sia disabilitato se non tutti sono scaricati
-        //     proceedButton.classList.add("disabled");
-        //     proceedButton.disabled = true;
-        //     proceedButton.classList.remove("pulse-animation");
-        //     proceedButton.innerHTML =
-        //       '<i class="bi bi-lock-fill proceed-lock"></i> Procedi con l\'emissione della polizza';
-        //     // Rimuovi listener se presente
-        //     const newProceedButton = proceedButton.cloneNode(true);
-        //     proceedButton.parentNode.replaceChild(
-        //       newProceedButton,
-        //       proceedButton
-        //     );
-        //   }
-        // }
 
         function saveDocumentState() {
           if (!sessionStorageAvailable) return;
@@ -3207,21 +3122,7 @@
                   document.getElementById("firstname")
                     .value /* ... altri dati ... */,
               };
-              // const apiDocuments = await fetchDocumentsFromAPI(
-              //   referenceNumber,
-              //   userData
-              // );
 
-              // Popola e inizializza stato documenti
-              // documentTypes = apiDocuments.map((doc) => ({
-              //   id: doc.id,
-              //   title: doc.title,
-              //   description: doc.description,
-              //   url: doc.url, // URL per download diretto (simulato)
-              //   contentUrl: doc.contentUrl, // URL per contenuto modal (simulato)
-              //   viewed: false,
-              //   downloaded: false,
-              // }));
               documentTypes = responseRichiediOfferta.document_pointers.map(
                 (doc) => ({
                   id: doc.pointer,
