@@ -2088,7 +2088,16 @@
           // !!! IMPORTANTE: NESSUNA CHIAVE API QUI !!!
           const url = await loadDocumentFromAPI(documentId);
           // return `<embed src="${url}" type="application/pdf" width="100%" height="80vh" />`;
-          return `<iframe src="${url}" style="width:100%; height:100vh;" frameborder="0"></iframe>`;
+          const isMobile = /iPhone|iPad|iPod|Android/i.test(
+            navigator.userAgent
+          );
+
+          if (isMobile) {
+            window.open(url, "_blank");
+            return '<p class="text-center">Il documento è stato aperto in una nuova finestra.</p>';
+          } else {
+            return `<iframe src="${url}" style="width:100%; height:100vh;" frameborder="0"></iframe>`;
+          }
           // new Promise((resolve) => {
           //   setTimeout(() => {
           //     // Simula contenuto HTML diverso per ogni documento
