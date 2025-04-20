@@ -1,7 +1,6 @@
 async function calcolaPremio(dati) {
   console.log("Funzione calcolaPremio chiamata con dati:", dati);
   try {
-    await testConnectionToAPI();
     const dataNascita = new Date(dati.dataNascita);
     const birthdate = parseInt(
       dataNascita.getFullYear().toString() +
@@ -38,7 +37,6 @@ async function calcolaPremio(dati) {
       datiAPI.weight = Number(dati.peso);
     }
     console.log(datiAPI);
-    // console.log("Tentativo di chiamata fetch...");
     const risposta = await fetch(`${API_BASE_URL}/premium`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

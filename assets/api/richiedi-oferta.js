@@ -190,23 +190,17 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
       policy_information: {
         tariff: "protection_retail",
         origin: Number(new Date().toISOString().slice(0, 10).replace(/-/g, "")),
-        duration:
-          //  Number(
-          parseInt(dati.duration),
-        // ),
+        duration: parseInt(dati.duration),
+
         coverage: parseInt(dati.coverage),
-        accident_coverage: 0, //sempre 0?
-        general_condition: 20201101, //? sempre 20201101?
+        accident_coverage: 0,
+        general_condition: 20201101,
         mode: dati.mode,
         smoker: dati.smoker === "no" ? false : true,
-        height:
-          // Number        (
-          parseInt(dati.height),
-        // ),
-        weight:
-          //  Number(
-          parseInt(dati.weight),
-        // ),
+        height: parseInt(dati.height),
+
+        weight: parseInt(dati.weight),
+
         comment: dati.notes || "",
       },
       payment_type: dati.payment_type,
@@ -303,8 +297,37 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
     }
 
     console.log("datiOfferta>>", datiOfferta);
+    try {
+      const datiPreventivo = {
+        origin: datiOfferta.policy_information.origin,
+        birthdate: datiOfferta.holder.birthdate,
+        smoker: datiOfferta.policy_information.smoker,
+        duration: datiOfferta.policy_information.duration,
+        coverage: datiOfferta.policy_information.coverage,
+        height: datiOfferta.policy_information.height,
+        weight: datiOfferta.policy_information.weight,
+      };
+      console.log("datiPreventivo>>", datiPreventivo);
+      const rispostaPreventivo = await fetch(`${API_BASE_URL}/premium`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datiPreventivo),
+      });
 
-    // Effettua la chiamata API
+      console.log("rispostaPreventivo>>", rispostaPreventivo);
+      const datiRispostaPreventivo = await rispostaPreventivo.json();
+      if (rispostaPreventivo.ok) {
+        sessionStorage.setItem(
+          "datiPreventivo",
+          JSON.stringify(datiRispostaPreventivo)
+        );
+      }
+      console.log("rispostaPreventivo json>>", datiRispostaPreventivo);
+    } catch (error) {
+      console.error("Errore durante il calcolo del premio:", error);
+      return { errore: "Errore durante il calcolo del premio" };
+    }
+
     const risposta = await fetch(`${API_BASE_URL}/offer`, {
       method: "POST",
       headers: {
@@ -314,15 +337,10 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
     });
     console.log("risposta>>", risposta);
     const datiRisposta = await risposta.json();
-    // Controlla se la risposta è ok
+
     console.log("risposta dati>>", datiRisposta);
 
-    const conditionNotes = document.getElementById("condition_notes");
-
-    console.log("conditionNotes>>", conditionNotes);
-
     if (risposta.status === 200 && !requiresManualVerification) {
-      sessionStorage.removeItem("datiPreventivo");
       const sendDocument = await fetch(`${API_BASE_URL}/send_documents`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
