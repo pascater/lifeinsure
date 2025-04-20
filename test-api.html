@@ -243,7 +243,6 @@
                 </h2>
 
                 <form id="form-calcolo-premio">
-                  <!-- Data di nascita -->
                   <div class="form-group mb-3">
                     <label for="data-nascita" class="form-label"
                       >Data di nascita *</label
@@ -253,15 +252,12 @@
                       class="form-control"
                       id="data-nascita"
                       required=""
-                      min="1960-01-01"
-                      max="2007-09-30"
                     />
                     <small class="form-text text-muted"
                       >Inserisci la tua data di nascita</small
                     >
                   </div>
 
-                  <!-- Fumatore -->
                   <div class="form-check mb-3">
                     <input
                       type="checkbox"
@@ -276,22 +272,6 @@
                     >
                   </div>
 
-                  <!-- Durata -->
-                  <!-- <div class="form-group mb-3">
-                   
-                    <select class="form-select" id="durata" required="">
-                      <option value="" disabled="" selected="">
-                        Seleziona la durata
-                      </option>
-                      <option value="5">5 anni</option>
-                      <option value="10">10 anni</option>
-                      <option value="15">15 anni</option>
-                      <option value="20">20 anni</option>
-                      <option value="25">25 anni</option>
-                      <option value="30">30 anni</option>
-                    </select>
-                  
-                  </div> -->
                   <div class="form-group mb-3">
                     <label for="durata" class="form-label"
                       >Durata (anni) *</label
@@ -423,47 +403,6 @@
           </div>
         </div>
       </section>
-
-      <!-- <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          const formPremio = document.getElementById("form-calcolo-premio");
-          const risultatoPremio = document.getElementById("risultato-premio");
-
-          formPremio.addEventListener("submit", async function (e) {
-            e.preventDefault();
-
-            // Mostra indicatore di caricamento
-            risultatoPremio.innerHTML = "Calcolo in corso...";
-
-            // Raccogli dati dal form
-            const dati = {
-              dataNascita: document.getElementById("data-nascita").value,
-              fumatore: document.getElementById("fumatore").checked,
-              durata: document.getElementById("durata").value,
-              copertura: document.getElementById("copertura").value,
-              altezza: document.getElementById("altezza").value,
-              peso: document.getElementById("peso").value,
-            };
-
-            // Chiama l'API
-            const risultato = await calcolaPremio(dati);
-
-            // Mostra il risultato
-            if (risultato.errore) {
-              risultatoPremio.innerHTML = `<div class="alert alert-danger">Errore: ${risultato.errore}</div>`;
-            } else {
-              // Estrai il premio dalla risposta
-              const premio = risultato.premium[0].yearly_gross_premium;
-              risultatoPremio.innerHTML = `
-                <div class="alert alert-success">
-                    <h4>Premio annuale: ${premio} ${risultato.currency}</h4>
-                </div>
-                <button id="richiedi-offerta" class="btn btn-primary">Avanti</button>
-            `;
-            }
-          });
-        });
-      </script> -->
     </div>
 
     <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -474,6 +413,7 @@
 
     <script src="assets/api/test-connection.js"></script>
     <script src="assets/api/calcola-premio.js"></script>
+    <script src="assets/api/check-age.js"></script>
 
     <script>
       function toggleDurataPersonalizzata() {
@@ -498,6 +438,10 @@
       document.addEventListener("DOMContentLoaded", function () {
         const formPremio = document.getElementById("form-calcolo-premio");
         const risultatoPremio = document.getElementById("risultato-premio");
+        const dateInput = document.getElementById("data-nascita");
+        if (dateInput) {
+          checkAge(dateInput);
+        }
 
         if (formPremio) {
           formPremio.addEventListener("submit", async function (e) {

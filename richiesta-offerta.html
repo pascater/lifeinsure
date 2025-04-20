@@ -1942,6 +1942,7 @@
     <script src="assets/api/richiedi-oferta.js"></script>
     <script src="assets/api/recupera-documento.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/api/check-age.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // --- COSTANTI E VARIABILI GLOBALI ---
@@ -2040,6 +2041,11 @@
         const totalPercentageDisplay =
           document.getElementById("total-percentage");
         const percentageInfoAlert = document.getElementById("percentage-info");
+        const inputBirthday = document.getElementById("birthdate");
+        if (inputBirthday) {
+          checkAge(inputBirthday);
+          console.log("Controllo et&agrave; eseguito.");
+        }
 
         // Stato interno
         let currentStep = 1;
@@ -2181,9 +2187,12 @@
               <h5 class="document-title">${
                 doc.title || "Documento senza titolo"
               }</h5>
-              <p class="document-description">${
-                doc.description || "Nessuna descrizione"
-              }</p>
+          ${
+            // <p class="document-description">
+            //   ${doc.description || "Nessuna descrizione"}
+            // </p>
+            null
+          }
               <div>
                 ${viewedBadge}
                 ${downloadedBadge}
