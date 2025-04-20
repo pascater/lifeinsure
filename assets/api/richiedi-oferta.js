@@ -307,14 +307,13 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
         height: datiOfferta.policy_information.height,
         weight: datiOfferta.policy_information.weight,
       };
-      console.log("datiPreventivo>>", datiPreventivo);
+
       const rispostaPreventivo = await fetch(`${API_BASE_URL}/premium`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(datiPreventivo),
       });
 
-      console.log("rispostaPreventivo>>", rispostaPreventivo);
       const datiRispostaPreventivo = await rispostaPreventivo.json();
       if (rispostaPreventivo.ok) {
         sessionStorage.setItem(
@@ -322,7 +321,6 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
           JSON.stringify(datiRispostaPreventivo.premium[0].yearly_gross_premium)
         );
       }
-      console.log("rispostaPreventivo json>>", datiRispostaPreventivo);
     } catch (error) {
       console.error("Errore durante il calcolo del premio:", error);
       return { errore: "Errore durante il calcolo del premio" };
@@ -335,10 +333,8 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
       },
       body: JSON.stringify(datiOfferta),
     });
-    console.log("risposta>>", risposta);
-    const datiRisposta = await risposta.json();
 
-    console.log("risposta dati>>", datiRisposta);
+    const datiRisposta = await risposta.json();
 
     if (risposta.status === 200 && !requiresManualVerification) {
       const sendDocument = await fetch(`${API_BASE_URL}/send_documents`, {
@@ -350,12 +346,14 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
           documentsPointer: datiRisposta.document_pointers,
         }),
       });
-      console.log("sendDocument>>", sendDocument);
+
       const sendDocumentResponse = await sendDocument.json();
       console.log("sendDocumentResponse>>", sendDocumentResponse);
     }
 
     sessionStorage.setItem("reference-number", datiOfferta.id);
+    sessionStorage.removeItem("referenceNumber");
+
     sessionStorage.setItem(
       "datiUtente",
       JSON.stringify({
