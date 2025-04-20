@@ -318,8 +318,8 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
       const datiRispostaPreventivo = await rispostaPreventivo.json();
       if (rispostaPreventivo.ok) {
         sessionStorage.setItem(
-          "datiPreventivo",
-          JSON.stringify(datiRispostaPreventivo)
+          "premio",
+          JSON.stringify(datiRispostaPreventivo.premium[0].yearly_gross_premium)
         );
       }
       console.log("rispostaPreventivo json>>", datiRispostaPreventivo);

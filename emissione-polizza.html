@@ -1588,7 +1588,7 @@
               const copertura = parseFloat(
                 offerData.coverage || 0
               ).toLocaleString("it-CH");
-              const premio = parseFloat(offerData.premio || 0).toFixed(2);
+              const premio = sessionStorage.getItem("premio") || 0;
               const modalita =
                 offerData.mode === "annual" ? "Annuale" : "Mensile";
 
