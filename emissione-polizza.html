@@ -1356,16 +1356,13 @@
            * @throws {object} Oggetto errore con dettagli (status, message, body)
            */
           async function callApi(endpoint, options = {}) {
-            // API_BASE_URL è assunto disponibile globalmente (da test-connection.js)
             const url = `${API_BASE_URL}${endpoint}`;
             const defaultOptions = {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
-                // API_KEY non aggiunto qui, gestito dal proxy
               },
             };
-            // console.log("capp api options", options); // Rimosso log superfluo
 
             options.headers = {
               ...defaultOptions.headers,
@@ -1380,17 +1377,9 @@
               options.body = JSON.stringify(options.body);
             }
 
-            // debugInfo({ message: `Chiamata API: ${ options.method || defaultOptions.method } ${url}`, body: options.body, headers: options.headers, }); // Removed debug call
-            console.log(
-              "Chiamata API:",
-              options.method || defaultOptions.method,
-              url
-            );
-            if (options.body) console.log("Body:", options.body);
-
             try {
               const response = await fetch(url, options);
-              // Non parsificare qui la risposta JSON per non consumarla
+
               console.log(
                 "Risposta API ricevuta (Status:",
                 response.status,
@@ -1434,11 +1423,14 @@
                 }
                 throw errorDetails;
               }
+              sessionStorage.removeItem("premio");
+              sessionStorage.removeItem("referenceNumber");
 
               const contentType = response.headers.get("content-type");
               if (contentType && contentType.includes("application/json")) {
                 const jsonResponse = await response.json();
                 console.log(`Risposta Successo API (JSON):`, jsonResponse);
+
                 return jsonResponse;
               } else {
                 return response;
@@ -1471,6 +1463,7 @@
 
             const requestBody = {
               id: offerId,
+              email: emailConfermaInput.value,
               underwriting: underwritingData,
             };
             // debugInfo("Corpo della richiesta per la Sottomissione Applicazione:", requestBody); // Removed debug call

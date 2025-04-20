@@ -2107,22 +2107,6 @@
           } else {
             return `<iframe src="${url}" style="width:100%; height:100vh;" frameborder="0"></iframe>`;
           }
-          // new Promise((resolve) => {
-          //   setTimeout(() => {
-          //     // Simula contenuto HTML diverso per ogni documento
-          //     let simulatedContent = `<p>Contenuto simulato per il documento <strong>${documentId}</strong>.</p>`;
-          //     simulatedContent += `<p>Numero di riferimento: ${referenceNumber}</p>`;
-          //     simulatedContent += `<p>Questo � un testo segnaposto generato dalla simulazione frontend. In un'applicazione reale, qui verrebbe visualizzato il contenuto effettivo del documento recuperato tramite il backend dall'API Squarelife.</p>`;
-          //     if (documentId === "summary") {
-          //       simulatedContent +=
-          //         "<h4>Dettagli Riepilogo (Simulati)</h4><ul><li>Nome: Mario Rossi</li><li>Copertura: 100'000 CHF</li><li>Durata: 10 anni</li></ul>";
-          //     } else if (documentId === "terms") {
-          //       simulatedContent +=
-          //         "<h4>Estratto Termini (Simulati)</h4><p>Art. 1: Definizioni...</p><p>Art. 2: Obblighi dell'assicurato...</p>";
-          //     }
-          //     resolve(simulatedContent);
-          //   }, 500); // Simula ritardo minore per il contenuto
-          // });
         }
 
         /**
@@ -2139,20 +2123,9 @@
             "per ref:",
             referenceNumber
           );
-          // !!! IMPORTANTE: NESSUNA CHIAVE API QUI !!!
 
           const simulatedUrl = loadDocumentFromAPI(documentId);
-          // return new Promise((resolve) => {
-          //   setTimeout(() => {
-          //     // Simula un URL di download. Potrebbe essere un link a un file statico o un blob URL generato.
-          //     // Per semplicit�, usiamo un URL fittizio che non funzioner� realmente.
-          //     const simulatedUrl = `data:text/plain;charset=utf-8,Contenuto%20simulato%20del%20documento%20${documentId}%20per%20${referenceNumber}.txt`;
-          //     // In alternativa, per simulare un PDF:
-          //     // const pdfBlob = new Blob(['Simulated PDF content for ' + documentId], { type: 'application/pdf' });
-          //     // const simulatedUrl = URL.createObjectURL(pdfBlob);
-          //     resolve(simulatedUrl);
-          //   }, 800); // Simula ritardo
-          // });
+
           return simulatedUrl;
         }
 
@@ -2280,19 +2253,6 @@
               ? '<i class="bi bi-check"></i> Gi&agrave; scaricato'
               : '<i class="bi bi-download"></i> Scarica';
 
-            // Rimuovi e riaggiungi listener per evitare duplicati
-            // const newModalDownloadBtn = modalDownloadBtn.cloneNode(true);
-            // console.log("Nuovo pulsante download:", newModalDownloadBtn);
-            // console.log("Vecchio pulsante download:", modalDownloadBtn);
-
-            // modalDownloadBtn.parentNode.replaceChild(
-            //   newModalDownloadBtn,
-            //   modalDownloadBtn
-            // );
-            // newModalDownloadBtn.addEventListener("click", function () {
-            //   downloadDocument(docId);
-            //   documentModal.hide();
-            // });
             modalDownloadBtn.replaceWith(modalDownloadBtn.cloneNode(true));
             const refreshedModalDownloadBtn =
               document.getElementById("modal-download-btn");
@@ -2489,14 +2449,8 @@
         function handleProceedClick() {
           if (proceedButton.disabled) return;
 
-          if (sessionStorageAvailable) {
-            const refNum = sessionStorage.getItem("referenceNumber");
-            sessionStorage.setItem(
-              "finalOfferData",
-              JSON.stringify({ reference: refNum })
-            );
-          }
-
+          sessionStorage.removeItem("documentsState");
+          sessionStorage.removeItem("referenceNumber");
           window.location.href = "emissione-polizza.html";
         }
 
@@ -3088,18 +3042,12 @@
             requiresManualVerification
           );
           console.log("Risposta backend:", responseRichiediOfferta);
-          // console.log("requiresManualVerification", requiresManualVerification);
 
           if (!responseRichiediOfferta.status === "ok") {
             throw new Error("Errore invio dati al backend");
           }
-          // const result = await response.json();
-          const referenceNumber = responseRichiediOfferta.id; // Ottieni il vero ref number dal backend
 
-          // --- INIZIO SIMULAZIONE ---
-          //  await new Promise((resolve) => setTimeout(resolve, 1500)); // Simula attesa backend
-          // const referenceNumber = generateUniqueIdPlaceholder(); // Usa placeholder
-          // --- FINE SIMULAZIONE ---
+          const referenceNumber = responseRichiediOfferta.id; // Ottieni il vero ref number dal backend
 
           // Salva riferimento (anche se placeholder) per recupero documenti simulato
           if (sessionStorageAvailable) {
@@ -3296,7 +3244,6 @@
             submitFormAction(requiresManualVerification);
           } else {
             console.log("Validazione fallita per lo step:", currentStep);
-            // La validazione mostra gi� gli errori e scrolla al primo
           }
         });
 
@@ -3403,7 +3350,7 @@
               }
               const alertPlaceholder =
                 document.getElementById("alert-placeholder");
-              // Pulisci alert precedente
+
               if (alertPlaceholder) {
                 alertPlaceholder.className =
                   "alert alert-info alert-dismissible fade show mb-4";
@@ -3423,11 +3370,10 @@
               "Errore durante il parsing dei dati preventivo:",
               error
             );
-            sessionStorage.removeItem("datiPreventivo"); // Rimuovi dati corrotti
+            sessionStorage.removeItem("datiPreventivo");
           }
         }
 
-        // Carica dati iniziali e vai al primo step
         loadDataFromPreviousModule();
         goToStep(1); // Assicura che si parta sempre dal primo step al caricamento
       }); // Fine DOMContentLoaded

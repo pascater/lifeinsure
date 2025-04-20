@@ -27,6 +27,8 @@ async function emettiPolizza(id, email) {
       body: JSON.stringify({ id, email }),
     });
     const rispostaEmetti = await risposta.json();
+    console.log("Risposta emissione polizza:", rispostaEmetti);
+
     await sendPolizzaByMail(rispostaEmetti.document_pointers, id, email);
 
     return rispostaEmetti;
