@@ -7,7 +7,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image:src" content="assets/images/test-api-meta.png" />
     <meta property="og:image" content="assets/images/test-api-meta.png" />
-    <meta name="twitter:title" content="Calcola quì il costo della tua polizza vita decesso caso morte" />
+    <meta name="twitter:title" content="TEST API" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, minimum-scale=1"
@@ -75,6 +75,25 @@
         /* Stile opzionale per lo scroll smooth */
         html {
             scroll-behavior: smooth;
+        }
+         /* Stili per feedback validazione (Bootstrap 5) */
+        .form-control.is-invalid, .form-select.is-invalid {
+            border-color: #dc3545;
+            padding-right: calc(1.5em + .75rem);
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right calc(.375em + .1875rem) center;
+            background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+        }
+        .invalid-feedback {
+            display: none;
+            width: 100%;
+            margin-top: .25rem;
+            font-size: .875em;
+            color: #dc3545;
+        }
+        .was-validated :invalid ~ .invalid-feedback {
+            display: block;
         }
     </style>
   </head>
@@ -250,7 +269,7 @@
                   Calcola il tuo premio assicurativo
                 </h2>
 
-                <form id="form-calcolo-premio" novalidate> <!-- Aggiunto novalidate per gestire validazione via JS -->
+                <form id="form-calcolo-premio" novalidate>
                   <div class="form-group mb-3">
                     <label for="data-nascita" class="form-label"
                       >Data di nascita *</label
@@ -261,7 +280,7 @@
                       id="data-nascita"
                       required
                     />
-                     <div class="invalid-feedback">Inserisci una data di nascita valida.</div> <!-- Feedback validazione -->
+                     <div class="invalid-feedback">Inserisci una data di nascita valida.</div>
                     <small class="form-text text-muted"
                       >Inserisci la tua data di nascita</small
                     >
@@ -282,16 +301,16 @@
                   </div>
 
                   <div class="form-group mb-3">
-                    <label for="durata-select" class="form-label" <!-- Cambiato for -->
-                      Durata (anni) *</label
+                    <label for="durata-select" class="form-label"
+                      >Durata (anni) *</label
                     >
                     <select
                       class="form-select"
                       id="durata-select"
-                      required <!-- Aggiunto required al select -->
+                      required <!-- Mantenuto required qui, gestito da JS -->
                       onchange="toggleDurataPersonalizzata()"
                     >
-                      <option value="" disabled selected> <!-- Rimosso required da qui -->
+                      <option value="" disabled selected> <!-- Rimosso selected vuoto, aggiunto required -->
                         Seleziona la durata
                       </option>
                       <option value="5">5 anni</option>
@@ -302,7 +321,7 @@
                       <option value="30">30 anni</option>
                       <option value="custom">Scegli tu la durata</option>
                     </select>
-                     <div class="invalid-feedback">Seleziona una durata.</div> <!-- Feedback validazione -->
+                     <div class="invalid-feedback">Seleziona una durata o inseriscine una personalizzata.</div>
                     <div id="durata-custom-container" class="mt-2 d-none">
                       <div class="input-group">
                         <input
@@ -312,13 +331,14 @@
                           min="5"
                           max="30"
                           placeholder="Inserisci durata (5-30 anni)"
-                          <!-- Required viene aggiunto/rimosso via JS -->
+                          <!-- required viene aggiunto/rimosso via JS -->
                         />
                         <span class="input-group-text">anni</span>
                       </div>
-                       <div class="invalid-feedback">Inserisci una durata valida tra 5 e 30 anni.</div> <!-- Feedback validazione -->
+                       <div class="invalid-feedback">Inserisci una durata valida tra 5 e 30 anni.</div>
                     </div>
-                    <input type="hidden" id="durata" name="durata" /> <!-- Rimosso required da qui -->
+                    <!-- Input nascosto non più necessario per la logica di submit, ma può servire per altri scopi -->
+                    <input type="hidden" id="durata" name="durata" />
                     <small class="form-text text-muted"
                       >Seleziona la durata della copertura assicurativa</small
                     >
@@ -342,7 +362,7 @@
                       />
                       <span class="input-group-text">CHF</span>
                     </div>
-                     <div class="invalid-feedback">Inserisci un capitale valido (min 20'000, max 600'000).</div> <!-- Feedback validazione -->
+                     <div class="invalid-feedback">Inserisci un capitale valido (min 20'000, max 600'000).</div>
                     <small class="form-text text-muted"
                       >Importo della copertura assicurativa (minimo 20.000
                       CHF)</small
@@ -368,7 +388,7 @@
                           />
                           <span class="input-group-text">cm</span>
                         </div>
-                         <div class="invalid-feedback">Inserisci un'altezza valida (100-250 cm).</div> <!-- Feedback validazione -->
+                         <div class="invalid-feedback">Inserisci un'altezza valida (100-250 cm).</div>
                         <small class="form-text text-muted"
                           >Inserisci la tua altezza</small
                         >
@@ -389,7 +409,7 @@
                           />
                           <span class="input-group-text">kg</span>
                         </div>
-                         <div class="invalid-feedback">Inserisci un peso valido (30-200 kg).</div> <!-- Feedback validazione -->
+                         <div class="invalid-feedback">Inserisci un peso valido (30-200 kg).</div>
                         <small class="form-text text-muted"
                           >Inserisci il tuo peso</small
                         >
@@ -430,35 +450,58 @@
     <script>
       'use strict'; // Abilita strict mode
 
+      /**
+       * Gestisce la visibilità e l'attributo 'required' per l'input della durata personalizzata.
+       */
       function toggleDurataPersonalizzata() {
         const durataSelect = document.getElementById("durata-select");
         const durataCustomContainer = document.getElementById("durata-custom-container");
         const durataCustomInput = document.getElementById("durata-custom");
-        const durataHidden = document.getElementById("durata"); // Input nascosto per valore finale
+        // const durataHidden = document.getElementById("durata"); // Non più strettamente necessario per il submit
 
-        if (!durataSelect || !durataCustomContainer || !durataCustomInput || !durataHidden) return;
-
-        if (durataSelect.value === "custom") {
-          durataCustomContainer.classList.remove("d-none");
-          durataCustomInput.required = true; // Rendi obbligatorio l'input custom
-          durataCustomInput.focus();
-          durataHidden.value = ""; // Pulisci valore nascosto
-          durataSelect.required = false; // Il select non è più l'input primario per la durata
-        } else {
-          durataCustomContainer.classList.add("d-none");
-          durataCustomInput.required = false; // Non più obbligatorio
-          durataHidden.value = durataSelect.value; // Imposta valore nascosto dal select
-          durataSelect.required = true; // Il select torna ad essere obbligatorio
+        if (!durataSelect || !durataCustomContainer || !durataCustomInput) {
+            console.error("Elementi durata mancanti.");
+            return;
         }
-        // Aggiorna lo stato di validità del select (necessario se si cambia da custom a valore)
-        durataSelect.dispatchEvent(new Event('change', { bubbles: true }));
+
+        const isCustom = durataSelect.value === "custom";
+
+        // Mostra/Nascondi container custom
+        durataCustomContainer.classList.toggle("d-none", !isCustom);
+
+        // Imposta/Rimuovi 'required' sull'input custom
+        durataCustomInput.required = isCustom;
+
+        // Imposta/Rimuovi 'required' sul select. Il select è required *solo se* non è selezionato 'custom'.
+        // Questo previene errori di validazione quando 'custom' è scelto ma il select ha ancora 'required'.
+        durataSelect.required = !isCustom;
+
+        // Pulisci l'input custom se viene nascosto
+        if (!isCustom) {
+          durataCustomInput.value = "";
+          // Rimuovi eventuali classi di errore dall'input custom se viene nascosto
+          durataCustomInput.classList.remove('is-invalid');
+        } else {
+            durataCustomInput.focus();
+        }
+
+        // Aggiorna l'input nascosto (se ancora usato altrove)
+        // if (durataHidden) {
+        //     durataHidden.value = isCustom ? "" : durataSelect.value;
+        // }
+
+        // Forza un re-check della validità del select se necessario (opzionale)
+        // if (!isCustom && durataSelect.checkValidity && !durataSelect.checkValidity()) {
+        //     // Potrebbe essere utile se si vuole mostrare l'errore subito
+        // }
       }
 
       document.addEventListener("DOMContentLoaded", function () {
         const formPremio = document.getElementById("form-calcolo-premio");
         const risultatoPremio = document.getElementById("risultato-premio");
         const dateInput = document.getElementById("data-nascita");
-        const calcolaBtn = document.getElementById("calcola-premio-btn"); // Riferimento al pulsante
+        const calcolaBtn = document.getElementById("calcola-premio-btn");
+        const durataSelect = document.getElementById("durata-select"); // Aggiunto riferimento
 
         // Controllo età (se la funzione checkAge esiste)
         if (typeof checkAge === 'function' && dateInput) {
@@ -467,42 +510,46 @@
             console.warn("Elemento data-nascita non trovato.");
         }
 
-        if (formPremio && risultatoPremio && calcolaBtn) {
+        if (formPremio && risultatoPremio && calcolaBtn && durataSelect) {
           formPremio.addEventListener("submit", async function (e) {
             e.preventDefault(); // Impedisce invio form standard
 
             // --- Reset stato pulsante e validazione ---
             calcolaBtn.classList.remove('btn-success');
             calcolaBtn.classList.add('btn-primary');
-            formPremio.classList.remove('was-validated'); // Rimuovi stato validazione precedente
+            formPremio.classList.remove('was-validated');
 
-            // --- Validazione Manuale (più controllo) ---
+            // --- Validazione Manuale ---
             let isValid = true;
-            formPremio.classList.add('was-validated'); // Applica stile validazione Bootstrap
+            formPremio.classList.add('was-validated');
 
-            // Controlla tutti i campi required visibili
             const requiredFields = formPremio.querySelectorAll('[required]');
+            let firstInvalidField = null; // Memorizza il primo campo non valido
+
             requiredFields.forEach(field => {
-                // Controlla se il campo è effettivamente visibile
-                if (field.offsetParent !== null) {
+                if (field.offsetParent !== null) { // Controlla se visibile
                     if (!field.checkValidity()) {
                         isValid = false;
-                        // Scroll al primo campo non valido trovato
-                        if (isValid === false) { // Solo la prima volta
-                            field.focus();
-                            field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        if (!firstInvalidField) { // Salva solo il primo
+                            firstInvalidField = field;
                         }
                     }
-                } else {
-                    // Se un campo required è nascosto, potresti voler gestire la logica
-                    // console.log(`Campo nascosto ${field.id} ignorato dalla validazione.`);
                 }
             });
 
-            // Se la validazione fallisce, interrompi
+            // Se la validazione fallisce, mostra errore e interrompi
             if (!isValid) {
                 console.log("Validazione fallita.");
-                return;
+                if (firstInvalidField) {
+                    firstInvalidField.focus();
+                    // Scrolla leggermente sopra il campo per visibilità label/errore
+                    const fieldRect = firstInvalidField.getBoundingClientRect();
+                    window.scrollBy({
+                        top: fieldRect.top - 100, // 100px di offset sopra il campo
+                        behavior: 'smooth'
+                    });
+                }
+                return; // Interrompi esecuzione
             }
 
             // --- Mostra caricamento e reset risultato ---
@@ -513,25 +560,25 @@
             risultatoPremio.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
             // --- Raccogli dati ---
-            const durataSelectValue = document.getElementById("durata-select").value;
+            const durataSelectValue = durataSelect.value;
+            const durataCustomInput = document.getElementById("durata-custom");
             const durataFinal = durataSelectValue === 'custom'
-                                ? document.getElementById("durata-custom").value
+                                ? durataCustomInput.value
                                 : durataSelectValue;
 
             let dati = {
               dataNascita: document.getElementById("data-nascita").value,
               fumatore: document.getElementById("fumatore").checked,
-              durata: durataFinal, // Usa il valore finale calcolato
+              durata: durataFinal,
               copertura: document.getElementById("copertura").value,
               altezza: document.getElementById("altezza").value || null,
               peso: document.getElementById("peso").value || null,
-              // Includi i valori originali del select/custom per eventuale logging o passaggio dati
               durata_select: durataSelectValue,
-              durata_custom: durataSelectValue === 'custom' ? document.getElementById("durata-custom").value : null
+              durata_custom: durataSelectValue === 'custom' ? durataCustomInput.value : null
             };
 
             try {
-              // --- Chiamata API (assicurati che calcolaPremio esista) ---
+              // --- Chiamata API ---
               if (typeof calcolaPremio !== 'function') {
                   throw new Error("La funzione calcolaPremio non è definita.");
               }
@@ -544,7 +591,6 @@
                             <h5>Si è verificato un errore</h5>
                             <p>${risultato.errore}</p>
                         </div>`;
-                // Non cambiare colore bottone in caso di errore API gestito
               } else if (risultato.premium && risultato.premium.length > 0) {
                 const premio = risultato.premium[0].yearly_gross_premium;
                 const currency = risultato.currency || "CHF";
@@ -558,37 +604,28 @@
                                 <p class="small text-muted mb-3">Copertura: ${parseInt(
                                   dati.copertura
                                 ).toLocaleString('it-CH')} ${currency} | Durata: ${dati.durata} anni</p>
-                                <button id="btn-richiedi-offerta" class="btn btn-success btn-lg">Richiedi Polizza >></button> <!-- Bottone più grande e verde -->
+                                <button id="btn-richiedi-offerta" class="btn btn-success btn-lg">Richiedi Polizza >></button>
                             </div>
                         </div>`;
 
-                // *** NUOVO: Cambia colore pulsante Calcola a verde dopo successo ***
+                // Cambia colore pulsante Calcola
                 calcolaBtn.classList.remove('btn-primary');
                 calcolaBtn.classList.add('btn-success');
 
-                // Memorizza dati per passaggio successivo
-                sessionStorage.setItem(
-                  "datiPreventivo",
-                  JSON.stringify({
-                    ...dati, // Passa tutti i dati raccolti
-                    premio: premio,
-                    currency: currency,
-                  })
-                );
+                // Memorizza dati
+                sessionStorage.setItem("datiPreventivo", JSON.stringify({ ...dati, premio: premio, currency: currency }));
 
-                // Aggiungi listener al nuovo pulsante "Richiedi Polizza"
+                // Aggiungi listener al nuovo pulsante
                 const richiediBtn = document.getElementById("btn-richiedi-offerta");
                 if (richiediBtn) {
                     richiediBtn.addEventListener("click", function () {
-                        // !!! Assicurati che 'richiesta-offerta.html' sia il nome corretto della pagina successiva !!!
-                        window.location.href = "richiesta-offerta.html";
+                        window.location.href = "richiesta-offerta.html"; // Assicurati sia il percorso corretto
                     });
                 } else {
-                    console.error("Bottone 'Richiedi Polizza' non trovato dopo la creazione.");
+                    console.error("Bottone 'Richiedi Polizza' non trovato.");
                 }
 
               } else {
-                  // Caso di risposta API valida ma senza dati premio attesi
                    risultatoPremio.innerHTML = `
                     <div class="alert alert-warning">
                         <h5>Risultato inatteso</h5>
@@ -604,15 +641,14 @@
                         <p class="small text-muted">Dettaglio: ${errore.message}</p>
                     </div>`;
             } finally {
-                 // *** NUOVO: Scroll all'area risultati DOPO che è stata popolata ***
-                 // Usiamo un piccolo timeout per assicurarci che il DOM sia aggiornato prima dello scroll
+                 // Scroll all'area risultati
                  setTimeout(() => {
                     risultatoPremio.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                 }, 100); // 100ms di ritardo
+                 }, 100);
             }
           });
         } else {
-            console.error("Elementi del form (form, risultato, bottone) non trovati.");
+            console.error("Elementi del form (form, risultato, bottone, select durata) non trovati.");
         }
 
         // Inizializza lo stato del select durata all'avvio
@@ -626,13 +662,13 @@
       "use strict";
       if ("loading" in HTMLImageElement.prototype) {
         document.querySelectorAll('img[loading="lazy"]').forEach((e) => {
-          if(e.dataset.src) e.src = e.dataset.src; // Assicurati che dataset.src esista
+          if(e.dataset.src) e.src = e.dataset.src;
           if (e.getAttribute("style")) {
             e.setAttribute("data-temp-style", e.getAttribute("style"));
           }
           if (e.getAttribute("data-aspectratio")) {
-            e.style.paddingTop = 100 * parseFloat(e.getAttribute("data-aspectratio")) + "%"; // Usa parseFloat
-            e.style.height = '0'; // Imposta altezza a 0
+            e.style.paddingTop = 100 * parseFloat(e.getAttribute("data-aspectratio")) + "%";
+            e.style.height = '0';
           }
           e.onload = function () {
             if (e.getAttribute("data-temp-style")) {
@@ -641,10 +677,9 @@
               e.removeAttribute("style");
             }
             e.removeAttribute("data-temp-style");
-            // Rimuovi padding-top se non serve più
             if (e.getAttribute("data-aspectratio")) {
                  e.style.paddingTop = '';
-                 if(!e.getAttribute("style")) e.removeAttribute("style"); // Rimuovi style se vuoto
+                 if(!e.getAttribute("style")) e.removeAttribute("style");
             }
           };
         });
