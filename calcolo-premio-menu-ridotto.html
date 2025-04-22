@@ -14,7 +14,7 @@
     />
     <link
       rel="shortcut icon"
-      href="assets/images/lifeinsure-1-172x172.png" <!-- Potresti voler usare favicon.ico come nell'altro esempio -->
+      href="assets/images/lifeinsure-1-172x172.png"
       type="image/x-icon"
     />
     <meta
@@ -25,7 +25,6 @@
     <title>
       Calcola quì il costo della tua polizza vita decesso caso morte
     </title>
-    <!-- CSS Essenziali (Bootstrap, Icone, Font, Tema Base Mobirise se serve per altro) -->
     <link
       rel="stylesheet"
       href="assets/Material-Design-Icons/css/material.css"
@@ -37,9 +36,14 @@
       rel="stylesheet"
       href="assets/bootstrap/css/bootstrap-reboot.min.css"
     />
-    <!-- <link rel="stylesheet" href="assets/dropdown/css/style.css" /> --> <!-- Rimosso/Commentato: CSS specifico menu Mobirise dropdown -->
+    <link
+      rel="stylesheet"
+      href="assets/web/assets/gdpr-plugin/gdpr-styles.css"
+    />
+    <link rel="stylesheet" href="assets/popup-overlay-plugin/style.css" />
+    <link rel="stylesheet" href="assets/dropdown/css/style.css" />
     <link rel="stylesheet" href="assets/socicon/css/styles.css" />
-    <link rel="stylesheet" href="assets/theme/css/style.css" /> <!-- Mantenuto se serve per altri stili Mobirise -->
+    <link rel="stylesheet" href="assets/theme/css/style.css" />
     <link
       rel="preload"
       href="https://fonts.googleapis.com/css?family=Space+Grotesk:300,400,500,600,700&display=swap"
@@ -61,82 +65,72 @@
       href="assets/mobirise/css/mbr-additional.css"
       type="text/css"
     />
-    <!-- Fine CSS -->
-
-    <!-- Eventuali CSS aggiuntivi per icone Bootstrap (se non già inclusi altrove) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        /* Aggiusta padding per navbar fissa Bootstrap standard */
-        body { padding-top: 56px; } /* Altezza standard navbar Bootstrap non-brand */
+        body { padding-top: 70px; } /* Mantenuto padding per navbar fissa */
         html { scroll-behavior: smooth; }
-        /* Stili validazione Bootstrap 5 (invariati) */
+        /* Stili validazione Bootstrap 5 */
         .form-control.is-invalid, .form-select.is-invalid { border-color: #dc3545; padding-right: calc(1.5em + .75rem); background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right calc(.375em + .1875rem) center; background-size: calc(.75em + .375rem) calc(.75em + .375rem); }
         .invalid-feedback { display: none; width: 100%; margin-top: .25rem; font-size: .875em; color: #dc3545; }
+        /* Mostra feedback standard quando validato e invalido */
         .was-validated :invalid ~ .invalid-feedback,
-        .was-validated .form-select:invalid ~ .invalid-feedback,
+        .was-validated .form-select:invalid ~ .invalid-feedback, /* Aggiunto per select */
         .was-validated .form-control:invalid ~ .invalid-feedback { display: block; }
+        /* Mostra feedback specifico per durata quando ha classe is-invalid */
         #durata-error.is-invalid { display: block; }
-
-        /* Stile per il form (opzionale, per migliorare aspetto) */
-        .form-section { padding: 40px 0; }
-        .card-title { color: #333; }
-        .form-label { font-weight: 500; }
     </style>
   </head>
   <body>
 
-    <!-- ================== MENU BOOTSTRAP STANDARD ================== -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <!-- Logo e Nome Brand -->
-            <a class="navbar-brand" href="index.html"> <!-- Assicurati che index.html sia la pagina corretta -->
-                <!-- Usa il logo della pagina di riferimento -->
-                <img src="assets/images/lifeinsure-logo-bianco-trasp.png" alt="LifeInsure Logo" height="30" class="d-inline-block align-top me-2">
-                LifeInsure
-            </a>
-            <!-- Bottone Toggler per mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Contenuto Navbar collassabile -->
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="chi-siamo.html">Chi Siamo</a></li> <!-- Assicurati che i link siano corretti -->
-                    <li class="nav-item"><a class="nav-link" href="prodotti.html">Prodotti</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownServizi" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Servizi Online
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownServizi">
-                            <!-- Metti 'active' sulla pagina corrente -->
-                            <li><a class="dropdown-item active" aria-current="page" href="#">Calcolo Premio</a></li>
-                            <li><a class="dropdown-item" href="richiesta-offerta.html">Richiesta Offerta</a></li> <!-- Assicurati nome file corretto -->
-                            <li><a class="dropdown-item" href="area-clienti.html">Area Clienti</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="contatti.html">Contatti</a></li>
-                    <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
-                    <!-- Aggiungi qui il dropdown lingua se necessario, stile Bootstrap -->
-                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLang" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-translate"></i> <span class="d-lg-none ms-2">Lingua</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownLang">
-                            <li><a class="dropdown-item" href="https://de.lifeinsure.ch" target="_blank">Deutsch</a></li>
-                            <li><a class="dropdown-item" href="https://fr.lifeinsure.ch" target="_blank">Français</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <!-- Rimosso bottone PREVENTIVO separato, integrato nei Servizi Online -->
+    <!-- ================== MENU SOSTITUITO ================== -->
+    <section data-bs-version="5.1" class="inspirem5 menu menu1 cid-uHcV8yKzqs" once="menu" id="menu01-3s">
+        <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
+          <div class="container-fluid">
+            <div class="navbar-brand">
+              <span class="navbar-logo">
+                <a href="index.html#top">
+                  <!-- Immagine logo con lazy loading -->
+                  <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="LifeInsure Logo" style="height: 3.6rem" loading="lazy" class="lazyload" data-src="https://r.mobirisesite.com/1342903/assets/images/lifeinsure-1-172x172.png?v=1TZWWw" />
+                </a>
+              </span>
             </div>
-        </div>
-    </nav>
-    <!-- ================== FINE MENU BOOTSTRAP STANDARD ================== -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <div class="hamburger"><span></span><span></span><span></span><span></span></div>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+                <li class="nav-item"><a class="nav-link link text-primary display-7" href="index.html#header01-2">Home</a></li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link link text-primary dropdown-toggle display-7" href="#" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Polizza decesso</a>
+                  <div class="dropdown-menu" aria-labelledby="dropdown-707">
+                    <a class="text-primary dropdown-item display-7" href="index.html#progress-bars02-0">Vantaggi</a>
+                    <a class="text-primary show dropdown-item display-7" href="index.html#progress-bars01-j">Valore</a>
+                    <!-- Link popup storia vera (assicurati che #mbr-popup-2k esista nella pagina o rimuovi/modifica) -->
+                    <a class="text-primary show dropdown-item display-7" href="#" data-toggle="modal" data-bs-toggle="modal" data-target="#mbr-popup-2k" data-bs-target="#mbr-popup-2k"><span class="mdi-content-markunread mbr-iconfont mbr-iconfont-btn"></span>Una storia vera (leggi)</a>
+                    <a class="text-primary show dropdown-item display-7" href="index.html#testimonials04-g">Testimonianze</a>
+                  </div>
+                </li>
+                <li class="nav-item"><a class="nav-link link text-primary display-7" href="index.html#forms03-5">Chi siamo</a></li>
+                <li class="nav-item"><a class="nav-link link text-primary display-7" href="index.html#forms03-5">Contatti</a></li>
+                <li class="nav-item dropdown">
+                   <a class="nav-link link text-primary dropdown-toggle show display-7" href="#" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"><span class="icon54-v1-translate2 mbr-iconfont mbr-iconfont-btn"></span></a>
+                   <div class="dropdown-menu show" aria-labelledby="dropdown-852" data-bs-popper="none">
+                       <a class="text-primary dropdown-item display-7" href="https://de.lifeinsure.ch" target="_blank">Deutsch</a>
+                       <a class="text-primary dropdown-item display-7" href="https://fr.lifeinsure.ch" target="_blank">Français</a>
+                   </div>
+                </li>
+              </ul>
+              <div class="navbar-buttons mbr-section-btn">
+                <!-- Modificato href per puntare alla sezione calcolo premio di questa pagina -->
+                <a class="btn btn-lg btn-danger display-4" href="#sezione-calcolo-premio"><span class="icon54-v1-click-1 mbr-iconfont mbr-iconfont-btn"></span>PREVENTIVO </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+    </section>
+    <!-- ================== FINE MENU SOSTITUITO ================== -->
 
-    <!-- Header Mobirise (invariato, ma potrebbe non essere più necessario o stilisticamente coerente) -->
     <section
       data-bs-version="5.1"
       class="inspirem5 header3 cid-uE0WsxjD7A"
@@ -145,14 +139,12 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-12 col-lg-11">
-            <!-- Contenuto Header -->
+            <!-- Contenuto Header (invariato) -->
           </div>
         </div>
       </div>
     </section>
-    <!-- Fine Header Mobirise -->
 
-    <!-- Sezione Calcolo Premio (invariata nel contenuto, ma ora sotto navbar Bootstrap) -->
     <div id="custom-html-36">
       <section class="mbr-section form-section" id="sezione-calcolo-premio">
         <div class="container">
@@ -164,7 +156,6 @@
                 </h2>
 
                 <form id="form-calcolo-premio" novalidate>
-                  <!-- Contenuto del form (invariato) -->
                   <div class="form-group mb-3">
                     <label for="data-nascita" class="form-label"
                       >Data di nascita *</label
@@ -175,7 +166,7 @@
                       id="data-nascita"
                       required
                       aria-describedby="data-nascita-error"
-                    />
+                    /> <!-- Chiusura corretta -->
                      <div id="data-nascita-error" class="invalid-feedback">Inserisci una data di nascita valida.</div>
                     <small class="form-text text-muted"
                       >Inserisci la tua data di nascita</small
@@ -187,7 +178,7 @@
                       type="checkbox"
                       class="form-check-input"
                       id="fumatore"
-                    />
+                    /> <!-- Chiusura corretta -->
                     <label class="form-check-label" for="fumatore"
                       >Fumatore</label
                     >
@@ -204,8 +195,9 @@
                       class="form-select"
                       id="durata-select"
                       aria-describedby="durata-error"
+                      <!-- Rimosso required -->
                       onchange="toggleDurataPersonalizzata()"
-                    >
+                    > <!-- Chiusura corretta -->
                       <option value="" disabled selected>
                         Seleziona la durata
                       </option>
@@ -227,17 +219,19 @@
                           max="30"
                           placeholder="Inserisci durata (5-30 anni)"
                           aria-describedby="durata-error"
-                        />
+                          <!-- Rimosso required -->
+                        /> <!-- Chiusura corretta -->
                         <span class="input-group-text">anni</span>
                       </div>
                     </div>
                     <div id="durata-error" class="invalid-feedback">Seleziona una durata valida o inseriscine una personalizzata (5-30 anni).</div>
-                    <input type="hidden" id="durata" name="durata"/>
+                    <input type="hidden" id="durata" name="durata"/> <!-- Chiusura corretta -->
                     <small class="form-text text-muted"
                       >Seleziona la durata della copertura assicurativa</small
                     >
                   </div>
 
+                  <!-- Copertura -->
                   <div class="form-group mb-3">
                     <label for="copertura" class="form-label"
                       >Capitale assicurato (CHF) *</label
@@ -253,7 +247,7 @@
                         value="100000"
                         required
                         aria-describedby="copertura-error"
-                      />
+                      /> <!-- Chiusura corretta -->
                       <span class="input-group-text">CHF</span>
                     </div>
                      <div id="copertura-error" class="invalid-feedback">Inserisci un capitale valido (min 20'000, max 600'000).</div>
@@ -263,6 +257,7 @@
                     >
                   </div>
 
+                  <!-- Dati fisici: Altezza e Peso -->
                   <div class="row mb-3">
                     <div class="col-md-6">
                       <div class="form-group">
@@ -279,7 +274,7 @@
                             placeholder="Es. 175"
                             required
                             aria-describedby="altezza-error"
-                          />
+                          /> <!-- Chiusura corretta -->
                           <span class="input-group-text">cm</span>
                         </div>
                          <div id="altezza-error" class="invalid-feedback">Inserisci un'altezza valida (100-250 cm).</div>
@@ -301,7 +296,7 @@
                             placeholder="Es. 70"
                             required
                             aria-describedby="peso-error"
-                          />
+                          /> <!-- Chiusura corretta -->
                           <span class="input-group-text">kg</span>
                         </div>
                          <div id="peso-error" class="invalid-feedback">Inserisci un peso valido (30-200 kg).</div>
@@ -312,6 +307,7 @@
                     </div>
                   </div>
 
+                  <!-- Pulsante Calcola -->
                   <div class="text-center mt-4">
                     <button type="submit" id="calcola-premio-btn" class="btn btn-primary btn-lg px-5">
                       Calcola premio
@@ -319,8 +315,9 @@
                   </div>
                 </form>
 
+                <!-- Area risultati -->
                 <div id="risultato-premio" class="mt-4 p-3 d-none">
-                  <!-- Risultati -->
+                  <!-- I risultati verranno inseriti qui via JavaScript -->
                 </div>
               </div>
             </div>
@@ -328,33 +325,271 @@
         </div>
       </section>
     </div>
-    <!-- Fine Sezione Calcolo Premio -->
 
-    <!-- Script JS (Bootstrap, Mobirise base, Calcolo Premio) -->
     <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/smoothscroll/smooth-scroll.js"></script>
     <script src="assets/ytplayer/index.js"></script>
-    <!-- <script src="assets/dropdown/js/navbar-dropdown.js"></script> --> <!-- Rimosso/Commentato: JS specifico menu Mobirise -->
-    <script src="assets/theme/js/script.js"></script> <!-- Mantenuto se serve per altri script Mobirise -->
+    <script src="assets/dropdown/js/navbar-dropdown.js"></script>
+    <script src="assets/theme/js/script.js"></script>
 
-    <!-- Script API e Calcolo (invariati) -->
+    <!-- Assicurati che questi script esistano e siano corretti -->
     <script src="assets/api/test-connection.js"></script>
     <script src="assets/api/calcola-premio.js"></script>
     <script src="assets/api/check-age.js"></script>
 
-    <!-- Script gestione form calcolo (invariato) -->
     <script>
       'use strict';
-      function toggleDurataPersonalizzata() { /* ... codice invariato ... */ }
-      function updateHiddenDurationFromCustom() { /* ... codice invariato ... */ }
-      document.addEventListener("DOMContentLoaded", function () { /* ... codice invariato ... */ });
+
+      /**
+       * Gestisce UI e valore nascosto per durata personalizzata.
+       */
+      function toggleDurataPersonalizzata() {
+        const durataSelect = document.getElementById("durata-select");
+        const durataCustomContainer = document.getElementById("durata-custom-container");
+        const durataCustomInput = document.getElementById("durata-custom");
+        const durataHidden = document.getElementById("durata");
+        const durataErrorDiv = document.getElementById('durata-error');
+
+        if (!durataSelect || !durataCustomContainer || !durataCustomInput || !durataHidden) return;
+
+        const isCustom = durataSelect.value === "custom";
+        durataCustomContainer.classList.toggle("d-none", !isCustom);
+
+        if (!isCustom) {
+          durataCustomInput.value = ""; // Pulisci custom
+          durataHidden.value = durataSelect.value; // Usa valore select (se valido)
+        } else {
+          durataHidden.value = ""; // Svuota hidden, valore verrà da custom
+          durataCustomInput.focus();
+        }
+
+        // Resetta errori durata quando si cambia selezione
+        durataSelect.classList.remove('is-invalid');
+        durataCustomInput.classList.remove('is-invalid');
+        if (durataErrorDiv) durataErrorDiv.classList.remove('is-invalid'); // Nascondi errore generico
+      }
+
+      /**
+       * Aggiorna input nascosto #durata quando #durata-custom cambia.
+       */
+       function updateHiddenDurationFromCustom() {
+           const durataCustomInput = document.getElementById("durata-custom");
+           const durataHidden = document.getElementById("durata");
+           const durataSelect = document.getElementById("durata-select");
+           const durataErrorDiv = document.getElementById('durata-error');
+
+           if (!durataCustomInput || !durataHidden || !durataSelect) return;
+
+           if (durataSelect.value === 'custom') {
+               // Usa checkValidity() dell'input number che considera min/max
+               if (durataCustomInput.checkValidity()) {
+                   durataHidden.value = durataCustomInput.value;
+                   // Rimuovi errori se ora è valido
+                   durataCustomInput.classList.remove('is-invalid');
+                   durataSelect.classList.remove('is-invalid');
+                   if (durataErrorDiv) durataErrorDiv.classList.remove('is-invalid');
+               } else {
+                   durataHidden.value = ""; // Non valido, pulisci hidden
+               }
+           }
+       }
+
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const formPremio = document.getElementById("form-calcolo-premio");
+        const risultatoPremio = document.getElementById("risultato-premio");
+        const dateInput = document.getElementById("data-nascita");
+        const calcolaBtn = document.getElementById("calcola-premio-btn");
+        const durataSelect = document.getElementById("durata-select");
+        const durataCustomInput = document.getElementById("durata-custom");
+        const durataHidden = document.getElementById("durata");
+        const durataErrorDiv = document.getElementById('durata-error');
+
+        // Controllo età
+        if (typeof checkAge === 'function' && dateInput) {
+          checkAge(dateInput);
+        } else if (!dateInput) {
+            console.warn("Elemento data-nascita non trovato.");
+        }
+
+        // Listener per input custom
+        if (durataCustomInput) {
+            durataCustomInput.addEventListener('input', updateHiddenDurationFromCustom);
+        } else {
+             console.error("Elemento durata-custom non trovato.");
+        }
+        // Listener per select (per chiamare toggle e aggiornare hidden)
+        if (durataSelect) {
+            durataSelect.addEventListener('change', toggleDurataPersonalizzata);
+        } else {
+             console.error("Elemento durata-select non trovato.");
+        }
+
+
+        if (formPremio && risultatoPremio && calcolaBtn && durataSelect && durataCustomInput && durataHidden && durataErrorDiv) {
+          formPremio.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            // --- Reset ---
+            calcolaBtn.classList.remove('btn-success');
+            calcolaBtn.classList.add('btn-primary');
+            formPremio.classList.remove('was-validated');
+            formPremio.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+            durataErrorDiv.classList.remove('is-invalid');
+
+            // --- Validazione JS ---
+            let isValid = true;
+            let firstInvalidField = null;
+
+            // 1. Campi standard required
+            const standardRequiredFields = formPremio.querySelectorAll('[required]');
+            standardRequiredFields.forEach(field => {
+                if (field.offsetParent !== null) {
+                    if (!field.checkValidity()) {
+                        isValid = false;
+                        field.classList.add('is-invalid');
+                        if (!firstInvalidField) firstInvalidField = field;
+                    }
+                }
+            });
+
+            // 2. Validazione Durata Specifica
+            // Assicura che l'hidden input sia aggiornato prima di validare
+            if (durataSelect.value === 'custom') {
+                updateHiddenDurationFromCustom(); // Aggiorna da custom se necessario
+            } else {
+                durataHidden.value = durataSelect.value; // Aggiorna da select
+            }
+            const durataFinaleValue = durataHidden.value;
+            // Controllo se è un numero valido tra 5 e 30
+            const durataNum = parseInt(durataFinaleValue, 10);
+            const isDurataValid = !isNaN(durataNum) && durataNum >= 5 && durataNum <= 30;
+
+            if (!isDurataValid) {
+                isValid = false;
+                durataSelect.classList.add('is-invalid');
+                durataCustomInput.classList.add('is-invalid');
+                durataErrorDiv.classList.add('is-invalid'); // Mostra errore generico
+                if (!firstInvalidField) firstInvalidField = durataSelect;
+            }
+
+            // Se validazione fallita
+            if (!isValid) {
+                console.log("Validazione fallita.");
+                formPremio.classList.add('was-validated'); // Mostra feedback Bootstrap
+                if (firstInvalidField) {
+                    firstInvalidField.focus();
+                    const fieldRect = firstInvalidField.getBoundingClientRect();
+                    window.scrollBy({ top: fieldRect.top - 100, behavior: 'smooth' });
+                }
+                return;
+            }
+
+            // --- Se validazione OK ---
+            formPremio.classList.add('was-validated');
+
+            // --- Mostra caricamento ---
+            risultatoPremio.classList.remove("d-none");
+            risultatoPremio.innerHTML =
+              '<div class="text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Calcolo in corso...</span></div><p class="mt-2">Calcolo del premio in corso...</p></div>';
+            risultatoPremio.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // --- Raccogli dati ---
+            let dati = {
+              dataNascita: dateInput.value,
+              fumatore: document.getElementById("fumatore").checked,
+              durata: durataFinaleValue, // Usa valore da hidden input validato
+              copertura: document.getElementById("copertura").value,
+              altezza: document.getElementById("altezza").value || null,
+              peso: document.getElementById("peso").value || null,
+              durata_select: durataSelect.value, // Per riferimento
+              durata_custom: durataSelect.value === 'custom' ? durataCustomInput.value : null // Per riferimento
+            };
+
+            try {
+              // --- Chiamata API ---
+              if (typeof calcolaPremio !== 'function') {
+                  throw new Error("La funzione calcolaPremio non è definita.");
+              }
+              const risultato = await calcolaPremio(dati);
+
+              // --- Mostra risultato ---
+              if (risultato.errore) {
+                risultatoPremio.innerHTML = `<div class="alert alert-danger"><h5>Errore</h5><p>${risultato.errore}</p></div>`;
+              } else if (risultato.premium && risultato.premium.length > 0) {
+                const premio = risultato.premium[0].yearly_gross_premium;
+                const currency = risultato.currency || "CHF";
+
+                risultatoPremio.innerHTML = `
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <h4 class="card-title">Il tuo preventivo</h4>
+                                <p class="card-text">Premio annuale stimato:</p>
+                                <h2 class="text-primary mb-4">${premio.toLocaleString('it-CH')} ${currency}</h2>
+                                <p class="small text-muted mb-3">Copertura: ${parseInt(dati.copertura).toLocaleString('it-CH')} ${currency} | Durata: ${dati.durata} anni</p>
+                                <button id="btn-richiedi-offerta" class="btn btn-success btn-lg">Richiedi Polizza >></button>
+                            </div>
+                        </div>`;
+
+                calcolaBtn.classList.remove('btn-primary');
+                calcolaBtn.classList.add('btn-success');
+
+                sessionStorage.setItem("datiPreventivo", JSON.stringify({ ...dati, premio: premio, currency: currency }));
+
+                const richiediBtn = document.getElementById("btn-richiedi-offerta");
+                if (richiediBtn) {
+                    richiediBtn.addEventListener("click", function () {
+                        // Assicurati che il nome del file sia corretto
+                        window.location.href = "richiesta-offerta.html";
+                    });
+                } else { console.error("Bottone 'Richiedi Polizza' non trovato."); }
+
+              } else {
+                   risultatoPremio.innerHTML = `<div class="alert alert-warning"><h5>Risultato inatteso</h5><p>Nessun premio valido restituito.</p></div>`;
+              }
+            } catch (errore) {
+              console.error("Errore calcolo premio:", errore);
+              risultatoPremio.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h5>Errore Connessione/Calcolo</h5>
+                        <p>Impossibile completare il calcolo. Riprova o contatta l'assistenza.</p>
+                        <p class="small text-muted">Dettaglio: ${errore.message}</p>
+                    </div>`;
+            } finally {
+                 setTimeout(() => {
+                    risultatoPremio.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                 }, 100);
+            }
+          });
+        } else {
+            console.error("Elementi essenziali del form non trovati.");
+        }
+
+        // Inizializza stato durata all'avvio
+        toggleDurataPersonalizzata();
+
+      }); // Fine DOMContentLoaded
     </script>
 
     <!-- Script Lazy Loading (invariato) -->
     <script>
       "use strict";
-      if ("loading" in HTMLImageElement.prototype) { /* ... codice invariato ... */ }
-      else { /* ... codice invariato ... */ }
+      if ("loading" in HTMLImageElement.prototype) {
+        document.querySelectorAll('img[loading="lazy"]').forEach((e) => {
+          if(e.dataset.src) e.src = e.dataset.src;
+          if (e.getAttribute("style")) { e.setAttribute("data-temp-style", e.getAttribute("style")); }
+          if (e.getAttribute("data-aspectratio")) { e.style.paddingTop = 100 * parseFloat(e.getAttribute("data-aspectratio")) + "%"; e.style.height = '0'; }
+          e.onload = function () {
+            if (e.getAttribute("data-temp-style")) { e.setAttribute("style", e.getAttribute("data-temp-style")); } else { e.removeAttribute("style"); }
+            e.removeAttribute("data-temp-style");
+            if (e.getAttribute("data-aspectratio")) { e.style.paddingTop = ''; if(!e.getAttribute("style")) e.removeAttribute("style"); }
+          };
+        });
+      } else {
+        const e = document.createElement("script");
+        e.src = "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js";
+        document.body.appendChild(e);
+      }
     </script>
 
   </body>
