@@ -68,7 +68,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        body { padding-top: 70px; }
+        body { padding-top: 70px; } /* Ridotto da valori più alti per dare meno spazio al menu */
         html { scroll-behavior: smooth; }
         /* Stili validazione Bootstrap 5 */
         .form-control.is-invalid, .form-select.is-invalid { border-color: #dc3545; padding-right: calc(1.5em + .75rem); background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right calc(.375em + .1875rem) center; background-size: calc(.75em + .375rem) calc(.75em + .375rem); }
@@ -79,6 +79,31 @@
         .was-validated .form-control:invalid ~ .invalid-feedback { display: block; }
         /* Mostra feedback specifico per durata quando ha classe is-invalid */
         #durata-error.is-invalid { display: block; }
+        
+        /* FIX PER IL MENU TROPPO GRANDE */
+        .navbar {
+            padding-top: 0.25rem !important;
+            padding-bottom: 0.25rem !important;
+            min-height: unset !important;
+        }
+        
+        .inspirem5.menu {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
+        
+        .header3 {
+            padding-top: 0 !important;
+        }
+        
+        .navbar-logo img {
+            height: 2.8rem !important; /* Logo un po' più piccolo */
+        }
+        
+        /* Riduciamo la distanza tra il menu e il contenuto */
+        #sezione-calcolo-premio {
+            padding-top: 1rem !important;
+        }
     </style>
   </head>
   <body>
@@ -89,7 +114,7 @@
           <div class="navbar-brand">
             <span class="navbar-logo">
               <a href="index.html#top">
-                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="LifeInsure Logo" style="height: 3.6rem" loading="lazy" class="lazyload" data-src="assets/images/lifeinsure-1-172x172.png" />
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="LifeInsure Logo" style="height: 2.8rem" loading="lazy" class="lazyload" data-src="assets/images/lifeinsure-1-172x172.png" />
               </a>
             </span>
           </div>
@@ -128,7 +153,8 @@
     </section>
     <!-- ================== FINE MENU SOSTITUITO ================== -->
 
-    <section
+    <!-- Rimuovere questa sezione che aggiunge spazio inutile -->
+    <!-- <section
       data-bs-version="5.1"
       class="inspirem5 header3 cid-uE0WsxjD7A"
       id="header03-34"
@@ -136,11 +162,10 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-12 col-lg-11">
-            <!-- Contenuto Header -->
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <div id="custom-html-36">
       <section class="mbr-section form-section" id="sezione-calcolo-premio">
@@ -578,12 +603,6 @@
             e.removeAttribute("data-temp-style");
             if (e.getAttribute("data-aspectratio")) { e.style.paddingTop = ''; if(!e.getAttribute("style")) e.removeAttribute("style"); }
           };
-        });
-      } else {
-        const e = document.createElement("script");
-        e.src = "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js";
-        document.body.appendChild(e);
-      }
     </script>
   </body>
 </html>
