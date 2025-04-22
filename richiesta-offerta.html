@@ -3117,7 +3117,7 @@
                 error
               );
               documentsLoading.style.display = "none";
-              documentContainer.innerHTML = `<div class="alert alert-danger">Si � verificato un errore nel caricamento dei documenti di riepilogo. Contatta l'assistenza citando il riferimento ${referenceNumber}.</div>`;
+              documentContainer.innerHTML = `<div class="alert alert-danger">Si e verificato un errore nel caricamento dei documenti di riepilogo. <br/>Contatta l'assistenza citando il riferimento ${referenceNumber}. <br/>È possibile che per questa persona sia già stata effettuata l'emissione della polizza.</div>`;
               documentsSection.style.display = "block"; // Mostra comunque la sezione con l'errore
               proceedButton.disabled = true; // Assicura che sia disabilitato
               proceedButton.classList.add("disabled");
