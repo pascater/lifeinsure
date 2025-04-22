@@ -1,38 +1,3 @@
-Certamente, capisco l'esigenza di rendere il menu fisso meno ingombrante per migliorare l'usabilità del modulo sottostante.
-
-Procederemo modificando gli stili CSS per ridurre l'altezza della barra di navigazione (riducendo padding, dimensione del logo, ecc.) e aggiustando il `padding-top` del `<body>` per compensare la nuova altezza. Faremo queste modifiche tramite CSS aggiuntivi per sovrascrivere gli stili di Mobirise in modo mirato, senza alterare i file originali del tema.
-
-**Passo 1: Identificare gli Elementi da Modificare**
-
-Gli elementi chiave che contribuiscono all'altezza della navbar sono:
-
-*   Il padding verticale della navbar stessa (`.navbar`).
-*   L'altezza del logo (`.navbar-logo img`).
-*   Il padding verticale dei link (`.nav-link`).
-*   La dimensione/padding dei bottoni (`.navbar-buttons .btn`).
-
-**Passo 2: Definire Nuovi Stili CSS (Overrides)**
-
-Aggiungeremo delle regole CSS specifiche all'interno del tag `<style>` esistente nella sezione `<head>` del file del modulo "Richiesta Offerta". Useremo l'ID della sezione del menu (`#menu01-3s` nel codice precedente, ma potrebbe essere `#menu01-33` se stai usando il codice del preventivo come base - userò `#menu01-3s` basandomi sull'ultimo codice completo che abbiamo generato per la richiesta offerta) per aumentare la specificità ed evitare conflitti.
-
-**Passo 3: Aggiustare il Padding del Body**
-
-Ridurremo il valore di `padding-top` nel CSS del `body` per adattarlo alla nuova altezza ridotta della navbar.
-
-**Passo 4: Verifica**
-
-Controlleremo che:
-
-*   La navbar sia visivamente più piccola.
-*   Rimanga fissa durante lo scroll.
-*   Il contenuto del modulo non sia nascosto sotto la navbar.
-*   Le funzionalità del menu (dropdown, toggle mobile) e del modulo rimangano invariate.
-
----
-
-Ecco il codice HTML completo del **modulo Richiesta Offerta** con il menu ridotto e fisso:
-
-```html
 <!DOCTYPE html>
 <html lang="it">
 <head>
