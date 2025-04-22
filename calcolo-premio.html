@@ -68,33 +68,17 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        /* Stile per assicurare che il padding non nasconda il contenuto sotto la navbar fissa */
-        body {
-            padding-top: 70px; /* Regola questo valore se l'altezza della navbar cambia */
-        }
-        /* Stile opzionale per lo scroll smooth */
-        html {
-            scroll-behavior: smooth;
-        }
-         /* Stili per feedback validazione (Bootstrap 5) */
-        .form-control.is-invalid, .form-select.is-invalid {
-            border-color: #dc3545;
-            padding-right: calc(1.5em + .75rem);
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right calc(.375em + .1875rem) center;
-            background-size: calc(.75em + .375rem) calc(.75em + .375rem);
-        }
-        .invalid-feedback {
-            display: none;
-            width: 100%;
-            margin-top: .25rem;
-            font-size: .875em;
-            color: #dc3545;
-        }
-        .was-validated :invalid ~ .invalid-feedback {
-            display: block;
-        }
+        body { padding-top: 70px; }
+        html { scroll-behavior: smooth; }
+        /* Stili validazione Bootstrap 5 (invariati) */
+        .form-control.is-invalid, .form-select.is-invalid { border-color: #dc3545; padding-right: calc(1.5em + .75rem); background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right calc(.375em + .1875rem) center; background-size: calc(.75em + .375rem) calc(.75em + .375rem); }
+        .invalid-feedback { display: none; width: 100%; margin-top: .25rem; font-size: .875em; color: #dc3545; }
+        .was-validated :invalid ~ .invalid-feedback,
+        .was-validated .form-select:invalid ~ .invalid-feedback, /* Aggiunto per select */
+        .was-validated .form-control:invalid ~ .invalid-feedback { display: block; }
+        /* Stile specifico per errore durata */
+        #durata-error.is-invalid { display: block; }
+
     </style>
   </head>
   <body>
@@ -307,10 +291,10 @@
                     <select
                       class="form-select"
                       id="durata-select"
-                      required <!-- Mantenuto required qui, gestito da JS -->
+                      <!-- Rimosso required dall'HTML, gestito da JS -->
                       onchange="toggleDurataPersonalizzata()"
                     >
-                      <option value="" disabled selected> <!-- Rimosso selected vuoto, aggiunto required -->
+                      <option value="" disabled selected> <!-- Opzione placeholder -->
                         Seleziona la durata
                       </option>
                       <option value="5">5 anni</option>
@@ -321,7 +305,8 @@
                       <option value="30">30 anni</option>
                       <option value="custom">Scegli tu la durata</option>
                     </select>
-                     <div class="invalid-feedback">Seleziona una durata o inseriscine una personalizzata.</div>
+                    <!-- Messaggio di errore generico per la durata -->
+                    <div id="durata-error" class="invalid-feedback">Seleziona una durata valida o inseriscine una personalizzata (5-30 anni).</div>
                     <div id="durata-custom-container" class="mt-2 d-none">
                       <div class="input-group">
                         <input
@@ -331,14 +316,14 @@
                           min="5"
                           max="30"
                           placeholder="Inserisci durata (5-30 anni)"
-                          <!-- required viene aggiunto/rimosso via JS -->
+                          <!-- Rimosso required dall'HTML -->
                         />
                         <span class="input-group-text">anni</span>
                       </div>
-                       <div class="invalid-feedback">Inserisci una durata valida tra 5 e 30 anni.</div>
+                       <!-- Feedback specifico per l'input custom (opzionale, può usare quello generico sopra) -->
+                       <!-- <div class="invalid-feedback">Inserisci una durata valida tra 5 e 30 anni.</div> -->
                     </div>
-                    <!-- Input nascosto non più necessario per la logica di submit, ma può servire per altri scopi -->
-                    <input type="hidden" id="durata" name="durata" />
+                    <input type="hidden" id="durata" name="durata" /> <!-- Mantenuto per memorizzare valore finale -->
                     <small class="form-text text-muted"
                       >Seleziona la durata della copertura assicurativa</small
                     >
@@ -448,18 +433,18 @@
     <script src="assets/api/check-age.js"></script>
 
     <script>
-      'use strict'; // Abilita strict mode
+      'use strict';
 
       /**
-       * Gestisce la visibilità e l'attributo 'required' per l'input della durata personalizzata.
+       * Gestisce la visibilità dell'input durata personalizzata e aggiorna l'input nascosto.
        */
       function toggleDurataPersonalizzata() {
         const durataSelect = document.getElementById("durata-select");
         const durataCustomContainer = document.getElementById("durata-custom-container");
         const durataCustomInput = document.getElementById("durata-custom");
-        // const durataHidden = document.getElementById("durata"); // Non più strettamente necessario per il submit
+        const durataHidden = document.getElementById("durata"); // Input nascosto per valore finale
 
-        if (!durataSelect || !durataCustomContainer || !durataCustomInput) {
+        if (!durataSelect || !durataCustomContainer || !durataCustomInput || !durataHidden) {
             console.error("Elementi durata mancanti.");
             return;
         }
@@ -469,113 +454,181 @@
         // Mostra/Nascondi container custom
         durataCustomContainer.classList.toggle("d-none", !isCustom);
 
-        // Imposta/Rimuovi 'required' sull'input custom
-        durataCustomInput.required = isCustom;
-
-        // Imposta/Rimuovi 'required' sul select. Il select è required *solo se* non è selezionato 'custom'.
-        // Questo previene errori di validazione quando 'custom' è scelto ma il select ha ancora 'required'.
-        durataSelect.required = !isCustom;
-
-        // Pulisci l'input custom se viene nascosto
+        // Pulisci l'input custom e rimuovi errori se viene nascosto
         if (!isCustom) {
           durataCustomInput.value = "";
-          // Rimuovi eventuali classi di errore dall'input custom se viene nascosto
-          durataCustomInput.classList.remove('is-invalid');
+          durataCustomInput.classList.remove('is-invalid'); // Rimuovi stato errore
+          durataHidden.value = durataSelect.value; // Aggiorna hidden con valore select
         } else {
-            durataCustomInput.focus();
+          durataHidden.value = ""; // Pulisci hidden quando custom è selezionato
+          durataCustomInput.focus();
         }
 
-        // Aggiorna l'input nascosto (se ancora usato altrove)
-        // if (durataHidden) {
-        //     durataHidden.value = isCustom ? "" : durataSelect.value;
-        // }
-
-        // Forza un re-check della validità del select se necessario (opzionale)
-        // if (!isCustom && durataSelect.checkValidity && !durataSelect.checkValidity()) {
-        //     // Potrebbe essere utile se si vuole mostrare l'errore subito
-        // }
+        // Rimuovi lo stato di errore generale della durata quando si cambia selezione
+        durataSelect.classList.remove('is-invalid');
+        const durataErrorDiv = document.getElementById('durata-error');
+        if (durataErrorDiv) durataErrorDiv.classList.remove('is-invalid'); // Nascondi errore generico
       }
+
+      /**
+       * Aggiorna il valore dell'input nascosto quando l'input custom cambia.
+       */
+       function updateHiddenDurationFromCustom() {
+           const durataCustomInput = document.getElementById("durata-custom");
+           const durataHidden = document.getElementById("durata");
+           const durataSelect = document.getElementById("durata-select");
+
+           if (durataCustomInput && durataHidden && durataSelect && durataSelect.value === 'custom') {
+               // Aggiorna l'hidden input solo se l'input custom è valido (opzionale, ma buona pratica)
+               if (durataCustomInput.checkValidity()) {
+                   durataHidden.value = durataCustomInput.value;
+                   // Rimuovi eventuale stato di errore se ora è valido
+                   durataCustomInput.classList.remove('is-invalid');
+                   durataSelect.classList.remove('is-invalid'); // Rimuovi errore anche dal select
+                   const durataErrorDiv = document.getElementById('durata-error');
+                   if (durataErrorDiv) durataErrorDiv.classList.remove('is-invalid');
+               } else {
+                   durataHidden.value = ""; // Non valido, pulisci hidden
+               }
+           }
+       }
+
 
       document.addEventListener("DOMContentLoaded", function () {
         const formPremio = document.getElementById("form-calcolo-premio");
         const risultatoPremio = document.getElementById("risultato-premio");
         const dateInput = document.getElementById("data-nascita");
         const calcolaBtn = document.getElementById("calcola-premio-btn");
-        const durataSelect = document.getElementById("durata-select"); // Aggiunto riferimento
+        const durataSelect = document.getElementById("durata-select");
+        const durataCustomInput = document.getElementById("durata-custom"); // Riferimento all'input custom
 
-        // Controllo età (se la funzione checkAge esiste)
+        // Controllo età
         if (typeof checkAge === 'function' && dateInput) {
           checkAge(dateInput);
         } else if (!dateInput) {
             console.warn("Elemento data-nascita non trovato.");
         }
 
-        if (formPremio && risultatoPremio && calcolaBtn && durataSelect) {
+        // Aggiungi listener all'input custom per aggiornare l'hidden input
+        if (durataCustomInput) {
+            durataCustomInput.addEventListener('input', updateHiddenDurationFromCustom);
+        }
+
+        if (formPremio && risultatoPremio && calcolaBtn && durataSelect && durataCustomInput) {
           formPremio.addEventListener("submit", async function (e) {
-            e.preventDefault(); // Impedisce invio form standard
+            e.preventDefault();
 
             // --- Reset stato pulsante e validazione ---
             calcolaBtn.classList.remove('btn-success');
             calcolaBtn.classList.add('btn-primary');
             formPremio.classList.remove('was-validated');
+            // Rimuovi manualmente classi is-invalid da tutti i campi prima di rivalidare
+            formPremio.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+            const durataErrorDiv = document.getElementById('durata-error');
+            if (durataErrorDiv) durataErrorDiv.classList.remove('is-invalid');
 
-            // --- Validazione Manuale ---
+
+            // --- Validazione JS ---
             let isValid = true;
-            formPremio.classList.add('was-validated');
+            let firstInvalidField = null;
 
-            const requiredFields = formPremio.querySelectorAll('[required]');
-            let firstInvalidField = null; // Memorizza il primo campo non valido
-
-            requiredFields.forEach(field => {
-                if (field.offsetParent !== null) { // Controlla se visibile
+            // 1. Controlla tutti i campi con 'required' standard (esclusa durata per ora)
+            const standardRequiredFields = formPremio.querySelectorAll('[required]:not(#durata-select):not(#durata-custom)');
+            standardRequiredFields.forEach(field => {
+                if (field.offsetParent !== null) { // Se visibile
                     if (!field.checkValidity()) {
                         isValid = false;
-                        if (!firstInvalidField) { // Salva solo il primo
-                            firstInvalidField = field;
-                        }
+                        field.classList.add('is-invalid'); // Aggiungi classe errore
+                        if (!firstInvalidField) firstInvalidField = field;
                     }
                 }
             });
 
-            // Se la validazione fallisce, mostra errore e interrompi
+            // 2. Validazione specifica per la Durata
+            const isCustomSelected = durataSelect.value === "custom";
+            const durataSelectedValue = durataSelect.value;
+            const durataCustomValue = durataCustomInput.value;
+            let isDurataValid = false;
+
+            if (isCustomSelected) {
+                // Se custom è selezionato, l'input custom deve essere valido
+                if (durataCustomInput.checkValidity()) {
+                    isDurataValid = true;
+                    durataCustomInput.classList.remove('is-invalid'); // Rimuovi errore se valido
+                    durataSelect.classList.remove('is-invalid');
+                } else {
+                    durataCustomInput.classList.add('is-invalid'); // Mostra errore su input custom
+                    if (!firstInvalidField) firstInvalidField = durataCustomInput;
+                }
+            } else {
+                // Se non è custom, il select deve avere un valore valido (non vuoto/placeholder)
+                if (durataSelect.checkValidity() && durataSelectedValue !== "") {
+                    isDurataValid = true;
+                    durataSelect.classList.remove('is-invalid'); // Rimuovi errore se valido
+                    durataCustomInput.classList.remove('is-invalid');
+                } else {
+                    durataSelect.classList.add('is-invalid'); // Mostra errore su select
+                    if (!firstInvalidField) firstInvalidField = durataSelect;
+                }
+            }
+
+            // Se la durata non è valida in entrambi i casi, imposta isValid a false
+            if (!isDurataValid) {
+                isValid = false;
+                // Mostra l'errore generico della durata
+                if (durataErrorDiv) durataErrorDiv.classList.add('is-invalid');
+            } else {
+                 if (durataErrorDiv) durataErrorDiv.classList.remove('is-invalid');
+            }
+
+
+            // Se la validazione generale fallisce, mostra errore e interrompi
             if (!isValid) {
                 console.log("Validazione fallita.");
+                formPremio.classList.add('was-validated'); // Mostra tutti i feedback standard
                 if (firstInvalidField) {
                     firstInvalidField.focus();
-                    // Scrolla leggermente sopra il campo per visibilità label/errore
                     const fieldRect = firstInvalidField.getBoundingClientRect();
-                    window.scrollBy({
-                        top: fieldRect.top - 100, // 100px di offset sopra il campo
-                        behavior: 'smooth'
-                    });
+                    window.scrollBy({ top: fieldRect.top - 100, behavior: 'smooth' });
+                } else {
+                    // Scrolla all'errore generico della durata se è quello il problema
+                     durataSelect.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
                 return; // Interrompi esecuzione
             }
+
+            // --- Se validazione OK, procedi ---
+            formPremio.classList.add('was-validated'); // Applica stile per feedback positivi (opzionale)
 
             // --- Mostra caricamento e reset risultato ---
             risultatoPremio.classList.remove("d-none");
             risultatoPremio.innerHTML =
               '<div class="text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Calcolo in corso...</span></div><p class="mt-2">Calcolo del premio in corso...</p></div>';
-            // Scroll iniziale all'area di caricamento
             risultatoPremio.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            // --- Raccogli dati ---
-            const durataSelectValue = durataSelect.value;
-            const durataCustomInput = document.getElementById("durata-custom");
-            const durataFinal = durataSelectValue === 'custom'
-                                ? durataCustomInput.value
-                                : durataSelectValue;
+            // --- Raccogli dati (usa l'input nascosto aggiornato) ---
+            const durataFinale = document.getElementById("durata").value; // Leggi dall'hidden input
 
             let dati = {
               dataNascita: document.getElementById("data-nascita").value,
               fumatore: document.getElementById("fumatore").checked,
-              durata: durataFinal,
+              durata: durataFinale, // Usa il valore dall'hidden input
               copertura: document.getElementById("copertura").value,
               altezza: document.getElementById("altezza").value || null,
               peso: document.getElementById("peso").value || null,
-              durata_select: durataSelectValue,
-              durata_custom: durataSelectValue === 'custom' ? durataCustomInput.value : null
+              // Mantieni questi per riferimento o logging se necessario
+              durata_select: durataSelect.value,
+              durata_custom: durataSelect.value === 'custom' ? durataCustomInput.value : null
             };
+
+            // Verifica che durataFinale abbia un valore (ulteriore sicurezza)
+            if (!dati.durata) {
+                 console.error("Errore: Valore durata finale mancante dopo validazione.");
+                 risultatoPremio.innerHTML = `<div class="alert alert-danger">Errore interno: valore durata mancante.</div>`;
+                 setTimeout(() => { risultatoPremio.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
+                 return;
+            }
+
 
             try {
               // --- Chiamata API ---
@@ -619,7 +672,7 @@
                 const richiediBtn = document.getElementById("btn-richiedi-offerta");
                 if (richiediBtn) {
                     richiediBtn.addEventListener("click", function () {
-                        window.location.href = "richiesta-offerta.html"; // Assicurati sia il percorso corretto
+                        window.location.href = "richiesta-offerta.html";
                     });
                 } else {
                     console.error("Bottone 'Richiedi Polizza' non trovato.");
@@ -648,7 +701,7 @@
             }
           });
         } else {
-            console.error("Elementi del form (form, risultato, bottone, select durata) non trovati.");
+            console.error("Elementi del form (form, risultato, bottone, select durata, input custom) non trovati.");
         }
 
         // Inizializza lo stato del select durata all'avvio
@@ -663,30 +716,17 @@
       if ("loading" in HTMLImageElement.prototype) {
         document.querySelectorAll('img[loading="lazy"]').forEach((e) => {
           if(e.dataset.src) e.src = e.dataset.src;
-          if (e.getAttribute("style")) {
-            e.setAttribute("data-temp-style", e.getAttribute("style"));
-          }
-          if (e.getAttribute("data-aspectratio")) {
-            e.style.paddingTop = 100 * parseFloat(e.getAttribute("data-aspectratio")) + "%";
-            e.style.height = '0';
-          }
+          if (e.getAttribute("style")) { e.setAttribute("data-temp-style", e.getAttribute("style")); }
+          if (e.getAttribute("data-aspectratio")) { e.style.paddingTop = 100 * parseFloat(e.getAttribute("data-aspectratio")) + "%"; e.style.height = '0'; }
           e.onload = function () {
-            if (e.getAttribute("data-temp-style")) {
-              e.setAttribute("style", e.getAttribute("data-temp-style"));
-            } else {
-              e.removeAttribute("style");
-            }
+            if (e.getAttribute("data-temp-style")) { e.setAttribute("style", e.getAttribute("data-temp-style")); } else { e.removeAttribute("style"); }
             e.removeAttribute("data-temp-style");
-            if (e.getAttribute("data-aspectratio")) {
-                 e.style.paddingTop = '';
-                 if(!e.getAttribute("style")) e.removeAttribute("style");
-            }
+            if (e.getAttribute("data-aspectratio")) { e.style.paddingTop = ''; if(!e.getAttribute("style")) e.removeAttribute("style"); }
           };
         });
       } else {
         const e = document.createElement("script");
-        e.src =
-          "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js";
+        e.src = "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js";
         document.body.appendChild(e);
       }
     </script>
