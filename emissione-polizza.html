@@ -802,13 +802,6 @@
               <p>Caricamento riepilogo...</p>
             </div>
 
-            <!-- Aggiungiamo dinamicamente le caselle di controllo per il consenso dall'API, se presenti -->
-            <!-- Secondo le API docs 3.3, underwriting.checkboxes sono dati in input,
-                  non una parte della risposta offerta. Quindi queste caselle di controllo
-                  dovrebbero essere statiche nel frontend, e i loro ID verranno inviati all'API.
-                  Se i documenti di consenso devono essere scaricati PRIMA del consenso,
-                  è necessario un endpoint API separato o una logica di download/visualizzazione.
-                  Per ora, manteniamo le caselle di controllo statiche come nel codice iniziale. -->
             <div class="lifensure-checkbox-group">
               <div class="lifensure-checkbox-wrapper">
                 <input
@@ -822,10 +815,8 @@
                   for="lifensure-condizioni-check"
                   id="lifensure-condizioni-label"
                 >
-                  Ho letto e accetto le
-                  <a href="#" id="lifensure-condizioni-link"
-                    >condizioni generali di assicurazione</a
-                  >.
+                  Ho scaricato, letto ed accetto le condizioni generali di
+                  assicurazione.
                 </label>
               </div>
               <div id="lifensure-condizioni-error" class="invalid-feedback">
@@ -846,10 +837,8 @@
                   for="lifensure-privacy-check"
                   id="lifensure-privacy-label"
                 >
-                  Ho letto l'<a href="#" id="lifensure-privacy-link"
-                    >informativa sulla privacy</a
-                  >
-                  e acconsento al trattamento dei miei dati.
+                  Ho letto ed accetto l'informativa sulla privacy acconsentendo
+                  al trattamento dei miei dati.
                 </label>
               </div>
               <div id="lifensure-privacy-error" class="invalid-feedback">
