@@ -195,9 +195,12 @@
         margin-top: 0.25rem;
         display: none; /* Nascosto di default */
       }
-      .was-validated .lifensure-form-group input:invalid ~ .invalid-feedback,
-      .was-validated .lifensure-form-group select:invalid ~ .invalid-feedback {
-        display: block; /* Mostra se invalido e validato */
+      .was-validated
+        .lifensure-checkbox-group
+        .lifensure-checkbox-wrapper:has(input:invalid)
+        + .invalid-feedback {
+        /* <-- Новий рядок */
+        display: block;
       }
       /* Stili Checkbox */
       .lifensure-checkbox-group {
