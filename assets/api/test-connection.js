@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://test-mobirise-api.fly.dev";
+const API_BASE_URL = "https://lifeinsure2.fly.dev";
 
 async function testConnectionToAPI() {
   try {
