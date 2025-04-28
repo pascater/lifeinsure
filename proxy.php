@@ -4,21 +4,6 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // Imposta header per consentire accesso da qualsiasi origine
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
-header('Content-Type: application/json');
-
-// Se la richiesta è OPTIONS, termina qui (pre-flight per CORS)
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    exit(0);
-}
-
-// URL dell'API Squarelife
-$apiUrl = 'https://squarelifetest.asp.lifeware.ch/squarelife_protection/api/v0/switzerland/life_insurance/premium';
-
-// API Key di Squarelife
-$apiKey = 'yra9qc9WffYaEsKlib8IrQwc2GRLdUCEJIzOo4uTfyc';
 
 // Ottieni i dati inviati dal modulo
 $postData = file_get_contents('php://input');
@@ -38,7 +23,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Disabilita verifica SSL per 
 $response = curl_exec($ch);
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-// Se c'è un errore cURL, registralo
+// Se c'Ã¨ un errore cURL, registralo
 if (curl_errno($ch)) {
     echo json_encode([
         'status' => 'error',
