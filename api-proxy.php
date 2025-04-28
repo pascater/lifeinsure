@@ -1,16 +1,3 @@
-<?php
-header('Content-Type: application/json');
-
-// Ricevi i parametri
-$requestData = json_decode(file_get_contents('php://input'), true);
-
-$endpoint = $requestData['endpoint'] ?? '/squarelife_protection/api/v0/switzerland/life_insurance/premium';
-$method = $requestData['method'] ?? 'POST';
-$apiKey = $requestData['apiKey'] ?? 'yra9qc9WffYaEsKlib8IrQwc2GRLdUCEJIzOo4uTfyc';
-$data = $requestData['data'] ?? [];
-
-// URL dell'API Squarelife
-$apiUrl = 'https://squarelifetest.asp.lifeware.ch' . $endpoint;
 
 // Inizializza cURL
 $ch = curl_init();
