@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" /> <!-- Als erstes Element garantiert -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <title>Todesfallversicherung Angebotsanfrage</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" />
+    <style>
+      /* CSS Styles unverändert */
+      .form-section { display: none; }
+      .form-section.active { display: block; }
+      .progress { height: 8px; margin-bottom: 30px; }
+      .step-indicator { display: flex; justify-content: space-between; margin-bottom: 20px; }
+      .step { text-align: center; flex: 1; position: relative; }
+      .step-number { width: 30px; height: 30px; border-radius: 50%; background-color: #dee2e6; color: #6c757d; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px; font-weight: bold; }
+      .step.active .step-number { background-color: #0d6efd; color: white; }
+      .step.completed .step-number { background-color: #198754; color: white; }
+      .step-title { font-size: 0.8rem; color: #6c757d; }
+      .step.active .step-title { color: #0d6efd; font-weight: bold; }
+      .step.completed .step-title { color: #198754; }
+      .required-field::after { content: "*"; color: red; margin-left: 4px; }
+      .subtitle { background-color: #f8f9fa; padding: 10px 15px; margin: 20px 0 15px; border-left: 4px solid #0d6efd; font-size: 1.1rem; }
+      .info-icon { color: #6c757d; cursor: pointer; margin-left: 5px; }
+      .is-invalid { border-color: #dc3545 !important; }
+      .invalid-feedback { display: none; color: #dc3545; font-size: 0.875em; margin-top: 0.25rem; }
+      .was-validated .form-control:invalid, .was-validated .form-select:invalid, .was-validated .form-check-input:invalid { border-color: #dc3545; }
+      .was-validated .form-control:invalid ~ .invalid-feedback, .was-validated .form-select:invalid ~ .invalid-feedback, .was-validated .form-check-input:invalid ~ .invalid-feedback { display: block; }
+      .radio-group-invalid .form-check-label { color: #dc3545; }
+      .radio-group-invalid .invalid-feedback { display: block !important; }
+      .conditional-field { margin-top: 1rem; padding: 1rem; border-left: 3px solid #0d6efd; background-color: #f8f9fa; }
+      @media (max-width: 767px) { .step-title { display: none; } }
+      .thank-you-message { display: none; text-align: center; padding: 30px 0; }
+      .thank-you-message.active { display: block; }
+      .beneficiary-container { background-color: rgba(13, 110, 253, 0.05); padding: 15px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #dee2e6; }
+      .document-list { margin: 25px 0; border: 1px solid #dee2e6; border-radius: 8px; overflow: hidden; }
+      .document-item { padding: 15px; border-bottom: 1px solid #dee2e6; display: flex; flex-wrap: wrap; align-items: center; background-color: #fff; transition: background-color 0.3s; }
+      .document-item:last-child { border-bottom: none; }
+      .document-item:hover { background-color: #f8f9fa; }
+      .document-icon { font-size: 24px; margin-right: 15px; color: #0d6efd; }
+      .document-details { flex-grow: 1; }
+      .document-title { font-weight: 500; font-size: 1.1rem; margin-bottom: 3px; }
+      .document-description { color: #6c757d; font-size: 0.9rem; margin-bottom: 0; }
+      .document-actions { display: flex; gap: 10px; margin-left: auto; margin-right: auto; flex-wrap: wrap; justify-content: center; padding-top: 10px; }
+      @media (min-width: 576px) { .document-actions { margin-left: auto; margin-right: 0; flex-wrap: nowrap; justify-content: flex-end; padding-top: 0; } }
+      .badge-document { font-size: 0.75rem; padding: 5px 8px; margin-top: 5px; display: inline-block; margin-right: 5px; }
+      .document-content-modal { overflow-y: auto; padding: 20px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; margin: 15px 0; font-size: 0.9rem; }
+      .proceed-btn { transition: all 0.3s; }
+      .proceed-btn.disabled { position: relative; cursor: not-allowed; opacity: 0.65; }
+      .proceed-btn.disabled .proceed-lock { margin-right: 5px; }
+      .download-progress { margin: 15px 0; height: 10px; }
+      .pulse-animation { animation: pulse 1.5s infinite; }
+      @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); } 100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); } }
+      .status-message { font-size: 0.9rem; color: #6c757d; margin-top: 10px; text-align: center; }
+      .highlight-text { color: #0d6efd; font-weight: bold; }
+      fieldset { border: none; padding: 0; margin: 0 0 1rem 0; }
+      legend { font-size: 1rem; font-weight: normal; margin-bottom: 0.5rem; float: none; width: auto; padding: 0; }
+      legend.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Todesfallversicherung Angebotsanfrage</h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- Fortschrittsanzeige -->
+                        <div class="step-indicator mb-4">
+                            <div class="step active" id="step-1">
+                                <div class="step-number">1</div>
+                                <div class="step-title">Persönliche Daten</div>
+                            </div>
+                            <div class="step" id="step-2">
+                                <div class="step-number">2</div>
+                                <div class="step-title">Gesundheitsfragebogen</div>
+                            </div>
+                            <div class="step" id="step-3">
+                                <div class="step-number">3</div>
+                                <div class="step-title">Begünstigte und Bestätigung</div>
+                            </div>
+                        </div>
+                        <div id="alert-placeholder"></div> <!-- Platzhalter für Benachrichtigungen -->
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+
+                        <form id="offer-request-form" novalidate>
+                            <!-- SCHRITT 1: Persönliche Daten -->
+                            <div class="form-section active" id="section-1">
+                                <div class="subtitle">Persönliche Daten</div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="firstname" class="form-label required-field">Vorname</label>
+                                        <input type="text" class="form-control" id="firstname" name="firstname" required />
+                                        <div class="invalid-feedback">Bitte geben Sie Ihren Vornamen ein</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="lastname" class="form-label required-field">Nachname</label>
+                                        <input type="text" class="form-control" id="lastname" name="lastname" required />
+                                        <div class="invalid-feedback">Bitte geben Sie Ihren Nachnamen ein</div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="gender" class="form-label required-field">Geschlecht</label>
+                                        <select class="form-select" id="gender" name="gender" required>
+                                            <option value="" selected disabled>Auswählen...</option>
+                                            <option value="M">Männlich</option>
+                                            <option value="F">Weiblich</option>
+                                        </select>
+                                        <div class="invalid-feedback">Bitte wählen Sie Ihr Geschlecht</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="birthdate" class="form-label required-field">Geburtsdatum</label>
+                                        <input type="date" class="form-control" id="birthdate" name="birthdate" required />
+                                        <div class="invalid-feedback">Bitte geben Sie Ihr Geburtsdatum ein</div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="street" class="form-label required-field">Adresse</label>
+                                    <input type="text" class="form-control" id="street" name="street" required />
+                                    <div class="invalid-feedback">Bitte geben Sie Ihre Adresse ein</div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="zip" class="form-label required-field">Postleitzahl</label>
+                                        <input type="text" class="form-control" id="zip" name="zip" required pattern="\d{4}" />
+                                        <div class="invalid-feedback">Bitte geben Sie eine gültige Schweizer Postleitzahl ein (4 Ziffern)</div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="city" class="form-label required-field">Ort</label>
+                                        <input type="text" class="form-control" id="city" name="city" required />
+                                        <div class="invalid-feedback">Bitte geben Sie Ihren Ort ein</div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="country" class="form-label required-field">Land</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="country" name="country" value="Schweiz" readonly />
+                                            <input type="hidden" name="country_code" value="CH" />
+                                            <span class="input-group-text"><i class="bi bi-flag"></i></span>
+                                        </div>
+                                        <small class="text-muted">Nur für Schweizer Einwohner</small>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="email" class="form-label required-field">E-Mail</label>
+                                        <input type="email" class="form-control" id="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
+                                        <div class="invalid-feedback">Bitte geben Sie eine gültige E-Mail-Adresse ein</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="phone" class="form-label required-field">Telefon</label>
+                                        <input type="tel" class="form-control" id="phone" name="phone" required />
+                                        <div class="invalid-feedback">Bitte geben Sie eine gültige Telefonnummer ein</div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="nationality" class="form-label required-field">Nationalität</label>
+                                        <select class="form-select" id="nationality" name="nationality" required>
+                                            <option value="CH" selected>Schweiz</option>
+                                            <option value="IT">Italien</option>
+                                            <option value="DE">Deutschland</option>
+                                            <option value="FR">Frankreich</option>
+                                            <option value="AT">Österreich</option>
+                                        </select>
+                                        <div class="invalid-feedback">Bitte wählen Sie Ihre Nationalität</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="profession" class="form-label required-field">Beruf</label>
+                                        <input type="text" class="form-control" id="profession" name="profession" required />
+                                        <div class="invalid-feedback">Bitte geben Sie Ihren Beruf ein</div>
+                                    </div>
+                                </div>
+
+                                <div class="subtitle">Versicherungsdetails</div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="duration" class="form-label required-field">Laufzeit (Jahre)</label>
+                                        <input type="number" class="form-control" id="duration" name="duration" min="5" max="30" value="10" required />
+                                        <div class="invalid-feedback">Bitte geben Sie die Laufzeit in Jahren ein (mindestens 5, höchstens 30)</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="coverage" class="form-label required-field">Versicherungssumme (CHF)</label>
+                                        <input type="number" class="form-control" id="coverage" name="coverage" min="50000" max="600000" step="10000" value="100000" required />
+                                        <div class="invalid-feedback">Bitte geben Sie eine gültige Versicherungssumme ein (min 50'000, max 600'000)</div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="mode" class="form-label required-field">Zahlungsweise</label>
+                                        <select class="form-select" id="mode" name="mode" required>
+                                            <option value="annual" selected>Jährlich</option>
+                                            <option value="monthly">Monatlich</option>
+                                        </select>
+                                        <div class="invalid-feedback">Bitte wählen Sie die Zahlungsweise</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="payment_type" class="form-label required-field">Zahlungsart</label>
+                                        <select class="form-select" id="payment_type" name="payment_type" required>
+                                            <option value="invoice_esr" selected>E-Bill</option>
+                                            <option value="manual">Rechnung mit QR-Code</option>
+                                        </select>
+                                        <div class="invalid-feedback">Bitte wählen Sie die Zahlungsart</div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-end mt-4">
+                                    <button type="button" id="next-1" class="btn btn-primary">Weiter <i class="bi bi-arrow-right"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- SCHRITT 2: Gesundheitsfragebogen -->
+                            <div class="form-section" id="section-2">
+                                <div class="subtitle">Gesundheitsinformationen</div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="height" class="form-label required-field">Größe (cm)</label>
+                                        <input type="number" class="form-control" id="height" name="height" min="100" max="250" required />
+                                        <div class="invalid-feedback">Bitte geben Sie eine gültige Größe ein (zwischen 100 und 250 cm)</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="weight" class="form-label required-field">Gewicht (kg)</label>
+                                        <input type="number" class="form-control" id="weight" name="weight" min="30" max="200" required />
+                                        <div class="invalid-feedback">Bitte geben Sie ein gültiges Gewicht ein (zwischen 30 und 200 kg)</div>
+                                    </div>
+                                </div>
+
+                                <fieldset class="mb-3">
+                                    <legend class="form-label required-field" id="smoker_legend">Haben Sie in den letzten 2 Jahren regelmäßig oder gelegentlich Zigaretten, Zigarren, Pfeife oder E-Zigaretten geraucht?</legend>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="smoker_yes" name="smoker" value="yes" required />
+                                        <label class="form-check-label" for="smoker_yes">Ja</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="smoker_no" name="smoker" value="no" required />
+                                        <label class="form-check-label" for="smoker_no">Nein</label>
+                                    </div>
+                                    <div class="invalid-feedback">Bitte wählen Sie eine Antwort</div>
+                                </fieldset>
+
+                                <fieldset class="mb-3">
+                                    <legend class="form-label required-field" id="existing_insurance_legend">Haben Sie bereits andere reine Todesfallrisikoversicherungen?</legend>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="existing_insurance_yes" name="existing_insurance" value="yes" required />
+                                        <label class="form-check-label" for="existing_insurance_yes">Ja</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="existing_insurance_no" name="existing_insurance" value="no" required />
+                                        <label class="form-check-label" for="existing_insurance_no">Nein</label>
+                                    </div>
+                                    <div class="invalid-feedback">Bitte wählen Sie eine Antwort</div>
+                                    <div id="existing_insurance_details" class="conditional-field d-none mt-2">
+                                        <label for="existing_coverage" id="existing_coverage_label" class="form-label required-field">Bestehende Gesamtversicherungssumme (CHF)</label>
+                                        <input type="number" class="form-control" id="existing_coverage" name="existing_coverage" min="0" />
+                                        <div class="invalid-feedback">Bitte geben Sie die bestehende Versicherungssumme ein (oder 0).</div>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset class="mb-3">
+                                    <legend class="form-label required-field" id="medication_legend">Haben Sie in den letzten 5 Jahren über mehr als 4 aufeinanderfolgende Wochen Medikamente eingenommen oder wurden Ihnen solche verschrieben?</legend>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="medication_yes" name="medication" value="yes" required />
+                                        <label class="form-check-label" for="medication_yes">Ja</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="medication_no" name="medication" value="no" required />
+                                        <label class="form-check-label" for="medication_no">Nein</label>
+                                    </div>
+                                    <div class="invalid-feedback">Bitte wählen Sie eine Antwort</div>
+                                    <div id="medication_details" class="conditional-field d-none mt-2">
+                                        <fieldset class="mb-2">
+                                            <legend class="form-label required-field" id="medication_resolved_legend">Ist die zugrunde liegende Erkrankung seit mindestens 2 Jahren ohne Folgen geheilt?</legend>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" id="medication_resolved_yes" name="medication_resolved" value="yes" />
+                                                <label class="form-check-label" for="medication_resolved_yes">Ja</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" id="medication_resolved_no" name="medication_resolved" value="no" />
+                                                <label class="form-check-label" for="medication_resolved_no">Nein</label>
+                                            </div>
+                                            <div class="invalid-feedback">Bitte wählen Sie eine Antwort</div>
+                                        </fieldset>
+                                        <div>
+                                            <label for="medication_description" class="form-label">Beschreibung (erforderlich, wenn Sie die Hauptfrage mit Ja beantwortet haben):</label>
+                                            <textarea class="form-control" id="medication_description" name="medication_description" rows="2"></textarea>
+                                            <div class="invalid-feedback">Bitte geben Sie eine Beschreibung an.</div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset class="mb-3">
+                                    <legend class="form-label required-field" id="hypertension_legend">Haben Sie in den letzten 5 Jahren an Bluthochdruck gelitten?</legend>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="hypertension_yes" name="hypertension" value="yes" required />
+                                        <label class="form-check-label" for="hypertension_yes">Ja</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="hypertension_no" name="hypertension" value="no" required />
+                                        <label class="form-check-label" for="hypertension_no">Nein</label>
+                                    </div>
+                                    <div class="invalid-feedback">Bitte wählen Sie eine Antwort</div>
+                                </fieldset>
+
+                                <fieldset class="mb-3">
+                                    <legend class="form-label required-field" id="hospitalization_legend">Wurden Sie in den letzten 10 Jahren ins Krankenhaus eingeliefert?</legend>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="hospitalization_yes" name="hospitalization" value="yes" required />
+                                        <label class="form-check-label" for="hospitalization_yes">Ja</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="hospitalization_no" name="hospitalization" value="no" required />
+                                        <label class="form-check-label" for="hospitalization_no">Nein</label>
+                                    </div>
+                                    <div class="invalid-feedback">Bitte wählen Sie eine Antwort</div>
+                                    <div id="hospitalization_details" class="conditional-field d-none mt-2">
+                                        <fieldset>
+                                            <legend class="form-label required-field" id="hospitalization_resolved_legend">Ist die zugrunde liegende Erkrankung seit mindestens 2 Jahren ohne Folgen geheilt?</legend>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" id="hospitalization_resolved_yes" name="hospitalization_resolved" value="yes" />
+                                                <label class="form-check-label" for="hospitalization_resolved_yes">Ja</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" id="hospitalization_resolved_no" name="hospitalization_resolved" value="no" />
+                                                <label class="form-check-label" for="hospitalization_resolved_no">Nein</label>
+                                            </div>
+                                            <div class="invalid-feedback">Bitte wählen Sie eine Antwort</div>
+                                        </fieldset>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset class="mb-3">
+                                    <legend class="form-label required-field" id="planned_exam_legend">Ist derzeit eine Untersuchung geplant (EKG, Laboranalysen, Ultraschall, MRT usw.)?</legend>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="planned_exam_yes" name="planned_exam" value="yes" required />
+                                        <label class="form-check-label" for="planned_exam_yes">Ja</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="planned_exam_no" name="planned_exam" value="no" required />
+                                        <label class="form-check-label" for="planned_exam_no">Nein</label>
+                                    </div>
+                                    <div class="invalid-feedback">Bitte wählen Sie eine Antwort</div>
+                                </fieldset>
+
+                                <fieldset class="mb-3">
+                                    <legend class="form-label required-field" id="drugs_legend">Haben Sie in den letzten 5 Jahren Betäubungsmittel oder Drogen konsumiert oder wurden Sie diesbezüglich beraten oder behandelt?</legend>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="drugs_yes" name="drugs" value="yes" required />
+                                        <label class="form-check-label" for="drugs_yes">Ja</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="drugs_no" name="drugs" value="no" required />
+                                        <label class="form-check-label" for="drugs_no">Nein</label>
+                                    </div>
+                                    <div class="invalid-feedback">Bitte wählen Sie eine Antwort</div>
+                                </fieldset>
+
+                                <fieldset class="mb-3">
+                                    <legend class="form-label required-field" id="hiv_legend">Wurde bei Ihnen jemals eine HIV-Infektion diagnostiziert (positiver AIDS-Test) oder warten Sie auf ein Testergebnis?</legend>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="hiv_yes" name="hiv" value="yes" required />
+                                        <label class="form-check-label" for="hiv_yes">Ja</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="hiv_no" name="hiv" value="no" required />
+                                        <label class="form-check-label" for="hiv_no">Nein</label>
+                                    </div>
+                                    <div class="invalid-feedback">Bitte wählen Sie eine Antwort</div>
+                                </fieldset>
+
+                                <fieldset class="mb-3">
+                                    <legend class="form-label required-field" id="foreign_stay_legend">Planen Sie in den nächsten 12 Monaten einen Auslandsaufenthalt von mehr als 6 Wochen? (Außerhalb der EU, der Schweiz, Island, Norwegen, USA, Kanada)</legend>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="foreign_stay_yes" name="foreign_stay" value="yes" required />
+                                        <label class="form-check-label" for="foreign_stay_yes">Ja</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="foreign_stay_no" name="foreign_stay" value="no" required />
+                                        <label class="form-check-label" for="foreign_stay_no">Nein</label>
+                                    </div>
+                                    <div class="invalid-feedback">Bitte wählen Sie eine Antwort</div>
+                                </fieldset>
+
+                                <fieldset class="mb-3">
+                                    <legend class="form-label required-field" id="dangerous_hobby_legend">Sind Sie bei Ihrer Arbeit oder in Ihrer Freizeit besonderen Gefahren ausgesetzt? (z.B. Umgang mit Sprengstoff oder Waffen, persönlicher Schutz, Aufenthalt in Krisengebieten, Autorennen, Luftsport, Bergsteigen, Klettern, Kampfsport, Extremsport, Tauchen)</legend>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="dangerous_hobby_yes" name="dangerous_hobby" value="yes" required />
+                                        <label class="form-check-label" for="dangerous_hobby_yes">Ja</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="dangerous_hobby_no" name="dangerous_hobby" value="no" required />
+                                        <label class="form-check-label" for="dangerous_hobby_no">Nein</label>
+                                    </div>
+                                    <div class="invalid-feedback">Bitte wählen Sie eine Antwort</div>
+                                </fieldset>
+
+                                <fieldset class="mb-3">
+                                    <legend class="form-label required-field" id="pension_legend">Erhalten Sie eine Rente oder ein Taggeld von der Invalidenversicherung oder einer Unfallversicherung?</legend>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="pension_yes" name="pension" value="yes" required />
+                                        <label class="form-check-label" for="pension_yes">Ja</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="pension_no" name="pension" value="no" required />
+                                        <label class="form-check-label" for="pension_no">Nein</label>
+                                    </div>
+                                    <div class="invalid-feedback">Bitte wählen Sie eine Antwort</div>
+                                </fieldset>
+
+                                <fieldset class="mb-3">
+                                    <legend class="form-label required-field" id="work_absence_legend">Hatten Sie in den letzten 5 Jahren krankheitsbedingt Arbeitsausfälle von mehr als einem Monat?</legend>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="work_absence_yes" name="work_absence" value="yes" required />
+                                        <label class="form-check-label" for="work_absence_yes">Ja</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="work_absence_no" name="work_absence" value="no" required />
+                                        <label class="form-check-label" for="work_absence_no">Nein</label>
+                                    </div>
+                                    <div class="invalid-feedback">Bitte wählen Sie eine Antwort</div>
+                                    <div id="work_absence_details" class="conditional-field d-none mt-2">
+                                        <fieldset>
+                                            <legend class="form-label required-field" id="work_absence_resolved_legend">Ist der Zustand seit mindestens 2 Jahren ohne Behandlung behoben?</legend>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" id="work_absence_resolved_yes" name="work_absence_resolved" value="yes" />
+                                                <label class="form-check-label" for="work_absence_resolved_yes">Ja</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" id="work_absence_resolved_no" name="work_absence_resolved" value="no" />
+                                                <label class="form-check-label" for="work_absence_resolved_no">Nein</label>
+                                            </div>
+                                            <div class="invalid-feedback">Bitte wählen Sie eine Antwort</div>
+                                        </fieldset>
+                                    </div>
+                                </fieldset>
+
+                                <div class="subtitle">Medizinische Bedingungen</div>
+
+                                <fieldset class="mb-3">
+                                    <legend class="form-label">Haben Sie in den letzten 5 Jahren an einer der folgenden Erkrankungen gelitten? (Wählen Sie alle zutreffenden aus)</legend>
+
+                                    <!-- KORREKTUR HIER ANGEWENDET: Korrekte HTML-Struktur und Text-Label mit Umlauten -->
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input condition-checkbox" type="checkbox" id="heart_disease" name="medical_conditions[]" value="heart_disease">
+                                        <label class="form-check-label" for="heart_disease">Herzprobleme oder Herzinfarkt</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input condition-checkbox" type="checkbox" id="stroke" name="medical_conditions[]" value="stroke">
+                                        <label class="form-check-label" for="stroke">Schlaganfall</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input condition-checkbox" type="checkbox" id="diabetes" name="medical_conditions[]" value="diabetes">
+                                        <label class="form-check-label" for="diabetes">Diabetes</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input condition-checkbox" type="checkbox" id="cancer" name="medical_conditions[]" value="cancer">
+                                        <label class="form-check-label" for="cancer">Krebs</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input condition-checkbox" type="checkbox" id="respiratory" name="medical_conditions[]" value="respiratory">
+                                        <label class="form-check-label" for="respiratory">Chronische Atemwegserkrankungen (z.B. COPD, Emphysem)</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input condition-checkbox" type="checkbox" id="liver" name="medical_conditions[]" value="liver">
+                                        <label class="form-check-label" for="liver">Lebererkrankungen</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input condition-checkbox" type="checkbox" id="kidney" name="medical_conditions[]" value="kidney">
+                                        <label class="form-check-label" for="kidney">Nierenerkrankungen</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input condition-checkbox" type="checkbox" id="epilepsy" name="medical_conditions[]" value="epilepsy">
+                                        <label class="form-check-label" for="epilepsy">Epilepsie</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input condition-checkbox" type="checkbox" id="multiple_sclerosis" name="medical_conditions[]" value="multiple_sclerosis">
+                                        <label class="form-check-label" for="multiple_sclerosis">Multiple Sklerose</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input condition-checkbox" type="checkbox" id="mental_health" name="medical_conditions[]" value="mental_health">
+                                        <label class="form-check-label" for="mental_health">Psychische Erkrankungen</label>
+                                    </div>
+                                    <!-- Ende Checkbox-Korrektur -->
+
+                                    <div id="condition_details" class="conditional-field d-none mt-3">
+                                        <label for="condition_notes" id="condition_notes_label" class="form-label required-field">Bitte geben Sie Details zu den ausgewählten Erkrankungen an:</label>
+                                        <textarea class="form-control" id="condition_notes" name="condition_notes" rows="3"></textarea>
+                                        <div class="invalid-feedback">Bitte geben Sie Details zu den ausgewählten Erkrankungen an.</div>
+                                    </div>
+                                </fieldset>
+
+                                <div class="d-flex justify-content-between mt-4">
+                                    <button type="button" id="prev-2" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Zurück</button>
+                                    <button type="button" id="next-2" class="btn btn-primary">Weiter <i class="bi bi-arrow-right"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- SCHRITT 3: Begünstigte und Bestätigung -->
+                            <div class="form-section" id="section-3">
+                                <div class="subtitle">Begünstigte</div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <label for="beneficiary_type" class="form-label required-field">Art des Begünstigten</label>
+                                        <select class="form-select" id="beneficiary_type" name="beneficiary_type" required>
+                                            <option value="" selected disabled>Auswählen...</option>
+                                            <option value="legal">Ehepartner</option>
+                                            <option value="child">Kinder (gemeinsam)</option>
+                                            <option value="parents">Eltern (gemeinsam)</option>
+                                            <option value="custom">Andere (bitte angeben)</option>
+                                        </select>
+                                        <div class="invalid-feedback">Bitte wählen Sie die Art des Begünstigten</div>
+                                    </div>
+                                </div>
+
+                                <div id="other_beneficiary" class="conditional-field d-none">
+                                    <div id="beneficiary-list">
+                                        <div class="beneficiary-container" data-index="0">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <h6 class="mb-0">Begünstigter #1</h6>
+                                                <button type="button" class="btn btn-sm btn-outline-danger remove-beneficiary d-none" data-index="0"><i class="bi bi-trash"></i> Entfernen</button>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label for="beneficiary_firstname_0" class="form-label required-field">Vorname</label>
+                                                    <input type="text" class="form-control" id="beneficiary_firstname_0" name="beneficiary_firstname_0" data-beneficiary-firstname />
+                                                    <div class="invalid-feedback">Bitte geben Sie den Vornamen des Begünstigten ein.</div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="beneficiary_lastname_0" class="form-label required-field">Nachname</label>
+                                                    <input type="text" class="form-control" id="beneficiary_lastname_0" name="beneficiary_lastname_0" data-beneficiary-lastname />
+                                                    <div class="invalid-feedback">Bitte geben Sie den Nachnamen des Begünstigten ein.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-8">
+                                                    <label for="beneficiary_relation_0" class="form-label">Beziehung zum Versicherten</label>
+                                                    <input type="text" class="form-control" id="beneficiary_relation_0" name="beneficiary_relation_0" data-beneficiary-relation />
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="beneficiary_percentage_0" class="form-label required-field">Prozentsatz (%)</label>
+                                                    <input type="number" class="form-control beneficiary-percentage" id="beneficiary_percentage_0" name="beneficiary_percentage_0" min="1" max="100" value="100" required data-beneficiary-percentage />
+                                                    <div class="invalid-feedback">Bitte geben Sie einen gültigen Prozentsatz ein (1-100).</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <template id="beneficiary-template">
+                                        <div class="beneficiary-container" data-index="{INDEX}">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <h6 class="mb-0">Begünstigter #{NUMBER}</h6>
+                                                <button type="button" class="btn btn-sm btn-outline-danger remove-beneficiary" data-index="{INDEX}"><i class="bi bi-trash"></i> Entfernen</button>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label for="beneficiary_firstname_{INDEX}" class="form-label required-field">Vorname</label>
+                                                    <input type="text" class="form-control" id="beneficiary_firstname_{INDEX}" name="beneficiary_firstname_{INDEX}" required data-beneficiary-firstname />
+                                                    <div class="invalid-feedback">Bitte geben Sie den Vornamen des Begünstigten ein.</div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="beneficiary_lastname_{INDEX}" class="form-label required-field">Nachname</label>
+                                                    <input type="text" class="form-control" id="beneficiary_lastname_{INDEX}" name="beneficiary_lastname_{INDEX}" required data-beneficiary-lastname />
+                                                    <div class="invalid-feedback">Bitte geben Sie den Nachnamen des Begünstigten ein.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-8">
+                                                    <label for="beneficiary_relation_{INDEX}" class="form-label">Beziehung zum Versicherten</label>
+                                                    <input type="text" class="form-control" id="beneficiary_relation_{INDEX}" name="beneficiary_relation_{INDEX}" data-beneficiary-relation />
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="beneficiary_percentage_{INDEX}" class="form-label required-field">Prozentsatz (%)</label>
+                                                    <input type="number" class="form-control beneficiary-percentage" id="beneficiary_percentage_{INDEX}" name="beneficiary_percentage_{INDEX}" min="1" max="100" required data-beneficiary-percentage />
+                                                    <div class="invalid-feedback">Bitte geben Sie einen gültigen Prozentsatz ein (1-100).</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <div class="alert alert-info mb-3" id="percentage-info" role="alert" aria-live="polite">Zugewiesener Gesamtprozentsatz: <strong id="total-percentage">100</strong>%</div>
+                                    <div class="text-center mb-3">
+                                        <button type="button" id="add-beneficiary" class="btn btn-outline-primary"><i class="bi bi-plus-circle"></i> Begünstigten hinzufügen</button>
+                                    </div>
+                                </div>
+
+                                <div class="subtitle">Einwilligungen und Erklärungen</div>
+
+                                <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" id="privacy_consent" name="privacy_consent" required />
+                                    <label id="privacy_consent_label" class="form-check-label required-field" for="privacy_consent">Ich habe die Datenschutzrichtlinie gelesen und akzeptiere die Verarbeitung meiner personenbezogenen Daten für die angegebenen Zwecke.</label>
+                                    <div class="invalid-feedback">Sie müssen die Datenschutzrichtlinie akzeptieren</div>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" id="terms_consent" name="terms_consent" required />
+                                    <label id="terms_consent_label" class="form-check-label required-field" for="terms_consent">Ich erkläre, dass die angegebenen Informationen wahrheitsgemäß und vollständig sind, und akzeptiere die Allgemeinen Geschäftsbedingungen.</label>
+                                    <div class="invalid-feedback">Sie müssen die Allgemeinen Geschäftsbedingungen akzeptieren</div>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" id="mandate_consent" name="mandate_consent" required />
+                                    <label id="mandate_consent_label" class="form-check-label required-field" for="mandate_consent">Ich erteile Lifensure SA ein <a href="https://drive.google.com/file/d/1AxCtrTTlQ5iw7mkiGvjO660GmFkJf01z/view " target="_blank" rel="noopener noreferrer">nicht ausschließliches Mandat</a> zur Vermittlung von Versicherungsdienstleistungen.</label>
+                                    <div class="invalid-feedback">Die Erteilung des Mandats ist erforderlich, um fortzufahren</div>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" id="marketing_consent" name="marketing_consent" />
+                                    <label id="marketing_consent_label" class="form-check-label" for="marketing_consent">Ich bin damit einverstanden, kommerzielle und werbliche Mitteilungen zu erhalten, auch von Dritten (optional).</label>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="notes" class="form-label">Zusätzliche Hinweise (optional)</label>
+                                    <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                                </div>
+
+                                <div class="d-flex justify-content-between mt-4">
+                                    <button type="button" id="prev-3" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Zurück</button>
+                                    <button type="submit" id="submit-form" class="btn btn-success"><i class="bi bi-check-lg"></i> Anfrage senden</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Danksagung -->
+                        <div class="thank-you-message" id="thank-you">
+                            <div class="alert alert-success mb-4" id="thank-you-alert">
+                                <h4 class="alert-heading">Vielen Dank für Ihre Anfrage!</h4>
+                                <p>Ihre Angebotsanfrage wurde erfolgreich übermittelt. Sie erhalten eine Bestätigungs-E-Mail an die angegebene Adresse.</p>
+                                <hr />
+                            </div>
+                            <p>Referenznummer: <strong id="reference-number">-</strong></p>
+                            <div class="card mt-4" id="documents-section" style="display: none;">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">Zusammenfassende Dokumente</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>Bevor Sie mit der Ausstellung der Police fortfahren, sehen Sie sich bitte die folgenden Dokumente an und laden sie herunter:</p>
+                                    <div class="progress download-progress">
+                                        <div id="documents-progress-bar" class="progress-bar bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="document-list" id="document-container">
+                                        <div class="text-center p-4" id="documents-loading">
+                                            <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Dokumente werden geladen...</span></div>
+                                            <p class="mt-3">Dokumente werden abgerufen...</p>
+                                        </div>
+                                    </div>
+                                    <div class="status-message" id="download-status"><i class="bi bi-info-circle"></i> Sehen Sie sich <span class="highlight-text">alle Dokumente</span> an und laden Sie sie herunter, um mit der Ausstellung der Police fortzufahren.</div>
+                                    <div class="d-grid gap-2 mt-4">
+                                        <button id="proceed-button" class="btn btn-success btn-lg proceed-btn disabled" disabled><i class="bi bi-lock-fill proceed-lock"></i> Mit der Ausstellung der Police fortfahren</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" id="new-request" class="btn btn-link mt-3">Neue Anfrage stellen</button>
+                        </div>
+
+                        <!-- Modal zur Dokumentenanzeige -->
+                        <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="documentModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="documentModalLabel">Dokument anzeigen</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="document-content-modal" id="document-content"></div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+                                        <button type="button" class="btn btn-primary" id="modal-download-btn"><i class="bi bi-download"></i> Herunterladen</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- Ende card-body -->
+                </div><!-- Ende card -->
+            </div><!-- Ende col -->
+        </div><!-- Ende row -->
+    </div><!-- Ende container -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // JavaScript-Code bleibt gleich wie in der vorherigen korrigierten Version
+      // Er verwaltet korrekt sessionStorage, Validierung, Navigation, bedingte Felder,
+      // Begünstigte, Dokument-Anzeige/Download-Simulation und Formular-Übermittlungs-Simulation.
+      // Die loadDataFromPreviousModule-Funktion verwendet den korrekten Schlüssel "datiPreventivo"
+      // und richtet sich an die korrekten Element-IDs.
+      // Die HTML-Entities sollten jetzt akzentuierte Zeichen korrekt darstellen.
+      // Die medizinische Checkbox-Struktur ist im HTML oben korrigiert.
+      document.addEventListener("DOMContentLoaded", function () {
+        // --- KONSTANTEN UND GLOBALE VARIABLEN ---
+        const BMI_UNDERWEIGHT_THRESHOLD = 18.5; // Standard WHO-Schwelle
+        const BMI_OBESE_THRESHOLD = 40; // Hohe Schwelle für mögliche Überprüfung
+
+        const form = document.getElementById("offer-request-form");
+        const sections = document.querySelectorAll(".form-section");
+        const progressBar = document.querySelector(".progress-bar");
+        const steps = document.querySelectorAll(".step");
+        const thankYouMessage = document.getElementById("thank-you");
+        const thankYouAlert = document.getElementById("thank-you-alert");
+        const documentsSection = document.getElementById("documents-section");
+
+        // Navigationsschaltflächen
+        const nextBtn1 = document.getElementById("next-1");
+        const nextBtn2 = document.getElementById("next-2");
+        const prevBtn2 = document.getElementById("prev-2");
+        const prevBtn3 = document.getElementById("prev-3");
+        const submitBtn = document.getElementById("submit-form");
+        const newRequestBtn = document.getElementById("new-request");
+
+        // Elemente für Dokumentenverwaltung
+        const documentContainer = document.getElementById("document-container");
+        const documentsLoading = document.getElementById("documents-loading");
+        const progressDocuments = document.getElementById(
+          "documents-progress-bar"
+        );
+        const proceedButton = document.getElementById("proceed-button");
+        const downloadStatus = document.getElementById("download-status");
+        const documentModalElement = document.getElementById("documentModal");
+        const documentModal = new bootstrap.Modal(documentModalElement);
+        const documentContent = document.getElementById("document-content");
+        const documentModalLabel =
+          document.getElementById("documentModalLabel");
+        const modalDownloadBtn = document.getElementById("modal-download-btn");
+
+        // Elemente für bedingte Felder
+        const existingInsuranceRadios = document.querySelectorAll(
+          'input[name="existing_insurance"]'
+        );
+        const existingInsuranceDetails = document.getElementById(
+          "existing_insurance_details"
+        );
+        const existingCoverageInput =
+          document.getElementById("existing_coverage");
+
+        const medicationRadios = document.querySelectorAll(
+          'input[name="medication"]'
+        );
+        const medicationDetails = document.getElementById("medication_details");
+        const medicationDescription = document.getElementById(
+          "medication_description"
+        );
+        const medicationResolvedRadios = medicationDetails.querySelectorAll(
+          'input[name="medication_resolved"]'
+        );
+
+        const hospitalizationRadios = document.querySelectorAll(
+          'input[name="hospitalization"]'
+        );
+        const hospitalizationDetails = document.getElementById(
+          "hospitalization_details"
+        );
+        const hospitalizationResolvedRadios =
+          hospitalizationDetails.querySelectorAll(
+            'input[name="hospitalization_resolved"]'
+          );
+
+        const workAbsenceRadios = document.querySelectorAll(
+          'input[name="work_absence"]'
+        );
+        const workAbsenceDetails = document.getElementById(
+          "work_absence_details"
+        );
+        const workAbsenceResolvedRadios = workAbsenceDetails.querySelectorAll(
+          'input[name="work_absence_resolved"]'
+        );
+
+        const conditionCheckboxes = document.querySelectorAll(
+          ".condition-checkbox" // Selektor bleibt gleich
+        );
+        const conditionDetails = document.getElementById("condition_details");
+        const conditionNotes = document.getElementById("condition_notes");
+
+        // Begünstigten-Elemente
+        const beneficiaryTypeSelect =
+          document.getElementById("beneficiary_type");
+        const otherBeneficiarySection =
+          document.getElementById("other_beneficiary");
+        const beneficiaryList = document.getElementById("beneficiary-list");
+        const beneficiaryTemplate = document.getElementById(
+          "beneficiary-template"
+        );
+        const addBeneficiaryBtn = document.getElementById("add-beneficiary");
+        const totalPercentageDisplay =
+          document.getElementById("total-percentage");
+        const percentageInfoAlert = document.getElementById("percentage-info");
+        const inputBirthday = document.getElementById("birthdate");
+        // Annahme, dass die checkAge-Funktion existiert und geladen ist (z.B. aus assets/api/check-age.js)
+        // if (inputBirthday && typeof checkAge === 'function') {
+        //   checkAge(inputBirthday);
+        //   console.log("Altersüberprüfung durchgeführt.");
+        // }
+
+        // Interner Zustand
+        let currentStep = 1;
+        let beneficiaryCount = 1; // Beginnt bei 1, da der erste immer vorhanden ist
+        let beneficiaryIndexes = [0]; // Verfolgt die Indizes der aktiven Begünstigten
+        let documentsViewed = 0;
+        let documentsDownloaded = 0;
+        let totalDocuments = 4; // Standardwert, wird aktualisiert
+        let documentTypes = []; // Wird durch die Simulation/API gefüllt
+        let sessionStorageAvailable = false; // Indikator für die Verfügbarkeit von sessionStorage
+
+        // --- BROWSER-FUNKTIONEN PRÜFEN ---
+        try {
+          sessionStorage.setItem("test", "test");
+          sessionStorage.removeItem("test");
+          sessionStorageAvailable = true;
+        } catch (e) {
+          console.warn("SessionStorage ist nicht verfügbar oder zugänglich.");
+          // Es könnte nützlich sein, den Benutzer zu benachrichtigen
+          // alert("Achtung: Die automatische Speicherfunktion funktioniert möglicherweise nicht korrekt in Ihrem Browser.");
+        }
+
+        // --- SIMULIERTE API-FUNKTIONEN (DURCH ECHTE BACKEND-AUFRUFE ZU ERSETZEN) ---
+        // HINWEIS: Diese simulierten Funktionen werden für die Struktur beibehalten, würden aber
+        // echte Backend-Implementierungen benötigen, die sicher mit der Squarelife-API kommunizieren.
+        // Die in HTML erwähnten JS-Dateien (richiedi-oferta.js usw.) würden
+        // wahrscheinlich die tatsächlichen Implementierungen oder Aufrufe an Ihr Backend enthalten.
+
+        /**
+         * SIMULATION: Ruft Dokumente ab.
+         */
+        async function getDocumentsFromAPI(referenceNumber, userData) {
+           console.log("Simuliere API-Aufruf zum Abrufen von Dokumenten für Ref:", referenceNumber, "Benutzer:", userData);
+           await new Promise(resolve => setTimeout(resolve, 500));
+           const simulatedDocs = [
+                { id: 'summary', title: 'Angebotszusammenfassung', description: 'Details Ihrer Anfrage.', url: '#', contentUrl: '#', viewed: false, downloaded: false },
+                { id: 'terms', title: 'Allgemeine Geschäftsbedingungen', description: 'Allgemeine Versicherungsbedingungen.', url: '#', contentUrl: '#', viewed: false, downloaded: false },
+                { id: 'privacy', title: 'Datenschutzrichtlinie', description: 'Verarbeitung Ihrer personenbezogenen Daten.', url: '#', contentUrl: '#', viewed: false, downloaded: false },
+                { id: 'conditions', title: 'Besondere Bedingungen', description: 'Spezifische Bedingungen Ihres Angebots.', url: '#', contentUrl: '#', viewed: false, downloaded: false }
+           ];
+           return simulatedDocs;
+        }
+
+
+        /**
+         * SIMULATION: Ruft den Inhalt eines Dokuments für das Modal ab.
+         */
+        async function getDocumentContentFromAPI(documentId, referenceNumber) {
+          console.log(
+            "Simuliere API-Aufruf für Dokumentinhalt:",
+            documentId,
+            "für Ref:", 
+            referenceNumber
+          );
+          await new Promise(resolve => setTimeout(resolve, 300));
+          let content = `<p class="text-center">Simulierter Inhalt für Dokument: <strong>${documentId}</strong>.</p>`; 
+          if (documentId === 'privacy') {
+              content += `<p>Dies ist ein Beispiel für eine Datenschutzrichtlinie. Ihre Daten werden gemäß DSGVO und DSG verarbeitet.</p>`; 
+          } else if (documentId === 'terms') {
+              content += `<p>Artikel 1: Definitionen...</p><p>Artikel 2: Verpflichtungen...</p>`; 
+          } else {
+              content += `<p>Dieses Dokument enthält wichtige Informationen zu Ihrer Anfrage.</p>`
+          }
+          const pdfUrl = `https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf#${documentId}`;
+          const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+          if (isMobile) {
+             return `<p class="text-center">Die PDF-Datei sollte sich öffnen. Auf mobilen Geräten funktioniert die integrierte Vorschau möglicherweise nicht. <a href="${pdfUrl}" target="_blank" class="btn btn-link">PDF öffnen</a></p>`; 
+          } else {
+            return `<iframe src="${pdfUrl}" style="width:100%; height:70vh;" frameborder="0"></iframe>`;
+          }
+        }
+
+        /**
+         * SIMULATION: Lädt ein Dokument herunter.
+         */
+        async function downloadDocumentFromAPI(documentId, referenceNumber) {
+          console.log(
+            "Simuliere API-Aufruf zum Herunterladen des Dokuments:", 
+            documentId,
+            "für Ref:", 
+            referenceNumber
+          );
+          await new Promise(resolve => setTimeout(resolve, 400));
+          const simulatedUrl = `https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf#${documentId}`;
+          return simulatedUrl;
+        }
+
+        // --- FUNKTIONEN ZUR DOKUMENTENVERWALTUNG ---
+
+        function createDocumentElements() {
+          documentContainer.innerHTML = "";
+          documentsLoading.style.display = "none";
+          if (!documentTypes || documentTypes.length === 0) {
+            documentContainer.innerHTML = '<div class="alert alert-warning">Keine Dokumente zum Anzeigen.</div>'; 
+            return;
+          }
+          documentTypes.forEach((doc) => {
+            const documentItem = document.createElement("div");
+            documentItem.className = "document-item";
+            documentItem.dataset.docId = doc.id;
+            const icon = getDocumentIcon(doc.id);
+            let viewedBadge = `<span class="badge bg-warning badge-document viewed-badge"><i class="bi bi-eye-slash"></i> Nicht angesehen</span>`; 
+            let downloadedBadge = `<span class="badge bg-danger badge-document downloaded-badge"><i class="bi bi-x-circle"></i> Nicht heruntergeladen</span>`; 
+            documentItem.innerHTML = `
+            <div class="document-icon"><i class="bi ${icon}"></i></div>
+            <div class="document-details">
+              <h5 class="document-title">${doc.title || "Dokument ohne Titel"}</h5>
+              <p class="document-description">${doc.description || ""}</p>
+              <div>${viewedBadge}${downloadedBadge}</div>
+            </div>
+            <div class="document-actions">
+              <button class="btn btn-primary btn-sm view-document" data-doc-id="${doc.id}"><i class="bi bi-eye"></i> Ansehen</button>
+              <button class="btn btn-success btn-sm download-document" data-doc-id="${doc.id}" disabled><i class="bi bi-download"></i> Herunterladen</button> 
+            </div>`;
+            documentContainer.appendChild(documentItem);
+            updateDocumentUI(doc.id);
+          });
+          setupDocumentListeners();
+        }
+
+        function setupDocumentListeners() {
+          document.querySelectorAll(".view-document").forEach((button) => {
+            button.replaceWith(button.cloneNode(true));
+          });
+          document.querySelectorAll(".download-document").forEach((button) => {
+            button.replaceWith(button.cloneNode(true));
+          });
+          document.querySelectorAll(".view-document").forEach((button) => {
+            button.addEventListener("click", function () { showDocumentInModal(this.dataset.docId); });
+          });
+          document.querySelectorAll(".download-document").forEach((button) => {
+            button.addEventListener("click", function () { downloadDocument(this.dataset.docId); });
+          });
+        }
+
+        async function showDocumentInModal(docId) {
+          const documentData = documentTypes.find((doc) => doc.id === docId);
+          if (!documentData) return;
+          documentModalLabel.textContent = documentData.title || "Dokument ansehen";
+          documentContent.innerHTML = `<div class="text-center p-4"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Wird geladen...</span></div><p class="mt-3">Dokument wird geladen...</p></div>`;
+          documentModal.show();
+          try {
+            const referenceNumber = sessionStorageAvailable ? sessionStorage.getItem("referenceNumber") : null;
+            if (!referenceNumber) throw new Error("Referenznummer nicht gefunden."); 
+            const content = await getDocumentContentFromAPI(docId, referenceNumber);
+            documentContent.innerHTML = content;
+            modalDownloadBtn.dataset.docId = docId;
+            modalDownloadBtn.disabled = documentData.downloaded;
+            modalDownloadBtn.innerHTML = documentData.downloaded ? '<i class="bi bi-check"></i> Bereits heruntergeladen' : '<i class="bi bi-download"></i> Herunterladen'; 
+            modalDownloadBtn.replaceWith(modalDownloadBtn.cloneNode(true));
+            const refreshedModalDownloadBtn = document.getElementById("modal-download-btn");
+            refreshedModalDownloadBtn.dataset.docId = docId;
+            refreshedModalDownloadBtn.disabled = documentData.downloaded;
+            refreshedModalDownloadBtn.innerHTML = documentData.downloaded ? '<i class="bi bi-check"></i> Bereits heruntergeladen' : '<i class="bi bi-download"></i> Herunterladen'; 
+            refreshedModalDownloadBtn.addEventListener("click", function () { downloadDocument(docId); documentModal.hide(); });
+            if (!documentData.viewed) {
+              documentData.viewed = true;
+              documentsViewed = documentTypes.filter((d) => d.viewed).length;
+              updateDocumentUI(docId);
+              updateProgressBarAndStatus();
+              saveDocumentState();
+            }
+          } catch (error) {
+            console.error("Fehler beim Laden des Dokumentinhalts:", error);
+            documentContent.innerHTML = `<div class="alert alert-danger"><h5>Ladefehler</h5><p>Der Inhalt konnte nicht geladen werden. Sie können versuchen, ihn herunterzuladen.</p><p><small>${error.message}</small></p></div>`; 
+            modalDownloadBtn.disabled = true;
+            modalDownloadBtn.innerHTML = '<i class="bi bi-download"></i> Herunterladen'; 
+          }
+        }
+
+        async function downloadDocument(docId) {
+          const documentData = documentTypes.find((doc) => doc.id === docId);
+          if (!documentData || documentData.downloaded) return;
+          const downloadBtn = document.querySelector(`.download-document[data-doc-id="${docId}"]`);
+          if (!downloadBtn) return;
+          downloadBtn.disabled = true;
+          downloadBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Wird heruntergeladen...'; 
+          try {
+            const referenceNumber = sessionStorageAvailable ? sessionStorage.getItem("referenceNumber") : null;
+            if (!referenceNumber) throw new Error("Referenznummer nicht gefunden."); 
+            const downloadData = await downloadDocumentFromAPI(docId, referenceNumber);
+            if (typeof downloadData === "string") {
+              const link = document.createElement("a");
+              link.href = downloadData;
+              link.download = `${(documentData.title || docId).replace(/\s+/g, "_")}.pdf`;
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            } else {
+              throw new Error("Format wird nicht von der Simulation unterstützt."); 
+            }
+            documentData.downloaded = true;
+            documentsDownloaded = documentTypes.filter((d) => d.downloaded).length;
+            updateDocumentUI(docId);
+            updateProgressBarAndStatus();
+            checkAllDocumentsDownloaded();
+            saveDocumentState();
+          } catch (error) {
+            console.error("Fehler beim Herunterladen (simuliert):", error); 
+            alert(`Fehler beim Herunterladen des Dokuments: ${error.message}. Bitte versuchen Sie es später erneut.`); 
+            if (!documentData.downloaded) {
+              downloadBtn.disabled = !documentData.viewed;
+              downloadBtn.innerHTML = '<i class="bi bi-download"></i> Herunterladen'; 
+            }
+          }
+        }
+
+        function updateDocumentUI(docId) {
+          const docElement = document.querySelector(`.document-item[data-doc-id="${docId}"]`);
+          if (!docElement) return;
+          const documentData = documentTypes.find((doc) => doc.id === docId);
+          if (!documentData) return;
+          const viewedBadge = docElement.querySelector(".viewed-badge");
+          const downloadedBadge = docElement.querySelector(".downloaded-badge");
+          const downloadBtn = docElement.querySelector(".download-document");
+          if (viewedBadge) {
+            viewedBadge.className = `badge badge-document viewed-badge ${documentData.viewed ? "bg-success" : "bg-warning"}`;
+            viewedBadge.innerHTML = documentData.viewed ? '<i class="bi bi-eye-fill"></i> Angesehen' : '<i class="bi bi-eye-slash"></i> Nicht angesehen'; 
+          }
+          if (downloadedBadge) {
+            downloadedBadge.className = `badge badge-document downloaded-badge ${documentData.downloaded ? "bg-success" : "bg-danger"}`;
+            downloadedBadge.innerHTML = documentData.downloaded ? '<i class="bi bi-check-circle"></i> Heruntergeladen' : '<i class="bi bi-x-circle"></i> Nicht heruntergeladen'; 
+          }
+          if (downloadBtn) {
+            downloadBtn.disabled = !documentData.viewed || documentData.downloaded;
+            downloadBtn.innerHTML = documentData.downloaded ? '<i class="bi bi-check"></i> Heruntergeladen' : '<i class="bi bi-download"></i> Herunterladen'; 
+          }
+        }
+
+        function updateProgressBarAndStatus() {
+          if (totalDocuments === 0) return;
+          documentsViewed = documentTypes.filter((d) => d.viewed).length;
+          documentsDownloaded = documentTypes.filter((d) => d.downloaded).length;
+          const percentage = Math.floor((documentsDownloaded / totalDocuments) * 100);
+          progressDocuments.style.width = percentage + "%";
+          progressDocuments.setAttribute("aria-valuenow", percentage);
+          updateStatusMessage();
+        }
+
+        function updateStatusMessage() {
+           if (!downloadStatus) return;
+           if (totalDocuments === 0) {
+                downloadStatus.innerHTML = '<i class="bi bi-info-circle"></i> Keine Dokumente verfügbar.';
+                return;
+           }
+           if (documentsDownloaded === 0) {
+                downloadStatus.innerHTML = `<i class="bi bi-info-circle"></i> Sehen Sie sich <span class="highlight-text">${totalDocuments} Dokumente</span> an und laden Sie sie herunter, um fortzufahren.`; 
+           } else if (documentsDownloaded < totalDocuments) {
+                const remaining = totalDocuments - documentsDownloaded;
+                downloadStatus.innerHTML = `<i class="bi bi-exclamation-circle"></i> Sie haben <span class="highlight-text">${documentsDownloaded} von ${totalDocuments}</span> Dokumenten heruntergeladen. Es fehlen noch ${remaining}.`; 
+           } else {
+                downloadStatus.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> <span class="highlight-text">Alle Dokumente wurden heruntergeladen</span>. Sie können fortfahren.'; 
+           }
+        }
+
+        proceedButton.addEventListener("click", handleProceedClick);
+
+        function checkAllDocumentsDownloaded() {
+          if (totalDocuments > 0 && documentsDownloaded === totalDocuments) {
+            proceedButton.disabled = false;
+            proceedButton.classList.remove("disabled");
+            proceedButton.classList.add("pulse-animation");
+            proceedButton.innerHTML = '<i class="bi bi-arrow-right-circle"></i> Mit der Ausstellung der Police fortfahren'; 
+          } else {
+            proceedButton.disabled = true;
+            proceedButton.classList.add("disabled");
+            proceedButton.classList.remove("pulse-animation");
+            proceedButton.innerHTML = '<i class="bi bi-lock-fill proceed-lock"></i> Mit der Ausstellung der Police fortfahren'; 
+          }
+        }
+        function handleProceedClick() {
+          if (proceedButton.disabled) return;
+          if (sessionStorageAvailable) {
+              sessionStorage.removeItem("documentsState");
+              sessionStorage.removeItem("referenceNumber");
+              sessionStorage.removeItem("datiPreventivo");
+          }
+          window.location.href = "emissione-polizza-de.html"; // URL anpassen falls nötig
+          console.log("Weiterleitung zur Policen-Ausstellung...");
+        }
+
+        function saveDocumentState() {
+          if (!sessionStorageAvailable) return;
+          try {
+            const state = {
+              viewedCount: documentsViewed, downloadedCount: documentsDownloaded, totalCount: totalDocuments,
+              documents: documentTypes.map((d) => ({ id: d.id, viewed: d.viewed, downloaded: d.downloaded })),
+            };
+            sessionStorage.setItem("documentsState", JSON.stringify(state));
+          } catch (error) {
+            console.error("Fehler beim Speichern des Dokumentenstatus:", error); 
+          }
+        }
+
+        function loadDocumentState() {
+          if (!sessionStorageAvailable) return;
+          try {
+            const stateString = sessionStorage.getItem("documentsState");
+            if (stateString) {
+              const parsedState = JSON.parse(stateString);
+              if (parsedState.totalCount === totalDocuments && parsedState.documents && parsedState.documents.length === totalDocuments) {
+                documentsViewed = parsedState.viewedCount || 0;
+                documentsDownloaded = parsedState.downloadedCount || 0;
+                documentTypes.forEach((localDoc) => {
+                  const savedDoc = parsedState.documents.find((saved) => saved.id === localDoc.id);
+                  if (savedDoc) { localDoc.viewed = savedDoc.viewed || false; localDoc.downloaded = savedDoc.downloaded || false; }
+                });
+                console.log("Dokumentenstatus aus sessionStorage geladen."); 
+              } else {
+                console.warn("Gespeicherter Dokumentenstatus ist inkonsistent mit aktuellen Dokumenten. Zurücksetzen."); 
+                sessionStorage.removeItem("documentsState");
+              }
+            }
+          } catch (error) {
+            console.error("Fehler beim Laden oder Parsen des Dokumentenstatus:", error); 
+            sessionStorage.removeItem("documentsState");
+          }
+        }
+
+        // --- FUNKTIONEN FÜR FORMULARNAVIGATION UND -VALIDIERUNG ---
+
+        function goToStep(stepNumber) {
+          currentStep = stepNumber;
+          sections.forEach((section) => section.classList.remove("active"));
+          const currentSection = document.getElementById(`section-${stepNumber}`);
+          if (currentSection) {
+            currentSection.classList.add("active");
+            currentSection.classList.remove("was-validated");
+          }
+          steps.forEach((step, index) => {
+            step.classList.remove("active", "completed");
+            const stepIndex = index + 1;
+            if (stepIndex === stepNumber) step.classList.add("active");
+            else if (stepIndex < stepNumber) step.classList.add("completed");
+          });
+          const totalVisibleSteps = 3;
+          const progressPercentage = Math.max(0, ((stepNumber - 1) / totalVisibleSteps) * 100);
+          progressBar.style.width = progressPercentage + "%";
+          progressBar.setAttribute("aria-valuenow", progressPercentage);
+          window.scrollTo({ top: form.offsetTop - 20, behavior: "smooth" });
+        }
+
+        function validateStep(stepNumber) {
+          const section = document.getElementById(`section-${stepNumber}`);
+          if (!section) return false;
+          section.classList.add("was-validated");
+          let isStepValid = true;
+          const inputs = section.querySelectorAll("input[required], select[required], textarea[required]");
+          inputs.forEach((input) => {
+            let isVisible = true;
+            let elementToCheck = input;
+            while (elementToCheck && elementToCheck !== section) {
+                 const style = window.getComputedStyle(elementToCheck);
+                 if (style.display === 'none' || style.visibility === 'hidden' || (elementToCheck.parentElement && elementToCheck.parentElement !== section && elementToCheck.parentElement.classList.contains('d-none'))) {
+                    isVisible = false; break;
+                 }
+                 elementToCheck = elementToCheck.parentElement;
+            }
+            if (isVisible) {
+              if (input.type === "checkbox") { if (!input.checked) isStepValid = false; }
+              else if (input.type === "radio") { /* Wird von validateRadioGroups behandelt */ }
+              else { if (!input.checkValidity()) isStepValid = false; }
+            } else {
+               input.classList.remove('is-invalid');
+               const feedback = input.parentElement?.querySelector('.invalid-feedback');
+               if (feedback) feedback.style.display = 'none';
+            }
+          });
+
+          if (stepNumber === 2) {
+            if (!validateRadioGroups(section)) isStepValid = false;
+            const medicationYesChecked = document.getElementById("medication_yes")?.checked;
+            const medicationResolvedSelected = medicationDetails.querySelector('[name="medication_resolved"]:checked');
+            const medicationDetailsVisible = !medicationDetails.classList.contains('d-none');
+            if (medicationYesChecked && medicationDetailsVisible && medicationResolvedSelected && !medicationDescription.value) {
+                 medicationDescription.classList.add("is-invalid"); isStepValid = false;
+            } else { medicationDescription.classList.remove("is-invalid"); }
+            const conditionDetailsVisible = !conditionDetails.classList.contains('d-none');
+            if (conditionCheckboxesChecked() && conditionDetailsVisible && !conditionNotes.value) {
+              conditionNotes.classList.add("is-invalid"); isStepValid = false;
+            } else { conditionNotes.classList.remove("is-invalid"); }
+            const existingInsuranceYesChecked = document.getElementById("existing_insurance_yes")?.checked;
+            const existingInsuranceDetailsVisible = !existingInsuranceDetails.classList.contains('d-none');
+            if (existingInsuranceYesChecked && existingInsuranceDetailsVisible && !existingCoverageInput.value) {
+                 existingCoverageInput.classList.add("is-invalid"); isStepValid = false;
+            } else { existingCoverageInput.classList.remove("is-invalid"); }
+          }
+
+          if (stepNumber === 3) {
+            if (beneficiaryTypeSelect.value === "custom") {
+              const beneficiaryContainers = beneficiaryList.querySelectorAll('.beneficiary-container');
+              beneficiaryContainers.forEach(container => {
+                  container.querySelectorAll('input[required], select[required]').forEach(input => {
+                      if (!input.checkValidity()) { isStepValid = false; input.classList.add('is-invalid'); }
+                      else { input.classList.remove('is-invalid'); }
+                  });
+              });
+              const totalPercentage = calculateTotalPercentage();
+              if (totalPercentage !== 100) {
+                percentageInfoAlert.classList.remove("alert-success", "alert-info");
+                percentageInfoAlert.classList.add("alert-danger"); isStepValid = false;
+                percentageInfoAlert.scrollIntoView({ behavior: "smooth", block: "center" });
+              } else {
+                percentageInfoAlert.classList.remove("alert-danger", "alert-info");
+                percentageInfoAlert.classList.add("alert-success");
+              }
+            }
+             section.querySelectorAll('input[type="checkbox"][required]').forEach(checkbox => {
+                 if (!checkbox.checked) isStepValid = false;
+             });
+          }
+
+          if (!isStepValid) {
+            const firstInvalid = section.querySelector(".is-invalid:not([style*='display: none']):not(.d-none), input:invalid:not([style*='display: none']):not(.d-none), select:invalid:not([style*='display: none']):not(.d-none), .radio-group-invalid:not([style*='display: none']):not(.d-none)");
+            if (firstInvalid) {
+              let elementToScroll = firstInvalid;
+              const style = window.getComputedStyle(elementToScroll);
+              if (style.display === 'none' || style.visibility === 'hidden') {
+                  elementToScroll = firstInvalid.closest('fieldset') || firstInvalid.closest('.mb-3') || firstInvalid.parentElement;
+              }
+              if(elementToScroll) elementToScroll.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }
+          return isStepValid;
+        }
+
+        function validateRadioGroups(section) {
+          let allGroupsValid = true;
+          const radioGroups = {};
+          section.querySelectorAll('input[type="radio"]').forEach((radio) => {
+            if (!radioGroups[radio.name]) {
+              radioGroups[radio.name] = { radios: [], container: null, feedbackElement: null, isRequired: false, isVisible: false };
+            }
+            radioGroups[radio.name].radios.push(radio);
+            if (radio.required) radioGroups[radio.name].isRequired = true;
+            if (!radioGroups[radio.name].container) {
+              radioGroups[radio.name].container = radio.closest("fieldset") || radio.closest(".mb-3");
+              if (radioGroups[radio.name].container) radioGroups[radio.name].feedbackElement = radioGroups[radio.name].container.querySelector(".invalid-feedback");
+            }
+          });
+          for (const name in radioGroups) {
+            const group = radioGroups[name];
+            let containerVisible = false;
+            if (group.container) {
+                let elementToCheck = group.container; let isEffectivelyVisible = true;
+                while (elementToCheck && elementToCheck !== section) {
+                    const style = window.getComputedStyle(elementToCheck);
+                    if (style.display === 'none' || style.visibility === 'hidden' || elementToCheck.classList.contains('d-none')) { isEffectivelyVisible = false; break; }
+                    elementToCheck = elementToCheck.parentElement;
+                } containerVisible = isEffectivelyVisible;
+            } else { containerVisible = group.radios.some(radio => { const style = window.getComputedStyle(radio); return style.display !== 'none' && style.visibility !== 'hidden'; }); }
+            group.isVisible = containerVisible;
+            if (group.isRequired && group.isVisible) {
+              const isChecked = group.radios.some((radio) => radio.checked);
+              if (!isChecked) {
+                allGroupsValid = false;
+                if (group.container) group.container.classList.add("radio-group-invalid");
+                if (group.feedbackElement) group.feedbackElement.style.display = "block";
+              } else {
+                if (group.container) group.container.classList.remove("radio-group-invalid");
+                if (group.feedbackElement) group.feedbackElement.style.display = "";
+              }
+            } else {
+              if (group.container) group.container.classList.remove("radio-group-invalid");
+              if (group.feedbackElement) group.feedbackElement.style.display = "";
+            }
+          }
+          return allGroupsValid;
+        }
+
+        // --- FUNKTIONEN ZUR BEGÜNSTIGTENVERWALTUNG ---
+
+        function calculateTotalPercentage() {
+          let total = 0;
+          beneficiaryList.querySelectorAll(".beneficiary-percentage").forEach((input) => { total += parseInt(input.value, 10) || 0; });
+          return total;
+        }
+
+        function updateTotalPercentageDisplay() {
+          if (beneficiaryTypeSelect.value !== "custom") return;
+          const total = calculateTotalPercentage();
+          totalPercentageDisplay.textContent = total;
+          percentageInfoAlert.classList.remove("alert-success", "alert-warning", "alert-danger", "alert-info");
+          if (total === 100) percentageInfoAlert.classList.add("alert-success");
+          else if (total < 100) percentageInfoAlert.classList.add("alert-warning");
+          else percentageInfoAlert.classList.add("alert-danger");
+        }
+
+        function distributePercentages() {
+          const percentageInputs = Array.from(beneficiaryList.querySelectorAll(".beneficiary-percentage"));
+          const count = percentageInputs.length; if (count === 0) return;
+          const basePercentage = Math.floor(100 / count); const remainder = 100 % count;
+          percentageInputs.forEach((input, index) => { input.value = basePercentage + (index < remainder ? 1 : 0); });
+          updateTotalPercentageDisplay();
+        }
+
+        function addBeneficiary() {
+          beneficiaryCount++; const newIndex = Date.now(); beneficiaryIndexes.push(newIndex);
+          const templateNode = beneficiaryTemplate.content.cloneNode(true);
+          const newBeneficiaryElement = templateNode.firstElementChild;
+          newBeneficiaryElement.dataset.index = newIndex;
+          newBeneficiaryElement.querySelector("h6").textContent = `Begünstigter #${beneficiaryCount}`;
+          newBeneficiaryElement.querySelectorAll('[id*="{INDEX}"]').forEach((el) => { el.id = el.id.replace("{INDEX}", newIndex); });
+          newBeneficiaryElement.querySelectorAll('[name*="{INDEX}"]').forEach((el) => { el.name = el.name.replace("{INDEX}", newIndex); });
+          newBeneficiaryElement.querySelectorAll('[for*="{INDEX}"]').forEach((el) => { el.htmlFor = el.htmlFor.replace("{INDEX}", newIndex); });
+          newBeneficiaryElement.querySelectorAll('[data-index="{INDEX}"]').forEach((el) => { el.dataset.index = newIndex; });
+          const percentageInput = newBeneficiaryElement.querySelector(".beneficiary-percentage");
+          percentageInput.addEventListener("input", updateTotalPercentageDisplay);
+          newBeneficiaryElement.querySelectorAll('[data-beneficiary-firstname], [data-beneficiary-lastname], [data-beneficiary-percentage]').forEach(input => input.required = true);
+          const removeBtn = newBeneficiaryElement.querySelector(".remove-beneficiary");
+          removeBtn.addEventListener("click", function () { removeBeneficiary(newIndex); });
+          beneficiaryList.appendChild(newBeneficiaryElement);
+          if (beneficiaryCount > 1) {
+            const firstRemoveBtn = beneficiaryList.querySelector('.beneficiary-container[data-index="0"] .remove-beneficiary');
+            if (firstRemoveBtn) firstRemoveBtn.classList.remove("d-none");
+          }
+          distributePercentages();
+        }
+
+        function removeBeneficiary(indexToRemove) {
+          const containerToRemove = beneficiaryList.querySelector(`.beneficiary-container[data-index="${indexToRemove}"]`);
+          if (!containerToRemove) return;
+          containerToRemove.remove(); beneficiaryCount--;
+          beneficiaryIndexes = beneficiaryIndexes.filter((idx) => idx !== indexToRemove);
+          beneficiaryList.querySelectorAll(".beneficiary-container").forEach((container, idx) => { container.querySelector("h6").textContent = `Begünstigter #${idx + 1}`; }); 
+          if (beneficiaryCount === 1) {
+            const firstRemoveBtn = beneficiaryList.querySelector('.beneficiary-container[data-index="0"] .remove-beneficiary');
+            if (firstRemoveBtn) firstRemoveBtn.classList.add("d-none");
+          }
+          distributePercentages();
+        }
+
+        // --- HILFSFUNKTIONEN ---
+
+        function generateUniqueIdPlaceholder() { return ("REQ-" + Math.random().toString(36).substring(2, 10).toUpperCase()); }
+        function getDocumentIcon(documentId) {
+          switch (documentId) {
+            case "summary": return "bi-file-earmark-person"; case "terms": return "bi-file-earmark-ruled";
+            case "privacy": return "bi-shield-lock"; case "conditions": return "bi-file-earmark-medical";
+            default: return "bi-file-earmark";
+          }
+        }
+        function conditionCheckboxesChecked() { return Array.from(conditionCheckboxes).some((cb) => cb.checked); }
+
+        function checkIfRequiresManualVerification() {
+          let requiresVerification = false;
+          const heightCm = parseFloat(document.getElementById("height").value);
+          const weightKg = parseFloat(document.getElementById("weight").value);
+          if (heightCm && weightKg) { const heightM = heightCm / 100; const bmi = weightKg / (heightM * heightM); if (bmi < BMI_UNDERWEIGHT_THRESHOLD || bmi > BMI_OBESE_THRESHOLD) { console.log("Manuelle Überprüfung erforderlich für BMI:", bmi.toFixed(1)); requiresVerification = true; } } 
+          const criticalYesAnswers = ["hypertension_yes", "planned_exam_yes", "drugs_yes", "hiv_yes", "foreign_stay_yes", "dangerous_hobby_yes", "pension_yes"];
+          for (const questionId of criticalYesAnswers) { const element = document.getElementById(questionId); if (element && element.checked) { console.log("Manuelle Überprüfung erforderlich für:", questionId); requiresVerification = true; break; } } 
+          if (requiresVerification) return true;
+          if (conditionCheckboxesChecked()) { console.log("Manuelle Überprüfung erforderlich für ausgewählte medizinische Bedingungen."); requiresVerification = true; } 
+          if (requiresVerification) return true;
+          if (document.getElementById("medication_yes")?.checked && document.getElementById("medication_resolved_no")?.checked) { console.log("Manuelle Überprüfung erforderlich für nicht gelöste Medikationen."); requiresVerification = true; } 
+          if (document.getElementById("hospitalization_yes")?.checked && document.getElementById("hospitalization_resolved_no")?.checked) { console.log("Manuelle Überprüfung erforderlich für nicht gelösten Krankenhausaufenthalt."); requiresVerification = true; } 
+          if (document.getElementById("work_absence_yes")?.checked && document.getElementById("work_absence_resolved_no")?.checked) { console.log("Manuelle Überprüfung erforderlich für nicht gelöste Arbeitsabwesenheit."); requiresVerification = true; } 
+          return requiresVerification;
+        }
+
+        // --- FORMULAR-ÜBERMITTLUNG VERWALTEN ---
+
+        async function submitFormAction(requiresManualVerification) {
+          submitBtn.disabled = true; submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Wird gesendet...';
+          console.log("Simuliere Formularübermittlung...");
+          const formData = new FormData(form); const formDataObject = {};
+          formData.forEach((value, key) => {
+              if (key === 'medical_conditions[]') { // Array-Name behandeln
+                  if (!formDataObject['medical_conditions']) formDataObject['medical_conditions'] = [];
+                  formDataObject['medical_conditions'].push(value);
+              } else if (formDataObject[key]) {
+                  if (!Array.isArray(formDataObject[key])) formDataObject[key] = [formDataObject[key]];
+                  formDataObject[key].push(value);
+              } else { formDataObject[key] = value; }
+          });
+          console.log("Formulardaten:", formDataObject); console.log("Benötigt manuelle Überprüfung:", requiresManualVerification);
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          const simulatedResponse = {
+              status: "ok", id: generateUniqueIdPlaceholder(),
+              document_pointers: requiresManualVerification ? [] : [
+                  { pointer: 'summary', description: 'Angebotszusammenfassung', url: '#', contentUrl: '#' }, { pointer: 'terms', description: 'Allgemeine Geschäftsbedingungen', url: '#', contentUrl: '#' },
+                  { pointer: 'privacy', description: 'Datenschutzrichtlinie', url: '#', contentUrl: '#' }, { pointer: 'conditions', description: 'Besondere Bedingungen', url: '#', contentUrl: '#' }
+              ],
+              message: requiresManualVerification ? "Anfrage erhalten, manuelle Überprüfung erforderlich." : "Anfrage erhalten, Dokumente generiert." 
+          };
+          console.log("Simulierte Backend-Antwort:", simulatedResponse);
+          if (simulatedResponse.status !== "ok") {
+             alert("Fehler beim Senden der Anfrage. Bitte versuchen Sie es erneut."); 
+             submitBtn.disabled = false; submitBtn.innerHTML = '<i class="bi bi-check-lg"></i> Anfrage senden'; return;
+          }
+          const referenceNumber = simulatedResponse.id;
+          if (sessionStorageAvailable) sessionStorage.setItem("referenceNumber", referenceNumber);
+          document.getElementById("reference-number").textContent = referenceNumber;
+          form.style.display = "none"; document.querySelector(".step-indicator").style.display = "none"; document.querySelector(".progress").style.display = "none"; thankYouMessage.classList.add("active");
+          if (requiresManualVerification) {
+            thankYouAlert.className = "alert alert-info mb-4";
+            thankYouAlert.innerHTML = `<h4 class="alert-heading">Anfrage erfolgreich gesendet!</h4><p>Ihre Anfrage erfordert aufgrund der angegebenen Informationen eine zusätzliche Bewertung durch unser Team.</p><hr><p class="mb-0">Einer unserer Berater wird Sie innerhalb von 48 Arbeitsstunden kontaktieren, um die nächsten Schritte zu besprechen.</p>`;
+            documentsSection.style.display = "none";
+          } else {
+            thankYouAlert.className = "alert alert-success mb-4";
+            thankYouAlert.innerHTML = `<h4 class="alert-heading">Versicherungsanfrage erfolgreich abgeschlossen!</h4><p>Sie erhalten außerdem eine Bestätigungs- und Zusammenfassungs-E-Mail an die von Ihnen angegebene Adresse.</p><hr><p class="mb-0">Fahren Sie nun mit der Ausstellung des Vertrags fort und schließen Sie den Kauf ab. Sie müssen jetzt noch nichts bezahlen.</p>`;
+            documentsSection.style.display = "block"; documentsLoading.style.display = "block"; documentContainer.innerHTML = "";
+            try {
+              const userData = { firstname: document.getElementById("firstname").value, lastname: document.getElementById("lastname").value };
+              documentTypes = simulatedResponse.document_pointers.map(doc => ({ id: doc.pointer, title: doc.description, description: '', url: doc.url || '#', contentUrl: doc.contentUrl || '#', viewed: false, downloaded: false }));
+              totalDocuments = documentTypes.length; documentsViewed = 0; documentsDownloaded = 0;
+              loadDocumentState(); createDocumentElements(); updateProgressBarAndStatus(); checkAllDocumentsDownloaded();
+            } catch (error) {
+              console.error("Fehler beim Abrufen/Verwalten der Dokumente (simuliert):", error); 
+              documentsLoading.style.display = "none"; documentContainer.innerHTML = `<div class="alert alert-danger">Bei der Ladung der zusammenfassenden Dokumente ist ein Fehler aufgetreten. <br/>Kontaktieren Sie den Support unter Angabe der Referenz ${referenceNumber}.</div>`; 
+              documentsSection.style.display = "block"; proceedButton.disabled = true; proceedButton.classList.add("disabled");
+            }
+          }
+        }
+
+        // --- EVENT-LISTENER ---
+        nextBtn1?.addEventListener("click", () => { if (validateStep(1)) goToStep(2); });
+        prevBtn2?.addEventListener("click", () => goToStep(1));
+        nextBtn2?.addEventListener("click", () => { if (validateStep(2)) goToStep(3); });
+        prevBtn3?.addEventListener("click", () => goToStep(2));
+
+        existingInsuranceRadios.forEach((radio) => radio.addEventListener("change", function () {
+            const isYes = this.value === "yes" && this.checked; existingInsuranceDetails.classList.toggle("d-none", !isYes); existingCoverageInput.required = isYes;
+            if (!isYes) { existingCoverageInput.value = ""; existingCoverageInput.classList.remove('is-invalid'); existingCoverageInput.closest('.form-section')?.classList.remove('was-validated'); }
+        }));
+        medicationRadios.forEach((radio) => radio.addEventListener("change", function () {
+            const isYes = this.value === "yes" && this.checked; medicationDetails.classList.toggle("d-none", !isYes); medicationResolvedRadios.forEach((r) => (r.required = isYes)); medicationDescription.required = isYes;
+            if (!isYes) { medicationResolvedRadios.forEach((r) => { r.checked = false; r.required = false; }); medicationDescription.value = ""; medicationDescription.required = false; medicationDescription.classList.remove("is-invalid"); const fieldset = medicationDetails.querySelector("fieldset"); if (fieldset) fieldset.classList.remove("radio-group-invalid"); medicationDetails.closest('.form-section')?.classList.remove('was-validated'); }
+        }));
+        hospitalizationRadios.forEach((radio) => radio.addEventListener("change", function () {
+            const isYes = this.value === "yes" && this.checked; hospitalizationDetails.classList.toggle("d-none", !isYes); hospitalizationResolvedRadios.forEach((r) => (r.required = isYes));
+            if (!isYes) { hospitalizationResolvedRadios.forEach((r) => { r.checked = false; r.required = false; }); const fieldset = hospitalizationDetails.querySelector("fieldset"); if (fieldset) fieldset.classList.remove("radio-group-invalid"); hospitalizationDetails.closest('.form-section')?.classList.remove('was-validated'); }
+        }));
+        workAbsenceRadios.forEach((radio) => radio.addEventListener("change", function () {
+            const isYes = this.value === "yes" && this.checked; workAbsenceDetails.classList.toggle("d-none", !isYes); workAbsenceResolvedRadios.forEach((r) => (r.required = isYes));
+            if (!isYes) { workAbsenceResolvedRadios.forEach((r) => { r.checked = false; r.required = false; }); const fieldset = workAbsenceDetails.querySelector("fieldset"); if (fieldset) fieldset.classList.remove("radio-group-invalid"); workAbsenceDetails.closest('.form-section')?.classList.remove('was-validated'); }
+        }));
+        conditionCheckboxes.forEach((checkbox) => checkbox.addEventListener("change", function () {
+            const anyChecked = conditionCheckboxesChecked(); conditionDetails.classList.toggle("d-none", !anyChecked); conditionNotes.required = anyChecked;
+            if (!anyChecked) { conditionNotes.value = ""; conditionNotes.required = false; conditionNotes.classList.remove("is-invalid"); conditionDetails.closest('.form-section')?.classList.remove('was-validated'); }
+        }));
+        beneficiaryTypeSelect?.addEventListener("change", function () {
+          const isOther = this.value === "custom"; otherBeneficiarySection.classList.toggle("d-none", !isOther);
+          const allBeneficiaryInputs = beneficiaryList.querySelectorAll('.beneficiary-container input[data-beneficiary-firstname], .beneficiary-container input[data-beneficiary-lastname], .beneficiary-container input[data-beneficiary-percentage]');
+          allBeneficiaryInputs.forEach(input => { input.required = isOther; if (!isOther) { input.value = ''; input.classList.remove('is-invalid'); } });
+          if (isOther) { if (beneficiaryCount === 1) { const firstPercInput = document.getElementById("beneficiary_percentage_0"); if (firstPercInput) firstPercInput.value = 100; } distributePercentages(); updateTotalPercentageDisplay(); }
+          else { percentageInfoAlert.classList.remove("alert-danger", "alert-warning", "alert-success"); percentageInfoAlert.classList.add("alert-info"); totalPercentageDisplay.textContent = '0'; const dynamicBeneficiaries = beneficiaryList.querySelectorAll('.beneficiary-container[data-index]:not([data-index="0"])'); dynamicBeneficiaries.forEach(ben => ben.remove()); beneficiaryCount = 1; beneficiaryIndexes = [0]; const firstRemoveBtn = beneficiaryList.querySelector('.beneficiary-container[data-index="0"] .remove-beneficiary'); if(firstRemoveBtn) firstRemoveBtn.classList.add('d-none'); const firstPercInput = document.getElementById("beneficiary_percentage_0"); if (firstPercInput) firstPercInput.value = 100; }
+           otherBeneficiarySection.closest('.form-section')?.classList.remove('was-validated');
+        });
+        addBeneficiaryBtn?.addEventListener("click", addBeneficiary);
+        document.getElementById("beneficiary_percentage_0")?.addEventListener("input", updateTotalPercentageDisplay);
+
+        form?.addEventListener("submit", function (e) {
+          e.preventDefault(); e.stopPropagation();
+          if (validateStep(currentStep)) { const requiresManualVerification = checkIfRequiresManualVerification(); submitFormAction(requiresManualVerification); }
+          else { console.log("Validierung fehlgeschlagen für Schritt:", currentStep); const firstError = form.querySelector('.is-invalid, .radio-group-invalid'); if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' }); } 
+        });
+
+        newRequestBtn?.addEventListener("click", function () {
+          if (sessionStorageAvailable) { sessionStorage.removeItem("documentsState"); sessionStorage.removeItem("referenceNumber"); sessionStorage.removeItem("datiPreventivo"); }
+          form.reset(); form.classList.remove("was-validated"); sections.forEach((s) => s.classList.remove("was-validated"));
+          documentTypes = []; totalDocuments = 4; documentsViewed = 0; documentsDownloaded = 0; documentContainer.innerHTML = ""; documentsLoading.style.display = "block"; updateProgressBarAndStatus(); checkAllDocumentsDownloaded();
+          beneficiaryList.innerHTML = ""; beneficiaryIndexes = [0]; beneficiaryCount = 1;
+          const templateNode = beneficiaryTemplate.content.cloneNode(true); const firstBeneficiaryElement = templateNode.firstElementChild; firstBeneficiaryElement.dataset.index = 0; firstBeneficiaryElement.querySelector("h6").textContent = `Begünstigter #1`; 
+          firstBeneficiaryElement.querySelectorAll('[id*="{INDEX}"]').forEach((el) => (el.id = el.id.replace("{INDEX}", 0))); firstBeneficiaryElement.querySelectorAll('[name*="{INDEX}"]').forEach((el) => (el.name = el.name.replace("{INDEX}", 0))); firstBeneficiaryElement.querySelectorAll('[for*="{INDEX}"]').forEach((el) => (el.htmlFor = el.htmlFor.replace("{INDEX}", 0)));
+          const firstRemoveBtn = firstBeneficiaryElement.querySelector(".remove-beneficiary"); firstRemoveBtn.dataset.index = 0; firstRemoveBtn.classList.add("d-none");
+          const firstPercInput = firstBeneficiaryElement.querySelector(".beneficiary-percentage"); firstPercInput.value = 100; firstPercInput.addEventListener("input", updateTotalPercentageDisplay);
+          const isOtherInitially = beneficiaryTypeSelect.value === "custom"; firstBeneficiaryElement.querySelectorAll('input[data-beneficiary-firstname], input[data-beneficiary-lastname], input[data-beneficiary-percentage]').forEach(input => input.required = isOtherInitially);
+          beneficiaryList.appendChild(firstBeneficiaryElement); otherBeneficiarySection.classList.add("d-none"); percentageInfoAlert.classList.remove("alert-danger", "alert-warning", "alert-success"); percentageInfoAlert.classList.add("alert-info"); totalPercentageDisplay.textContent = '100';
+          existingInsuranceDetails.classList.add("d-none"); existingCoverageInput.required = false; medicationDetails.classList.add("d-none"); medicationDescription.required = false; medicationResolvedRadios.forEach(r => r.required = false); hospitalizationDetails.classList.add("d-none"); hospitalizationResolvedRadios.forEach(r => r.required = false); workAbsenceDetails.classList.add("d-none"); workAbsenceResolvedRadios.forEach(r => r.required = false); conditionDetails.classList.add("d-none"); conditionNotes.required = false;
+          existingCoverageInput.classList.remove('is-invalid'); medicationDescription.classList.remove('is-invalid'); conditionNotes.classList.remove('is-invalid'); medicationDetails.querySelector("fieldset")?.classList.remove("radio-group-invalid"); hospitalizationDetails.querySelector("fieldset")?.classList.remove("radio-group-invalid"); workAbsenceDetails.querySelector("fieldset")?.classList.remove("radio-group-invalid");
+          thankYouMessage.classList.remove("active"); form.style.display = "block"; document.querySelector(".step-indicator").style.display = "flex"; document.querySelector(".progress").style.display = "block"; submitBtn.disabled = false; submitBtn.innerHTML = '<i class="bi bi-check-lg"></i> Anfrage senden';
+          const alertPlaceholder = document.getElementById("alert-placeholder"); if (alertPlaceholder) { alertPlaceholder.innerHTML = ''; alertPlaceholder.className = ''; }
+          goToStep(1); loadDataFromPreviousModule();
+        });
+
+        // --- INITIALISIERUNG ---
+        function loadDataFromPreviousModule() {
+          if (!sessionStorageAvailable) return;
+          const alertPlaceholder = document.getElementById("alert-placeholder"); if (alertPlaceholder) { alertPlaceholder.innerHTML = ''; alertPlaceholder.className = ''; }
+          try {
+            const datiPreventivoString = sessionStorage.getItem("datiPreventivo");
+            if (datiPreventivoString) {
+              const datiPreventivo = JSON.parse(datiPreventivoString); console.log("Lade Daten aus Angebot:", datiPreventivo); 
+              const durationEl = document.getElementById("duration"); const coverageEl = document.getElementById("coverage"); const birthdateEl = document.getElementById("birthdate");
+              if (durationEl) durationEl.value = datiPreventivo.durata || 10; if (coverageEl) coverageEl.value = datiPreventivo.copertura || 100000; if (birthdateEl) birthdateEl.value = datiPreventivo.dataNascita || "";
+              const heightEl = document.getElementById("height"); const weightEl = document.getElementById("weight"); const smokerYesEl = document.getElementById("smoker_yes"); const smokerNoEl = document.getElementById("smoker_no");
+              if (heightEl) heightEl.value = datiPreventivo.altezza || ""; if (weightEl) weightEl.value = datiPreventivo.peso || "";
+              if (datiPreventivo.fumatore !== undefined) { if (datiPreventivo.fumatore && smokerYesEl) smokerYesEl.checked = true; else if (!datiPreventivo.fumatore && smokerNoEl) smokerNoEl.checked = true; }
+              if (alertPlaceholder) {
+                alertPlaceholder.className = "alert alert-info alert-dismissible fade show mb-4";
+                alertPlaceholder.innerHTML = `<strong>Daten aus Angebot importiert:</strong> Versicherungssumme: ${datiPreventivo.copertura || 'N/A'} ${datiPreventivo.currency || "CHF"}, Laufzeit: ${datiPreventivo.durata || 'N/A'} Jahre, Prämie: ${datiPreventivo.premio || 'N/A'} ${datiPreventivo.currency || "CHF"} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Schließen"></button>`;
+              }
+            } else { console.log("Keine Angebotsdaten in sessionStorage gefunden ('datiPreventivo')."); } 
+          } catch (error) {
+            console.error("Fehler beim Parsen der Angebotsdaten:", error); 
+            if (sessionStorageAvailable) sessionStorage.removeItem("datiPreventivo");
+            if (alertPlaceholder) { alertPlaceholder.innerHTML = ''; alertPlaceholder.className = ''; }
+          }
+        }
+        loadDataFromPreviousModule(); goToStep(1);
+      }); // Ende DOMContentLoaded
+    </script>
+</body>
+</html>

@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Meta-Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:image:src"
+      content="https://r.mobirisesite.com/1342903/assets/images/page8-meta.png"
+    />
+    <meta
+      property="og:image"
+      content="https://r.mobirisesite.com/1342903/assets/images/page8-meta.png"
+    />
+    <meta
+      name="twitter:title"
+      content="Ausstellung von Todesfallversicherungspolicen in der Schweiz"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1"
+    />
+    <link
+      rel="shortcut icon"
+      href="https://r.mobirisesite.com/1342903/assets/images/lifeinsure-1-172x172.png?v=1TZWWw"
+      type="image/x-icon"
+    />
+    <meta
+      name="description"
+      content="Schlie&szlig;en Sie Ihre Todesfallversicherungspolice in der Schweiz ab."
+    />
+
+    <title>Ausstellung von Todesfallversicherungspolicen in der Schweiz</title>
+
+    <!-- CSS Links -->
+    <link
+      rel="stylesheet"
+      href="https://r.mobirisesite.com/1342903/assets/Material-Design-Icons/css/material.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://r.mobirisesite.com/1342903/assets/icon54/style.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://r.mobirisesite.com/1342903/assets/bootstrap/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://r.mobirisesite.com/1342903/assets/bootstrap/css/bootstrap-grid.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://r.mobirisesite.com/1342903/assets/bootstrap/css/bootstrap-reboot.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://r.mobirisesite.com/1342903/assets/web/assets/gdpr-plugin/gdpr-styles.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://r.mobirisesite.com/1342903/assets/popup-overlay-plugin/style.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://r.mobirisesite.com/1342903/assets/dropdown/css/style.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://r.mobirisesite.com/1342903/assets/socicon/css/styles.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://r.mobirisesite.com/1342903/assets/theme/css/style.css"
+    />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css?family=Space+Grotesk:300,400,500,600,700&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Space+Grotesk:300,400,500,600,700&display=swap"
+    /></noscript>
+    <link
+      rel="preload"
+      as="style"
+      href="https://r.mobirisesite.com/1342903/assets/mobirise/css/mbr-additional.css?v=1TZWWw"
+    />
+    <link
+      rel="stylesheet"
+      href="https://r.mobirisesite.com/1342903/assets/mobirise/css/mbr-additional.css?v=1TZWWw"
+      type="text/css"
+    />
+
+    <!-- Styles für das Ausstellungsmodul -->
+    <style>
+      /* Basis-Styles für Container und Karte */
+      .lifensure-container {
+        font-family: "Space Grotesk", sans-serif;
+        line-height: 1.6;
+        color: #333;
+      }
+      .lifensure-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin: 30px auto;
+        max-width: 800px;
+        border: 1px solid #e9ecef;
+      }
+      .lifensure-card h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #343a40;
+        font-size: 1.8rem;
+        font-weight: 600;
+      }
+      .lifensure-step-title {
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 12px;
+        margin-bottom: 25px;
+        font-weight: 600;
+        font-size: 1.2rem;
+        color: #495057;
+      }
+      /* Fortschrittsbalken */
+      .lifensure-progress-container {
+        height: 10px;
+        background-color: #e9ecef;
+        border-radius: 5px;
+        margin-bottom: 35px;
+        overflow: hidden;
+      }
+      #lifensure-progress-bar {
+        height: 100%;
+        width: 0%;
+        background-color: #0d6efd;
+        transition: width 0.4s ease-in-out;
+        border-radius: 5px;
+      }
+      /* Styles für Input und Label */
+      .lifensure-form-group {
+        margin-bottom: 20px;
+      }
+      .lifensure-form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #495057;
+        font-size: 0.95rem;
+      }
+      .lifensure-form-group label .lifensure-required {
+        color: #dc3545;
+        margin-left: 3px;
+      }
+      .lifensure-form-group input[type="text"],
+      .lifensure-form-group input[type="email"],
+      .lifensure-form-group select {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 1rem;
+        box-sizing: border-box;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      }
+      .lifensure-form-group input:focus,
+      .lifensure-form-group select:focus {
+        border-color: #86b7fe;
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+      }
+      .lifensure-form-group .lifensure-input-hint {
+        color: #6c757d;
+        font-size: 0.85rem;
+        margin-top: 5px;
+      }
+      /* Styles für Fehler */
+      .lifensure-form-group input.is-invalid,
+      .lifensure-form-group select.is-invalid {
+        border-color: #dc3545 !important;
+      }
+      .lifensure-form-group .invalid-feedback {
+        color: #dc3545;
+        font-size: 0.875em;
+        margin-top: 0.25rem;
+        display: none;
+      }
+      .was-validated
+        .lifensure-checkbox-group
+        .lifensure-checkbox-wrapper:has(input:invalid)
+        + .invalid-feedback {
+        display: block;
+      }
+      /* Checkbox-Styles */
+      .lifensure-checkbox-group {
+        margin-bottom: 15px;
+      }
+      .lifensure-checkbox-group .lifensure-checkbox-wrapper {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 5px;
+      }
+      .lifensure-checkbox-group input[type="checkbox"] {
+        margin-right: 10px;
+        margin-top: 4px;
+        flex-shrink: 0;
+        width: 1.1em;
+        height: 1.1em;
+      }
+      .lifensure-checkbox-group label {
+        font-size: 1rem;
+        color: #333;
+        line-height: 1.5;
+      }
+      .lifensure-checkbox-group label a {
+        color: #0d6efd;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      .lifensure-checkbox-group .invalid-feedback {
+        color: #dc3545;
+        font-size: 0.875em;
+        margin-left: 25px;
+        display: none;
+      }
+      .was-validated
+        .lifensure-checkbox-group
+        input:invalid
+        ~ .invalid-feedback {
+        display: block;
+      }
+      /* Schaltflächen */
+      .lifensure-button {
+        background-color: #0d6efd;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .lifensure-button:hover {
+        background-color: #0b5ed7;
+      }
+      .lifensure-button.secondary {
+        background-color: #6c757d;
+      }
+      .lifensure-button.secondary:hover {
+        background-color: #5c636a;
+      }
+      .lifensure-button.success {
+        background-color: #198754;
+      }
+      .lifensure-button.success:hover {
+        background-color: #157347;
+      }
+      .lifensure-button.outline {
+        background-color: transparent;
+        color: #0d6efd;
+        border: 1px solid #0d6efd;
+      }
+      .lifensure-button.outline:hover {
+        background-color: #0d6efd;
+        color: white;
+      }
+      .lifensure-button:disabled {
+        background-color: #adb5bd;
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+      .lifensure-button-spinner {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        border: 2px solid currentColor;
+        border-radius: 50%;
+        border-top-color: transparent;
+        animation: lifensure-spin 0.75s linear infinite;
+        margin-right: 8px;
+      }
+      @keyframes lifensure-spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      /* Zusammenfassung */
+      .lifensure-summary-box {
+        margin-bottom: 25px;
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 5px;
+        border: 1px solid #dee2e6;
+      }
+      .lifensure-summary-box h6 {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+        color: #495057;
+      }
+      .lifensure-summary-box p {
+        margin-bottom: 8px;
+        color: #343a40;
+      }
+      .lifensure-summary-box strong {
+        color: #212529;
+      }
+      .lifensure-summary-highlight {
+        background-color: #cfe2ff;
+        color: #052c65;
+        padding: 12px;
+        border-radius: 4px;
+        margin-top: 15px;
+        font-weight: 500;
+      }
+      /* Abschluss-Schritt */
+      .lifensure-completion-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 25px auto;
+        border-radius: 50%;
+        border: 4px solid #198754;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .lifensure-completion-icon::after {
+        content: "";
+        display: block;
+        width: 40%;
+        height: 60%;
+        border: solid #198754;
+        border-width: 0 5px 5px 0;
+        transform: rotate(45deg);
+      }
+      .lifensure-completion-message h3 {
+        color: #198754;
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+      .lifensure-completion-message p {
+        font-size: 1.1rem;
+        color: #495057;
+      }
+      .lifensure-policy-info {
+        background-color: #d1e7dd;
+        color: #0f5132;
+        padding: 15px 20px;
+        border-radius: 4px;
+        margin-bottom: 25px;
+        border: 1px solid #badbcc;
+      }
+      .lifensure-policy-info h5 {
+        margin-bottom: 5px;
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+      .lifensure-documents-list {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 4px;
+        margin-bottom: 25px;
+        border: 1px solid #dee2e6;
+      }
+      .lifensure-documents-list h6 {
+        font-weight: 600;
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+      .lifensure-document-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #eee;
+      }
+      .lifensure-document-item:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+      .lifensure-document-item span {
+        color: #343a40;
+      }
+      .lifensure-document-item button,
+      .lifensure-document-item a {
+        background-color: #e9ecef;
+        color: #0d6efd;
+        border: 1px solid #ced4da;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+      }
+      .lifensure-document-item button:hover,
+      .lifensure-document-item a:hover {
+        background-color: #dee2e6;
+        border-color: #adb5bd;
+      }
+      /* Fehler-Schritt */
+      .lifensure-error-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 25px auto;
+        font-size: 60px;
+        color: #dc3545;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 4px solid #dc3545;
+        border-radius: 50%;
+      }
+      .lifensure-error-message h3 {
+        color: #dc3545;
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+      .lifensure-error-message p {
+        font-size: 1.1rem;
+        color: #495057;
+      }
+      /* Modal */
+      #lifensure-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 1050;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      #lifensure-overlay.visible {
+        display: block;
+        opacity: 1;
+      }
+      #lifensure-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        width: 90%;
+        max-width: 650px;
+        background-color: white;
+        border-radius: 8px;
+        padding: 25px 30px;
+        max-height: 85vh;
+        overflow-y: auto;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: 1051;
+      }
+      #lifensure-overlay.visible #lifensure-modal {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      #lifensure-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #dee2e6;
+      }
+      #lifensure-modal-title {
+        font-size: 1.3rem;
+        margin: 0;
+        font-weight: 600;
+        color: #343a40;
+      }
+      #lifensure-modal-close {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        line-height: 1;
+        color: #6c757d;
+        padding: 0 5px;
+      }
+      #lifensure-modal-close:hover {
+        color: #343a40;
+      }
+      #lifensure-modal-content {
+        margin-bottom: 25px;
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+      #lifensure-modal-content h6 {
+        font-weight: 600;
+        margin-top: 15px;
+        margin-bottom: 8px;
+        font-size: 1.1rem;
+      }
+      #lifensure-modal-content ul {
+        padding-left: 25px;
+        margin-top: 10px;
+      }
+      #lifensure-modal-footer {
+        text-align: right;
+        padding-top: 15px;
+        border-top: 1px solid #dee2e6;
+      }
+      /* Debug-Bereich */
+      #lifensure-debug {
+        display: none;
+        margin-top: 30px;
+        padding: 15px;
+        background-color: #fff3cd;
+        color: #664d03;
+        border: 1px solid #ffecb5;
+        border-radius: 4px;
+        font-size: 0.9rem;
+      }
+      #lifensure-debug h5 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+      #lifensure-debug p {
+        margin: 3px 0;
+        word-break: break-all;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <section
+      data-bs-version="5.1"
+      class="inspirem5 menu menu1 cid-uHcV8yKzqs"
+      once="menu"
+      id="menu01-3s"
+    >
+      <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
+        <div class="container-fluid">
+          <div class="navbar-brand">
+            <span class="navbar-logo">
+              <a href="index.html#top">
+                <img
+                  src="https://r.mobirisesite.com/1342903/assets/images/lifeinsure-1-172x172.png?v=1TZWWw"
+                  alt="LifeInsure Logo"
+                  style="height: 3.6rem"
+                />
+              </a>
+            </span>
+          </div>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-bs-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <div class="hamburger">
+              <span></span><span></span><span></span><span></span>
+            </div>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+              <li class="nav-item">
+                <a
+                  class="nav-link link text-primary display-7"
+                  href="index.html#header01-2"
+                  >Startseite</a
+                >
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link link text-primary dropdown-toggle display-7"
+                  href="#"
+                  data-toggle="dropdown-submenu"
+                  data-bs-toggle="dropdown"
+                  data-bs-auto-close="outside"
+                  aria-expanded="false"
+                  >Todesfallversicherung</a
+                >
+                <div class="dropdown-menu" aria-labelledby="dropdown-707">
+                  <a
+                    class="text-primary dropdown-item display-7"
+                    href="index.html#progress-bars02-0"
+                    >Vorteile</a
+                  >
+                  <a
+                    class="text-primary show dropdown-item display-7"
+                    href="index.html#progress-bars01-j"
+                    >Wert</a
+                  >
+                  <a
+                    class="text-primary show dropdown-item display-7"
+                    href="#"
+                    data-toggle="modal"
+                    data-bs-toggle="modal"
+                    data-target="#mbr-popup-2k"
+                    data-bs-target="#mbr-popup-2k"
+                    ><span
+                      class="mdi-content-markunread mbr-iconfont mbr-iconfont-btn"
+                    ></span
+                    >Eine wahre Geschichte (lesen)</a
+                  >
+                  <a
+                    class="text-primary show dropdown-item display-7"
+                    href="index.html#testimonials04-g"
+                    >Erfahrungsberichte</a
+                  >
+                </div>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link link text-primary display-7"
+                  href="index.html#forms03-5"
+                  >Über uns</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link link text-primary display-7"
+                  href="index.html#forms03-5"
+                  >Kontakt</a
+                >
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link link text-primary dropdown-toggle show display-7"
+                  href="#"
+                  data-toggle="dropdown-submenu"
+                  data-bs-toggle="dropdown"
+                  data-bs-auto-close="outside"
+                  aria-expanded="false"
+                  ><span
+                    class="icon54-v1-translate2 mbr-iconfont mbr-iconfont-btn"
+                  ></span
+                ></a>
+                <div
+                  class="dropdown-menu show"
+                  aria-labelledby="dropdown-852"
+                  data-bs-popper="none"
+                >
+                  <a
+                    class="text-primary dropdown-item display-7"
+                    href="https://fr.lifeinsure.ch"
+                    target="_blank"
+                    >Français</a
+                  >
+                  <a
+                    class="text-primary dropdown-item display-7"
+                    href="https://lifeinsure.ch"
+                    target="_blank"
+                    >Italiano</a
+                  >
+                </div>
+              </li>
+            </ul>
+            <div class="navbar-buttons mbr-section-btn">
+              <a
+                class="btn btn-lg btn-danger display-4"
+                href="calcolo-premio-de.html"
+                ><span
+                  class="icon54-v1-click-1 mbr-iconfont mbr-iconfont-btn"
+                ></span
+                >ANGEBOT
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </section>
+
+    <!-- Header -->
+    <section
+      data-bs-version="5.1"
+      class="inspirem5 header3 cid-uHcV8zftrL"
+      id="header03-3t"
+    >
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 col-lg-11">
+            <!-- Header-Inhalt falls vorhanden -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modul zur Versicherungspolice -->
+    <div id="custom-html-3u">
+      <div id="lifensure-emission-module" class="lifensure-container">
+        <div class="lifensure-card">
+          <h2>Ausstellung der Todesfallversicherungspolice</h2>
+
+          <!-- Fortschrittsbalken -->
+          <div class="lifensure-progress-container">
+            <div id="lifensure-progress-bar"></div>
+          </div>
+
+          <!-- SCHRITT 1: Eingabe der Angebotsdetails -->
+          <div id="lifensure-step-1" style="display: block">
+            <div class="lifensure-step-title">
+              1. Geben Sie die Angebotsdetails ein
+            </div>
+
+            <div class="lifensure-form-group">
+              <label for="lifensure-offerta-id">
+                Angebots-ID <span class="lifensure-required">*</span>
+              </label>
+              <input
+                type="text"
+                id="lifensure-offerta-id"
+                placeholder="Geben Sie die Angebots-ID ein"
+                required
+                aria-describedby="lifensure-offerta-id-error"
+              />
+              <div id="lifensure-offerta-id-error" class="invalid-feedback">
+                Geben Sie die erhaltene Angebots-ID ein.
+              </div>
+              <div class="lifensure-input-hint">
+                Geben Sie die ID ein, die Sie am Ende der Angebotsanfrage erhalten haben.
+              </div>
+            </div>
+
+            <div class="lifensure-form-group">
+              <label for="lifensure-email-conferma">
+                Zugehörige E-Mail <span class="lifensure-required">*</span>
+              </label>
+              <input
+                type="email"
+                id="lifensure-email-conferma"
+                placeholder="Ihre mit dem Angebot verknüpfte E-Mail"
+                required
+                aria-describedby="lifensure-email-error"
+              />
+              <div id="lifensure-email-error" class="invalid-feedback">
+                Geben Sie die gültige E-Mail-Adresse ein, die mit dem Angebot verknüpft ist.
+              </div>
+              <div class="lifensure-input-hint">
+                Geben Sie die E-Mail ein, die bei der Angebotsanfrage verwendet wurde.
+              </div>
+            </div>
+
+            <!-- Fehlermeldung, wenn die Angebotsdaten nicht in sessionStorage gefunden werden -->
+            <div
+              id="lifensure-session-error"
+              class="invalid-feedback"
+              style="
+                display: none;
+                color: #dc3545;
+                margin-bottom: 20px;
+                text-align: center;
+              "
+            >
+              Fehler: Angebotsdaten in der Sitzung nicht gefunden oder stimmen nicht überein. Stellen Sie sicher, dass Sie den Prozess von der Angebotsseite aus beginnen, oder überprüfen Sie die eingegebenen Daten.
+            </div>
+
+            <div style="text-align: center; margin-top: 30px">
+              <!-- Diese Schaltfläche wechselt einfach zum nächsten Schritt, wenn die Felder ausgefüllt sind und sessionStorage-Daten vorhanden sind -->
+              <button id="lifensure-verifica-btn" class="lifensure-button">
+                Zusammenfassung und Einwilligungen anzeigen
+              </button>
+            </div>
+          </div>
+
+          <!-- SCHRITT 2: Zusammenfassung und Einwilligungen -->
+          <div id="lifensure-step-2" style="display: none">
+            <div class="lifensure-step-title">2. Zusammenfassung und Einwilligungen</div>
+
+            <div id="lifensure-riepilogo-content" class="lifensure-summary-box">
+              <!-- Inhalt der Zusammenfassung wird dynamisch aus sessionStorage eingefügt -->
+              <p>Zusammenfassung wird geladen...</p>
+            </div>
+
+            <div class="lifensure-checkbox-group">
+              <div class="lifensure-checkbox-wrapper">
+                <input
+                  type="checkbox"
+                  id="lifensure-condizioni-check"
+                  required
+                  aria-describedby="lifensure-condizioni-error"
+                  value="cga_acceptance"
+                />
+                <label
+                  for="lifensure-condizioni-check"
+                  id="lifensure-condizioni-label"
+                >
+                  Ich habe die Allgemeinen Versicherungsbedingungen heruntergeladen, gelesen und akzeptiert.
+                </label>
+              </div>
+              <div id="lifensure-condizioni-error" class="invalid-feedback">
+                Sie müssen die Allgemeinen Bedingungen akzeptieren, um fortzufahren.
+              </div>
+            </div>
+
+            <div class="lifensure-checkbox-group">
+              <div class="lifensure-checkbox-wrapper">
+                <input
+                  type="checkbox"
+                  id="lifensure-privacy-check"
+                  required
+                  aria-describedby="lifensure-privacy-error"
+                  value="privacy_acceptance"
+                />
+                <label
+                  for="lifensure-privacy-check"
+                  id="lifensure-privacy-label"
+                >
+                  Ich habe die Datenschutzrichtlinie gelesen und akzeptiert und stimme der Verarbeitung meiner Daten zu.
+                </label>
+              </div>
+              <div id="lifensure-privacy-error" class="invalid-feedback">
+                Sie müssen die Datenschutzrichtlinie akzeptieren, um fortzufahren.
+              </div>
+            </div>
+
+            <div class="lifensure-checkbox-group">
+              <div class="lifensure-checkbox-wrapper">
+                <input
+                  type="checkbox"
+                  id="lifensure-dichiarazione-check"
+                  required
+                  aria-describedby="lifensure-dichiarazione-error"
+                  value="declaration_truth"
+                />
+                <label
+                  for="lifensure-dichiarazione-check"
+                  id="lifensure-dichiarazione-label"
+                >
+                  Ich erkläre, dass alle während der Anfrage bereitgestellten Informationen wahrheitsgemäß und vollständig sind.
+                </label>
+              </div>
+              <div id="lifensure-dichiarazione-error" class="invalid-feedback">
+                Sie müssen die Richtigkeit der bereitgestellten Informationen bestätigen.
+              </div>
+            </div>
+
+            <!-- Zusätzliche Fragen (wenn die API ihre Notwendigkeit in der PREMIA/OFFER-Phase anzeigt) -->
+            <div id="lifensure-domande-aggiuntive" style="margin-top: 20px">
+              <!-- Beispiel für die Struktur einer dynamischen Frage:
+                 <div class="lifensure-form-group">
+                     <label for="question-XYZ">Fragetext <span class="lifensure-required">*</span></label>
+                     <input type="text" id="question-XYZ" required data-question-id="XYZ">
+                     <div class="invalid-feedback">Antwort erforderlich.</div>
+                 </div>
+                 -->
+            </div>
+
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                margin-top: 30px;
+              "
+            >
+              <button
+                id="lifensure-indietro-riepilogo"
+                class="lifensure-button secondary"
+              >
+                Zurück
+              </button>
+              <!-- Diese Schaltfläche startet den Prozess der Übermittlung der Anwendung an die API /application -->
+              <button id="lifensure-procedi-btn" class="lifensure-button">
+                Mit Ausstellung fortfahren
+              </button>
+            </div>
+          </div>
+
+          <!-- SCHRITT 3: Abschluss (ehem. Schritt 4) -->
+          <div id="lifensure-step-3" style="display: none">
+            <div class="lifensure-step-title">3. Ausstellung abgeschlossen</div>
+            <div style="text-align: center; margin-bottom: 30px">
+              <div class="lifensure-completion-icon"></div>
+              <div class="lifensure-completion-message">
+                <h3>Ausstellung abgeschlossen!</h3>
+                <p>Ihre Todesfallversicherungspolice ist aktiv.</p>
+              </div>
+            </div>
+
+            <div class="lifensure-policy-info">
+              <h5>
+                Policennummer: <span id="lifensure-numero-polizza">--</span>
+              </h5>
+              <p>
+                Die offiziellen Policendokumente wurden an die angegebene E-Mail-Adresse gesendet.
+              </p>
+            </div>
+
+            <div class="lifensure-documents-list">
+              <h6>Verfügbare Dokumente zum Download:</h6>
+              <div id="lifensure-documenti-polizza">
+                <p>Dokumente werden geladen...</p>
+              </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px">
+              <a href="index.html" class="lifensure-button">
+                Zurück zur Startseite
+              </a>
+            </div>
+          </div>
+
+          <!-- SCHRITT 4: Fehler (ehem. Schritt 5) -->
+          <div id="lifensure-step-4" style="display: none">
+            <div class="lifensure-step-title">4. Ein Fehler ist aufgetreten</div>
+            <div style="text-align: center; margin-bottom: 30px">
+              <div class="lifensure-error-icon">!</div>
+              <!-- Einfaches Symbol -->
+              <div class="lifensure-error-message">
+                <h3>Ein Fehler ist aufgetreten</h3>
+                <p id="lifensure-errore-messaggio">
+                  Der Vorgang konnte nicht abgeschlossen werden.
+                </p>
+              </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px">
+              <button
+                id="lifensure-riprova"
+                class="lifensure-button"
+                style="margin-right: 10px"
+              >
+                Vom ersten Schritt erneut versuchen
+              </button>
+              <a href="index.html" class="lifensure-button outline">
+                Zurück zur Startseite
+              </a>
+            </div>
+          </div>
+
+          <!-- Debug-Bereich (optional, in der Produktion zu entfernen) -->
+          <div id="lifensure-debug">
+            <h5 style="margin-top: 0">Debug-Infos:</h5>
+            <div id="lifensure-debug-content"></div>
+          </div>
+        </div>
+        <!-- Ende lifensure-card -->
+
+        <!-- Modal -->
+        <div id="lifensure-overlay">
+          <div
+            id="lifensure-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="lifensure-modal-title"
+            aria-describedby="lifensure-modal-content"
+          >
+            <div id="lifensure-modal-header">
+              <h5 id="lifensure-modal-title">Modal-Titel</h5>
+              <button
+                id="lifensure-modal-close"
+                aria-label="Modal schließen"
+              >
+                ×
+              </button>
+            </div>
+            <div id="lifensure-modal-content">
+              <!-- Dynamisch eingefügter Modal-Inhalt -->
+            </div>
+            <div id="lifensure-modal-footer">
+              <button id="lifensure-modal-confirm" class="lifensure-button">
+                Ich habe gelesen
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Ende lifensure-emission-module -->
+      <script src="assets/api/test-connection.js"></script>
+      <script>
+        // Isolierter Bereich zur Vermeidung von Konflikten
+        (function () {
+          "use strict";
+
+          // --- VARIABLEN UND KONSTANTEN ---
+          let currentStepIndex = 0;
+          // Variable zum Speichern der aus sessionStorage geladenen Angebotsdaten
+          let offerDetailsFromSession = null;
+          // Variable zum Speichern der API-Antwort nach erfolgreichem /application-Aufruf
+          let applicationResponseData = null;
+
+          let sessionStorageAvailable = false;
+          // DEBUG_MODE auf false in der Produktion setzen, um debugInfo zu unterdrücken
+          const DEBUG_MODE = true; // In Produktion auf false setzen
+
+          // Haupt-DOM-Elemente
+          const progressBar = document.getElementById("lifensure-progress-bar");
+          // Liste der Schritte, aktualisiert gemäß der neuen Struktur
+          const steps = [
+            document.getElementById("lifensure-step-1"), // Index 0 (ID/Email-Eingabe)
+            document.getElementById("lifensure-step-2"), // Index 1 (Zusammenfassung und Einwilligungen)
+            document.getElementById("lifensure-step-3"), // Index 2 (Abschluss)
+            document.getElementById("lifensure-step-4"), // Index 3 (Fehler)
+          ];
+
+          const emissionModuleContainer = document.getElementById(
+            "lifensure-emission-module"
+          );
+
+          // Eingabefelder Schritt 1
+          const offertaIdInput = document.getElementById(
+            "lifensure-offerta-id"
+          );
+          const emailConfermaInput = document.getElementById(
+            "lifensure-email-conferma"
+          );
+          const offertaIdError = document.getElementById(
+            "lifensure-offerta-id-error"
+          );
+          const emailError = document.getElementById("lifensure-email-error");
+          const sessionErrorDiv = document.getElementById(
+            "lifensure-session-error"
+          );
+
+          // Checkboxen Schritt 2
+          const condizioniCheck = document.getElementById(
+            "lifensure-condizioni-check"
+          );
+          const privacyCheck = document.getElementById(
+            "lifensure-privacy-check"
+          );
+          const dichiarazioneCheck = document.getElementById(
+            "lifensure-dichiarazione-check"
+          );
+          const condizioniError = document.getElementById(
+            "lifensure-condizioni-error"
+          );
+          const privacyError = document.getElementById(
+            "lifensure-privacy-error"
+          );
+          const dichiarazioneError = document.getElementById(
+            "lifensure-dichiarazione-error"
+          );
+          const riepilogoContent = document.getElementById(
+            "lifensure-riepilogo-content"
+          );
+          const condizioniLink = document.getElementById(
+            "lifensure-condizioni-link"
+          );
+          const privacyLink = document.getElementById("lifensure-privacy-link");
+          const domandeAggiuntiveDiv = document.getElementById(
+            "lifensure-domande-aggiuntive"
+          );
+
+          // Abschluss Schritt 3 (ehem. Schritt 4)
+          const numeroPolizzaSpan = document.getElementById(
+            "lifensure-numero-polizza"
+          );
+          const documentiPolizzaDiv = document.getElementById(
+            "lifensure-documenti-polizza"
+          );
+
+          // Fehler Schritt 4 (ehem. Schritt 5)
+          const erroreMessaggioP = document.getElementById(
+            "lifensure-errore-messaggio"
+          );
+
+          // Schaltflächen
+          const verificaBtn = document.getElementById("lifensure-verifica-btn"); // Jetzt "Zusammenfassung anzeigen"
+          const indietroRiepilogoBtn = document.getElementById(
+            "lifensure-indietro-riepilogo"
+          );
+          // Die Schaltfläche "Fortfahren" startet jetzt den Prozess der Anwendungsübermittlung (application)
+          const procediBtn = document.getElementById("lifensure-procedi-btn");
+          const riprovaBtn = document.getElementById("lifensure-riprova");
+
+          // Modal
+          const overlay = document.getElementById("lifensure-overlay");
+          const modal = document.getElementById("lifensure-modal");
+          const modalTitle = document.getElementById("lifensure-modal-title");
+          const modalContent = document.getElementById(
+            "lifensure-modal-content"
+          );
+          const modalCloseBtn = document.getElementById(
+            "lifensure-modal-close"
+          );
+          const modalConfirmBtn = document.getElementById(
+            "lifensure-modal-confirm"
+          );
+
+          // Debug - DOM-Elemente beibehalten, aber debugInfo-Funktionen entfernen
+          const debugContainer = document.getElementById("lifensure-debug");
+          const debugContent = document.getElementById(
+            "lifensure-debug-content"
+          );
+
+          // --- HILFSFUNKTIONEN ---
+
+          /** @param {string} message Zu loggende Nachricht */
+          function safeLog(message) {
+            if (window.console && console.log) {
+              console.log("[Lifensure Emission] " + message);
+            }
+          }
+
+          // debugInfo-Funktion wie angefordert entfernt
+          function debugInfo(data) {
+            // Leere Implementierung für debugInfo im Nicht-Debug-Modus oder wenn entfernt
+            if (DEBUG_MODE && window.console && console.log) {
+              // Optional: Loggen in der Konsole, wenn DEBUG_MODE true ist, auch wenn debugInfo entfernt wurde
+              console.log("[DEBUG INFO]", data);
+            }
+            if (!DEBUG_MODE && debugContainer) {
+              debugContainer.style.display = "none"; // Sicherstellen, dass Debug-Bereich ausgeblendet ist
+            }
+          }
+
+          /** Überprüft die Verfügbarkeit von sessionStorage */
+          function checkSessionStorage() {
+            try {
+              const testKey = "lifensure_test";
+              sessionStorage.setItem(testKey, testKey);
+              sessionStorage.removeItem(testKey);
+              sessionStorageAvailable = true;
+              // debugInfo("SessionStorage ist verfügbar."); // Debug-Aufruf entfernt
+            } catch (e) {
+              sessionStorageAvailable = false;
+              // debugInfo("SessionStorage nicht verfügbar oder blockiert."); // Debug-Aufruf entfernt
+            }
+          }
+
+          /**
+           * Zeigt/verbirgt ein HTML-Element.
+           * @param {HTMLElement} element Das anzuzeigende/auszublendende Element.
+           * @param {boolean} show True zum Anzeigen, false zum Ausblenden.
+           */
+          function toggleElement(element, show) {
+            if (element) {
+              element.style.display = show ? "block" : "none";
+            } else {
+              // debugInfo("Versuch, ein Null-Element zu toggeln."); // Debug-Aufruf entfernt
+            }
+          }
+
+          /**
+           * Setzt den Ladezustand einer Schaltfläche.
+           * @param {HTMLButtonElement} button Die Schaltfläche.
+           * @param {boolean} isLoading True, wenn geladen wird, sonst false.
+           * @param {string} [loadingText='Verarbeitung...'] Anzuzeigender Text während des Ladens.
+           */
+          function setButtonLoading(
+            button,
+            isLoading,
+            loadingText = "Verarbeitung..."
+          ) {
+            if (!button) return;
+            if (isLoading) {
+              button.disabled = true;
+              // Original-Text speichern, wenn er noch nicht gespeichert ist
+              if (!button.dataset.originalText) {
+                button.dataset.originalText = button.innerHTML;
+              }
+              button.innerHTML = `<span class="lifensure-button-spinner"></span> ${loadingText}`;
+            } else {
+              button.disabled = false;
+              // Original-Text wiederherstellen
+              button.innerHTML =
+                button.dataset.originalText || button.innerHTML;
+              delete button.dataset.originalText; // Gespeicherten Text bereinigen
+            }
+          }
+
+          // --- MODAL-FUNKTIONEN ---
+
+          /**
+           * Zeigt das Modal-Fenster an.
+           * @param {string} title Titel des Modals.
+           * @param {string} content HTML-Inhalt des Modals.
+           */
+          function showModal(title, content) {
+            if (!overlay || !modal || !modalTitle || !modalContent) {
+              // debugInfo("Modal-Elemente nicht gefunden."); // Debug-Aufruf entfernt
+              return;
+            }
+            try {
+              modalTitle.textContent = title;
+              modalContent.innerHTML = content;
+              overlay.classList.add("visible");
+              // Optional: Fokusmanagement für Zugänglichkeit
+              // modalConfirmBtn.focus();
+            } catch (err) {
+              // debugInfo("Fehler beim Öffnen des Modals: " + err.message); // Debug-Aufruf entfernt
+            }
+          }
+
+          /** Schließt das Modal-Fenster. */
+          function closeModal() {
+            if (!overlay) return;
+            overlay.classList.remove("visible");
+          }
+
+          // --- NAVIGATIONS- UND VALIDIERUNGSFUNKTIONEN ---
+
+          /**
+           * Navigiert zu einem bestimmten Schritt.
+           * @param {number} stepIndex Index des Schritts (Basis 0).
+           */
+          function goToStep(stepIndex) {
+            if (
+              stepIndex < 0 ||
+              stepIndex >= steps.length ||
+              !steps[stepIndex]
+            ) {
+              // debugInfo("Ungültiger Schrittindex: " + stepIndex); // Debug-Aufruf entfernt
+              return;
+            }
+            safeLog("Navigation zu Schritt " + (stepIndex + 1));
+            currentStepIndex = stepIndex;
+
+            steps.forEach((step, index) => {
+              if (step) {
+                step.style.display = index === stepIndex ? "block" : "none";
+                // Validierungsstatus beim Schrittwechsel entfernen
+                step.classList.remove("was-validated");
+              }
+            });
+
+            // Fortschrittsbalken aktualisieren (jetzt 3 Hauptschritte: 0, 1, 2)
+            const progressPercentage =
+              stepIndex < 2 ? (stepIndex / 2) * 100 : 100;
+            progressBar.style.width = progressPercentage + "%";
+
+            // Zum Anfang des Moduls scrollen
+            if (emissionModuleContainer) {
+              emissionModuleContainer.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
+          }
+
+          /**
+           * Validiert die Eingaben des aktuellen Schritts.
+           * @returns {boolean} True wenn gültig, sonst false.
+           */
+          function validateCurrentStep() {
+            const currentStepElement = steps[currentStepIndex];
+            if (!currentStepElement) {
+              // debugInfo("currentStepElement nicht gefunden für Validierung."); // Debug-Aufruf entfernt
+              return false;
+            }
+
+            let isStepValid = true;
+            // Klasse hinzufügen, um HTML5-Validierung und Stile zu aktivieren
+            currentStepElement.classList.add("was-validated");
+
+            // Alle erforderlichen Formularelemente im aktuellen Schritt auswählen
+            const requiredElements = currentStepElement.querySelectorAll(
+              "input[required], select[required], textarea[required]"
+            );
+
+            requiredElements.forEach((element) => {
+              // Prüfen, ob das Element sichtbar ist (nicht durch display: none verborgen)
+              const style = window.getComputedStyle(element);
+              if (style.display === "none" || style.visibility === "hidden") {
+                return; // Validierung für ausgeblendete Elemente ignorieren
+              }
+
+              if (element.type === "checkbox") {
+                if (!element.checked) {
+                  isStepValid = false;
+                }
+              } else {
+                if (!element.checkValidity()) {
+                  isStepValid = false;
+                }
+              }
+            });
+
+            if (!isStepValid) {
+              // debugInfo(`Validierung Schritt ${currentStepIndex + 1} fehlgeschlagen.`); // Debug-Aufruf entfernt
+              // Erstes ungültiges sichtbares Element finden, um den Fokus zu setzen
+              const firstInvalidVisible = currentStepElement.querySelector(
+                ':invalid:not(fieldset):not([type="hidden"]):not([style*="display: none"]):not([style*="visibility: hidden"])'
+              );
+
+              if (firstInvalidVisible) {
+                safeLog(
+                  `Zum ersten ungültigen sichtbaren Element scrollen: ${
+                    firstInvalidVisible.id ||
+                    firstInvalidVisible.name ||
+                    firstInvalidVisible.tagName
+                  }`
+                );
+                setTimeout(() => {
+                  firstInvalidVisible.focus();
+                  firstInvalidVisible.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                  });
+                }, 100); // Kleine Verzögerung für flüssiges Scrollen
+              } else {
+                // debugInfo( "Kein ungültiges sichtbares Element zum Scrollen gefunden."); // Debug-Aufruf entfernt
+              }
+            } else {
+              // debugInfo(`Validierung Schritt ${currentStepIndex + 1} erfolgreich.`); // Debug-Aufruf entfernt
+            }
+
+            return isStepValid;
+          }
+
+          // --- API-AUFRUFFUNKTIONEN ---
+
+          /**
+           * Generische Funktion zum Ausführen von Fetch-Anfragen an die API.
+           * @param {string} endpoint - Teil der URL nach API_BASE_URL (z.B. '/offer').
+           * @param {object} options - Anfrage-Optionen (method, headers, body).
+           * @returns {Promise<object | Response>} - Geparste JSON-Antwort oder Response-Objekt für Nicht-JSON-Typen (z.B. Blob).
+           * @throws {object} Fehlerobjekt mit Details (status, message, body)
+           */
+          async function callApi(endpoint, options = {}) {
+            const url = `${API_BASE_URL}${endpoint}`;
+            const defaultOptions = {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            };
+
+            options.headers = {
+              ...defaultOptions.headers,
+              ...options.headers,
+            };
+
+            if (
+              options.body &&
+              typeof options.body === "object" &&
+              options.headers["Content-Type"] === "application/json"
+            ) {
+              options.body = JSON.stringify(options.body);
+            }
+
+            try {
+              const response = await fetch(url, options);
+
+              console.log(
+                "API-Antwort erhalten (Status:",
+                response.status,
+                response.statusText,
+                ")"
+              );
+
+              if (!response.ok) {
+                let errorDetails = {
+                  status: response.status,
+                  message: `HTTP-Fehler! Status: ${response.status} ${response.statusText}`,
+                  body: null,
+                };
+                try {
+                  const clonedResponse = response.clone();
+                  const errorBody = await clonedResponse.json();
+                  errorDetails.body = errorBody;
+                  if (
+                    Array.isArray(errorBody.error) &&
+                    errorBody.error.length > 0
+                  ) {
+                    errorDetails.message = `API-Fehler: ${errorBody.error
+                      .map((e) => e.error)
+                      .join(", ")}`;
+                  } else if (typeof errorBody === "object") {
+                    errorDetails.message = `API-Fehler: ${JSON.stringify(
+                      errorBody
+                    )}`;
+                  } else {
+                    const textBody = await clonedResponse.text();
+                    errorDetails.body = textBody;
+                    errorDetails.message = `API-Fehler (Nicht-JSON): ${textBody.substring(
+                      0,
+                      200
+                    )}`;
+                  }
+                } catch (parseError) {
+                  console.log(
+                    `Antwort-Fehlerkörper der API konnte nicht als JSON/Text geparst werden (${response.status}): ${parseError}`
+                  );
+                }
+                throw errorDetails;
+              }
+              sessionStorage.removeItem("premio");
+              sessionStorage.removeItem("referenceNumber");
+
+              const contentType = response.headers.get("content-type");
+              if (contentType && contentType.includes("application/json")) {
+                const jsonResponse = await response.json();
+                console.log(`API-Erfolgsantwort (JSON):`, jsonResponse);
+
+                return jsonResponse;
+              } else {
+                return response;
+              }
+            } catch (error) {
+              if (!error.status) {
+                console.error(`Fetch-API-Netzwerkfehler: ${error.message}`);
+                throw {
+                  status: 0,
+                  message: `Netzwerkfehler: ${error.message}`,
+                };
+              }
+              console.error(`API-Fehler:`, error); // Behandelten Fehler loggen
+              throw error;
+            }
+          }
+
+          /**
+           * Ruft die API für die Übermittlung der Anwendung für die Police-Ausstellung auf (3.3 Application).
+           * @param {string} offerId - ID des Angebots.
+           * @param {object} underwritingData - Daten für den Underwriting-Abschnitt ({ questions: [], checkbox: [] }).
+           * @returns {Promise<object>} - API-Antwort mit Policennummer und Zeigern auf Dokumente.
+           * @throws {object} Fehlerobjekt mit Details
+           */
+          async function callSubmitApplicationAPI(offerId, underwritingData) {
+            safeLog(
+              `API-Aufruf: Anwendung einreichen für Angebots-ID: ${offerId}`
+            );
+            const endpoint = "/application";
+
+            const requestBody = {
+              id: offerId,
+              email: emailConfermaInput.value,
+              underwriting: underwritingData,
+            };
+            // debugInfo("Anfrage-Körper für Anwendungseinreichung:", requestBody); // Debug-Aufruf entfernt
+
+            return callApi(endpoint, {
+              method: "POST",
+              body: requestBody,
+            });
+          }
+
+          /**
+           * Ruft die API auf, um den Inhalt eines Dokuments über seinen Zeiger abzurufen (4.1 Retrieve document).
+           * @param {string} pointer - Dokument-ID (Zeiger).
+           * @returns {Promise<Blob>} - Dokumentinhalt als Blob.
+           * @throws {object | Error} callApi-Fehlerobjekt oder Error, wenn der Blob nicht abgerufen werden kann.
+           */
+          async function callRetrieveDocumentAPI(pointer) {
+            safeLog(
+              `API-Aufruf: Dokument abrufen für Zeiger: ${pointer}`
+            );
+            const endpoint = `/document_pointer/${pointer}`;
+
+            try {
+              const response = await callApi(endpoint, {
+                method: "GET",
+                headers: {
+                  Accept: "application/pdf, application/octet-stream, */*",
+                },
+              });
+
+              const fileBlob = await response.blob();
+              // debugInfo( `Dokument-Blob erhalten (Typ: ${fileBlob.type}, Größe: ${fileBlob.size} Bytes).`); // Debug-Aufruf entfernt
+              return fileBlob;
+            } catch (error) {
+              // debugInfo(`Fehler in callRetrieveDocumentAPI:`, error); // Debug-Aufruf entfernt
+              throw error;
+            }
+          }
+
+          // --- SCHRITTLOGIK-FUNKTIONEN ---
+
+          /**
+           * Versucht, Angebotsdaten aus sessionStorage zu laden.
+           * @returns {boolean} True, wenn Daten gefunden und gültig sind, False sonst.
+           */
+          function loadOfferDetailsFromSession() {
+            offerDetailsFromSession = null;
+            toggleElement(sessionErrorDiv, false);
+
+            if (!sessionStorageAvailable) {
+              toggleElement(sessionErrorDiv, true);
+              sessionErrorDiv.innerHTML =
+                "Fehler: Lokaler Speicher (sessionStorage) ist nicht verfügbar. Der Ausstellungsprozess erfordert aktiven lokalen Speicher.";
+              return false;
+            }
+
+            const savedOfferId = sessionStorage.getItem("reference-number");
+            const datiUtenteString = sessionStorage.getItem("datiUtente");
+
+            let datiUtente = null;
+            if (datiUtenteString) {
+              try {
+                datiUtente = JSON.parse(datiUtenteString);
+              } catch (e) {
+                toggleElement(sessionErrorDiv, true);
+                sessionErrorDiv.innerHTML =
+                  "Fehler: Die gespeicherten Angebotsdaten sind beschädigt. Bitte versuchen Sie erneut, das Angebot zu erstellen.";
+                return false;
+              }
+            }
+
+            const enteredEmail = emailConfermaInput.value.trim().toLowerCase();
+
+            if (!savedOfferId || !datiUtente || !datiUtente.email) {
+              toggleElement(sessionErrorDiv, true);
+              sessionErrorDiv.innerHTML =
+                "Fehler: Angebotsdaten nicht in der Sitzung gefunden. Stellen Sie sicher, dass Sie den Prozess von der Angebotsseite aus beginnen.";
+              return false;
+            }
+
+            const sessionEmail = datiUtente.email.toLowerCase();
+            if (enteredEmail && sessionEmail !== enteredEmail) {
+              toggleElement(sessionErrorDiv, true);
+              sessionErrorDiv.innerHTML =
+                "Fehler: Die eingegebene E-Mail stimmt nicht mit der E-Mail überein, die mit dem in der Sitzung gespeicherten Angebot verknüpft ist.";
+              return false;
+            }
+
+            offerDetailsFromSession = {
+              id: savedOfferId,
+              offerDetails: datiUtente,
+            };
+
+            return true;
+          }
+
+          /** Füllt die Angebotszusammenfassung in Schritt 2 aus sessionStorage-Daten */
+          function populateOfferSummary() {
+            if (
+              !offerDetailsFromSession ||
+              !offerDetailsFromSession.offerDetails
+            ) {
+              riepilogoContent.innerHTML =
+                '<p style="color: red;">Interner Fehler: Zusammenfassungsdaten nicht verfügbar.</p>';
+              return;
+            }
+
+            try {
+              const offerData = offerDetailsFromSession.offerDetails;
+
+              const nomeCompleto = `${offerData.firstname || ""} ${
+                offerData.lastname || ""
+              }`.trim();
+              const durata = offerData.durata;
+              const copertura = parseFloat(
+                offerData.coverage || 0
+              ).toLocaleString("de-CH");
+              const premio = sessionStorage.getItem("premio") || 0;
+              const modalita =
+                offerData.mode === "annual" ? "Jährlich" : "Monatlich";
+
+              riepilogoContent.innerHTML = `
+                      <h6>Zusammenfassung der Details</h6>
+                      <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                          <div style="flex: 1; min-width: 200px;">
+                              <p><strong>Versicherter:</strong> ${
+                                nomeCompleto || "N/A"
+                              }</p>
+                              <p><strong>Dauer:</strong> ${
+                                durata || "N/A"
+                              } Jahre</p>
+                          </div>
+                          <div style="flex: 1; min-width: 200px;">
+                              <p><strong>Versicherungssumme:</strong> CHF ${
+                                copertura || "N/A"
+                              }</p>
+                              <p><strong>Zahlungsweise:</strong> ${
+                                modalita || "N/A"
+                              }</p>
+                          </div>
+                      </div>
+                      <div class="lifensure-summary-highlight">
+                          <strong>${modalita} Prämie:</strong> CHF ${
+                premio || "N/A"
+              }
+                      </div>
+                  `;
+
+              if (condizioniLink) {
+                condizioniLink.onclick = (e) => {
+                  e.preventDefault();
+                  showModal(
+                    "Allgemeine Versicherungsbedingungen",
+                    `
+                         <p>Text der Allgemeinen Versicherungsbedingungen. (Statischer Beispielinhalt. Beziehen Sie sich auf die offiziellen Dokumente, die nach Ausstellung der Police heruntergeladen werden können.)</p>
+                       `
+                  );
+                };
+                condizioniLink.style.cursor = "pointer";
+              }
+
+              if (privacyLink) {
+                privacyLink.onclick = (e) => {
+                  e.preventDefault();
+                  showModal(
+                    "Datenschutzrichtlinie",
+                    `
+                         <p>Text der Datenschutzrichtlinie. (Statischer Beispielinhalt. Beziehen Sie sich auf die offiziellen Dokumente, die nach Ausstellung der Police heruntergeladen werden können.)</p>
+                       `
+                  );
+                };
+                privacyLink.style.cursor = "pointer";
+              }
+            } catch (error) {
+              riepilogoContent.innerHTML =
+                '<p style="color: red;">Fehler bei der Formatierung der Zusammenfassung.</p>';
+            }
+          }
+
+          /** Füllt die Dokumentenliste in Schritt 3 (Abschluss) */
+          function populatePolicyDocuments() {
+            if (
+              !applicationResponseData ||
+              !applicationResponseData.document_pointers ||
+              applicationResponseData.document_pointers.length === 0
+            ) {
+              documentiPolizzaDiv.innerHTML =
+                "<p>Zurzeit keine Dokumente verfügbar.</p>";
+              return;
+            }
+
+            let documentsHTML = "";
+            applicationResponseData.document_pointers.forEach((doc) => {
+              if (doc.pointer) {
+                documentsHTML += `
+                           <div class="lifensure-document-item">
+                               <span>${
+                                 doc.description || "Unbenanntes Dokument"
+                               }</span>
+                               <button type="button" class="lifensure-document-download-btn lifensure-button outline" data-pointer="${
+                                 doc.pointer
+                               }" data-description="${
+                  doc.description || "Dokument"
+                }">
+                                   ? Herunterladen <!-- Pfeil nach unten -->
+                               </button>
+                           </div>
+                       `;
+              } else {
+                documentsHTML += `
+                           <div class="lifensure-document-item">
+                               <span>${
+                                 doc.description || "Unbenanntes Dokument"
+                               }</span>
+                               <span style="color: #6c757d; font-size: 0.9rem;">Nicht zum Download verfügbar</span>
+                           </div>
+                       `;
+              }
+            });
+            documentiPolizzaDiv.innerHTML = documentsHTML;
+
+            document
+              .querySelectorAll(".lifensure-document-download-btn")
+              .forEach((button) => {
+                button.addEventListener("click", function () {
+                  const pointer = this.dataset.pointer;
+                  const description = this.dataset.description;
+                  if (pointer) {
+                    handleDocumentDownload(pointer, description);
+                  }
+                });
+              });
+          }
+
+          /**
+           * Behandelt die Schaltfläche "Zusammenfassung anzeigen" (Schritt 1 -> Schritt 2 oder 4).
+           * @async
+           */
+          async function handleStep1Proceed() {
+            toggleElement(sessionErrorDiv, false);
+
+            if (!validateCurrentStep()) {
+              return;
+            }
+
+            const isOfferDataLoaded = loadOfferDetailsFromSession();
+
+            if (!isOfferDataLoaded) {
+              return;
+            }
+
+            populateOfferSummary();
+            goToStep(1);
+          }
+
+          /**
+           * Behandelt die Anwendungsübermittlung (Schritt 2 -> Schritt 3 oder 4).
+           * @async
+           */
+          async function handleApplicationSubmission() {
+            if (!validateCurrentStep()) {
+              return;
+            }
+
+            const offerId = offerDetailsFromSession?.id;
+            if (!offerId) {
+              erroreMessaggioP.textContent =
+                "Interner Fehler: Angebots-ID für die Übermittlung nicht verfügbar. Versuchen Sie es vom ersten Schritt aus erneut.";
+              goToStep(3);
+              return;
+            }
+
+            const underwritingData = {
+              questions: [],
+              checkbox: [],
+            };
+
+            setButtonLoading(procediBtn, true, "Wird gesendet...");
+
+            try {
+              applicationResponseData = await callSubmitApplicationAPI(
+                offerId,
+                underwritingData
+              );
+
+              if (applicationResponseData.policy_number) {
+                numeroPolizzaSpan.textContent =
+                  applicationResponseData.policy_number;
+              } else {
+                numeroPolizzaSpan.textContent = "-- N/A --";
+              }
+
+              populatePolicyDocuments();
+              goToStep(2);
+
+              if (sessionStorageAvailable) {
+                sessionStorage.removeItem("reference-number");
+                sessionStorage.removeItem("datiUtente");
+                sessionStorage.removeItem("datiPreventivo");
+              }
+              console.log("Ausstellung erfolgreich:", applicationResponseData);
+            } catch (error) {
+              console.log("Ausstellung fehlgeschlagen:", error);
+
+              const errorMessage =
+                error.message ||
+                "Unbekannter Fehler beim Senden der Anfrage.";
+              if (
+                error.body &&
+                Array.isArray(error.body.error) &&
+                error.body.error.length > 0
+              ) {
+                erroreMessaggioP.textContent = `Fehler: ${error.body.error[0].error}`;
+              } else {
+                erroreMessaggioP.textContent = `Bei der Finalisierung der Police ist ein Fehler aufgetreten. Details: ${errorMessage}. Kontaktieren Sie den Support.`;
+              }
+
+              goToStep(3);
+            } finally {
+              setButtonLoading(procediBtn, false);
+            }
+          }
+
+          /**
+           * Behandelt den Download eines Dokuments (Schritt 3 Abschluss).
+           * @param {string} pointer Dokument-ID.
+           * @param {string} description Beschreibung für den Dateinamen.
+           * @async
+           */
+          async function handleDocumentDownload(pointer, description) {
+            const downloadButton = documentiPolizzaDiv.querySelector(
+              `button[data-pointer="${pointer}"]`
+            );
+            if (!downloadButton) {
+              return;
+            }
+
+            setButtonLoading(downloadButton, true, "...");
+
+            try {
+              const fileBlob = await callRetrieveDocumentAPI(pointer);
+
+              if (fileBlob instanceof Blob) {
+                const url = window.URL.createObjectURL(fileBlob);
+                const a = document.createElement("a");
+                a.style.display = "none";
+                a.href = url;
+                const cleanedDescription = (description || "Dokument")
+                  .replace(/[^a-z0-9\s_]/gi, "")
+                  .trim()
+                  .replace(/\s+/g, "_");
+                const fileBaseName =
+                  cleanedDescription || "heruntergeladenes_dokument";
+
+                let fileExtension = "";
+                const mimeParts = fileBlob.type.split("/");
+                if (mimeParts.length > 1) {
+                  fileExtension = "." + mimeParts.pop();
+                }
+
+                a.download = `${fileBaseName}${fileExtension}`;
+
+                document.body.appendChild(a);
+                a.click();
+
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+              } else {
+                throw new Error(
+                  "Unerwartetes Datenformat für das Dokument erhalten."
+                );
+              }
+            } catch (error) {
+              const errorMessage = error.message || "Unbekannter Fehler.";
+              alert(
+                `Dokument "${description}" kann nicht heruntergeladen werden. Details: ${errorMessage}. Versuchen Sie es erneut oder kontaktieren Sie den Support.`
+              );
+            } finally {
+              setButtonLoading(downloadButton, false);
+              if (downloadButton.dataset.originalText) {
+                downloadButton.innerHTML = downloadButton.dataset.originalText;
+                delete downloadButton.dataset.originalText;
+              } else {
+                downloadButton.innerHTML = "? Herunterladen";
+              }
+            }
+          }
+
+          // --- MODULINITIALISIERUNG ---
+
+          async function initializeModule() {
+            safeLog("Initialisiere Ausstellungsmodul...");
+            checkSessionStorage();
+
+            loadOfferDetailsFromSession();
+
+            if (offerDetailsFromSession) {
+              offertaIdInput.value = offerDetailsFromSession.id || "";
+              emailConfermaInput.value =
+                offerDetailsFromSession.offerDetails?.email || "";
+              toggleElement(sessionErrorDiv, false);
+            }
+
+            addEventListeners();
+            goToStep(0);
+
+            safeLog("Ausstellungsmodul erfolgreich initialisiert.");
+          }
+
+          // --- EVENT-LISTENER HINZUFÜGEN ---
+
+          function addEventListeners() {
+            verificaBtn?.addEventListener("click", handleStep1Proceed);
+
+            indietroRiepilogoBtn?.addEventListener("click", () => goToStep(0));
+
+            procediBtn?.addEventListener("click", handleApplicationSubmission);
+
+            riprovaBtn?.addEventListener("click", () => goToStep(0));
+
+            if (condizioniLink) {
+              condizioniLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                showModal(
+                  "Allgemeine Versicherungsbedingungen",
+                  `
+                         <p>Text der Allgemeinen Versicherungsbedingungen. (Statischer Beispielinhalt. Beziehen Sie sich auf die offiziellen Dokumente, die nach Ausstellung der Police heruntergeladen werden können.)</p>
+                       `
+                );
+              });
+            }
+
+            if (privacyLink) {
+              privacyLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                showModal(
+                  "Datenschutzrichtlinie",
+                  `
+                         <p>Text der Datenschutzrichtlinie. (Statischer Beispielinhalt. Beziehen Sie sich auf die offiziellen Dokumente, die nach Ausstellung der Police heruntergeladen werden können.)</p>
+                       `
+                );
+              });
+            }
+
+            modalCloseBtn?.addEventListener("click", closeModal);
+            modalConfirmBtn?.addEventListener("click", closeModal);
+            overlay?.addEventListener("click", (e) => {
+              if (e.target === overlay) closeModal();
+            });
+          }
+
+          if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initializeModule);
+          } else {
+            initializeModule();
+          }
+        })(); // Ende isolierter Bereich
+      </script>
+    </div>
+    <!-- Ende custom-html-3u -->
+
+    <!-- JS-Skripte des Themes -->
+    <script src="https://r.mobirisesite.com/1342903/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://r.mobirisesite.com/1342903/assets/smoothscroll/smooth-scroll.js"></script>
+    <script src="https://r.mobirisesite.com/1342903/assets/ytplayer/index.js"></script>
+    <script src="https://r.mobirisesite.com/1342903/assets/dropdown/js/navbar-dropdown.js"></script>
+    <script src="https://r.mobirisesite.com/1342903/assets/theme/js/script.js"></script>
+
+    <!-- Skript für Lazy Loading Bilder (bestehend) -->
+    <script>
+      "use strict";
+      if ("loading" in HTMLImageElement.prototype) {
+        document.querySelectorAll('img[loading="lazy"]').forEach((e) => {
+          if (e.dataset.src) e.src = e.dataset.src;
+        });
+      } else {
+        // Fallback Lazy Loading
+      }
+    </script>
+  </body>
+</html>
