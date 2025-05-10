@@ -180,7 +180,12 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
         phone: dati.phone || "",
         profession: dati.profession,
         gender: dati.gender,
-        language: "it-ch",
+        language:
+          dati.nationality === "IT"
+            ? "it-CH"
+            : dati.nationality === "FR"
+            ? "fr-CH"
+            : "de-CH",
       },
       beneficiaries: {
         type: dati.beneficiary_type,
