@@ -2095,12 +2095,12 @@
          * @returns {Promise<string>} - Promise con il contenuto HTML (simulato).
          */
         async function getDocumentContentFromAPI(documentId, referenceNumber) {
-          console.log(
-            "Simulazione chiamata API per contenuto documento:",
-            documentId,
-            "per ref:",
-            referenceNumber
-          );
+          // console.log(
+          //   "Simulazione chiamata API per contenuto documento:",
+          //   documentId,
+          //   "per ref:",
+          //   referenceNumber
+          // );
           // !!! IMPORTANTE: NESSUNA CHIAVE API QUI !!!
           const url = await loadDocumentFromAPI(documentId);
           // return `<embed src="${url}" type="application/pdf" width="100%" height="80vh" />`;
@@ -2124,12 +2124,12 @@
          * @returns {Promise<string>} - Promise con un URL di download (simulato).
          */
         async function downloadDocumentFromAPI(documentId, referenceNumber) {
-          console.log(
-            "Simulazione chiamata API per download documento:",
-            documentId,
-            "per ref:",
-            referenceNumber
-          );
+          // console.log(
+          //   "Simulazione chiamata API per download documento:",
+          //   documentId,
+          //   "per ref:",
+          //   referenceNumber
+          // );
 
           const simulatedUrl = loadDocumentFromAPI(documentId);
 
@@ -3035,7 +3035,7 @@
             formData,
             requiresManualVerification
           );
-          console.log("Risposta backend:", responseRichiediOfferta);
+          // console.log("Risposta backend:", responseRichiediOfferta);
 
           if (!responseRichiediOfferta.status === "ok") {
             throw new Error("Errore invio dati al backend");
@@ -3324,7 +3324,7 @@
               sessionStorage.getItem("datiPreventivo");
             if (datiPreventivoString) {
               const datiPreventivo = JSON.parse(datiPreventivoString);
-              console.log("Caricamento dati da preventivo:", datiPreventivo);
+              // console.log("Caricamento dati da preventivo:", datiPreventivo);
 
               // Compila campi Step 1
               document.getElementById("duration").value =
