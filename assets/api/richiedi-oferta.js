@@ -157,8 +157,8 @@ function getFormData(form) {
       comment: "",
     },
   ];
+  values.language = document.documentElement.lang;
 
-  console.log("form values>>", values);
   return values;
 }
 
@@ -181,9 +181,9 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
         profession: dati.profession,
         gender: dati.gender,
         language:
-          dati.nationality === "IT"
+          dati.language === "it"
             ? "it-CH"
-            : dati.nationality === "FR"
+            : dati.language === "fr"
             ? "fr-CH"
             : "de-CH",
       },
@@ -266,7 +266,7 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
       const beneficiaries = Array.from(
         document.querySelectorAll(".beneficiary-container")
       );
-      console.log(beneficiaries);
+      // console.log(beneficiaries);
 
       beneficiaries.map((item) => {
         const firstname = item.querySelector(
@@ -282,12 +282,12 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
           "[data-beneficiary-percentage]"
         ).value;
 
-        console.log("benef", {
-          firstname,
-          lastname,
-          relation,
-          percentage,
-        });
+        // console.log("benef", {
+        //   firstname,
+        //   lastname,
+        //   relation,
+        //   percentage,
+        // });
 
         datiOfferta.beneficiaries.individual_beneficiaries.push({
           individual_type: "person",
@@ -301,7 +301,7 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
       });
     }
 
-    console.log("datiOfferta>>", datiOfferta);
+    // console.log("datiOfferta>>", datiOfferta);
     try {
       const datiPreventivo = {
         origin: datiOfferta.policy_information.origin,
@@ -353,7 +353,7 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
       });
 
       const sendDocumentResponse = await sendDocument.json();
-      console.log("sendDocumentResponse>>", sendDocumentResponse);
+      // console.log("sendDocumentResponse>>", sendDocumentResponse);
     }
 
     sessionStorage.setItem("reference-number", datiOfferta.id);
