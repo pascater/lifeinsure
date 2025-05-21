@@ -1,3 +1,15 @@
+function getLanguage() {
+  const htmlEl = document.documentElement;
+  const attrLang = htmlEl.getAttribute("lang");
+  console.log("attrLang", attrLang);
+
+  // if (attrLang) return attrLang;
+  const path = location.pathname;
+  if (path.includes("-fr")) return "fr";
+  if (path.includes("-de")) return "de";
+
+  return "it";
+}
 function getFormData(form) {
   let values = Object.fromEntries(form.entries());
 
@@ -163,6 +175,8 @@ function getFormData(form) {
 }
 
 async function richiediOfferta(formOfertaData, requiresManualVerification) {
+  console.log("function getLanguage>>", getLanguage());
+
   const dati = getFormData(formOfertaData);
   try {
     const datiOfferta = {
@@ -181,9 +195,9 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
         profession: dati.profession,
         gender: dati.gender,
         language:
-          dati.language === "it"
+          getLanguage() === "it"
             ? "it-CH"
-            : dati.language === "fr"
+            : getLanguage() === "fr"
             ? "fr-CH"
             : "de-CH",
       },
@@ -282,13 +296,6 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
           "[data-beneficiary-percentage]"
         ).value;
 
-        // console.log("benef", {
-        //   firstname,
-        //   lastname,
-        //   relation,
-        //   percentage,
-        // });
-
         datiOfferta.beneficiaries.individual_beneficiaries.push({
           individual_type: "person",
           percentage: parseInt(percentage) / 100,
@@ -301,7 +308,6 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
       });
     }
 
-    // console.log("datiOfferta>>", datiOfferta);
     try {
       const datiPreventivo = {
         origin: datiOfferta.policy_information.origin,
@@ -341,19 +347,24 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
 
     const datiRisposta = await risposta.json();
 
+    // const textEmail =
+    //   language === "it"
+    //     ? textEmailRichiediOfertIT(datiOfferta.id)
+    //     : language === "fr"
+    //     ? textEmailRichiediOfertFR(datiOfferta.id)
+    //     : textEmailRichiediOfertDE(datiOfferta.id);
+
     if (risposta.status === 200 && !requiresManualVerification) {
-      const sendDocument = await fetch(`${API_BASE_URL}/send_documents`, {
+      await fetch(`${API_BASE_URL}/send_documents`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          //  textEmail: textEmail,
           id: datiOfferta.id,
           email: datiOfferta.holder.email,
           documentsPointer: datiRisposta.document_pointers,
         }),
       });
-
-      const sendDocumentResponse = await sendDocument.json();
-      // console.log("sendDocumentResponse>>", sendDocumentResponse);
     }
 
     sessionStorage.setItem("reference-number", datiOfferta.id);
