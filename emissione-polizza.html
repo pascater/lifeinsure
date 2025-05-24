@@ -1006,6 +1006,7 @@
       </div>
       <!-- Fine lifensure-emission-module -->
       <script src="assets/api/test-connection.js"></script>
+      <script type="module" src="assets/api/text-email.js"></script>
       <script>
         // Scope isolato per evitare conflitti
         (function () {
@@ -1457,6 +1458,7 @@
               id: offerId,
               email: emailConfermaInput.value,
               underwriting: underwritingData,
+              text: textEmailEmissioneIT(offerId),
             };
             // debugInfo("Corpo della richiesta per la Sottomissione Applicazione:", requestBody); // Removed debug call
 

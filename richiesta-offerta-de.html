@@ -471,7 +471,6 @@
                         id="email"
                         name="email"
                         required
-                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                       />
                       <div class="invalid-feedback">
                         Bitte geben Sie eine gültige E-Mail-Adresse ein
@@ -1946,7 +1945,7 @@
     <!-- Ende container -->
 
     <script src="assets/api/test-connection.js"></script>
-    <script src="assets/api/richiedi-oferta.js"></script>
+    <script type="module" src="assets/api/richiedi-oferta.js"></script>
     <script src="assets/api/recupera-documento.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/api/check-age.js"></script>
@@ -3033,7 +3032,8 @@
           const formData = new FormData(form);
           const responseRichiediOfferta = await richiediOfferta(
             formData,
-            requiresManualVerification
+            requiresManualVerification,
+            "de"
           );
           // console.log("Risposta backend:", responseRichiediOfferta);
 
@@ -3371,8 +3371,8 @@
         }
 
         loadDataFromPreviousModule();
-        goToStep(1); // Assicura che si parta sempre dal primo step al caricamento
-      }); // Fine DOMContentLoaded
+        goToStep(1);
+      });
     </script>
   </body>
 </html>

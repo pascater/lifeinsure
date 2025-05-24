@@ -97,7 +97,7 @@
       type="text/css"
     />
 
-    <!-- Styles pour le module d'émission -->
+    <!-- Styles pour le module d'ï¿½mission -->
     <style>
       /* Styles de base pour le conteneur et card */
       .lifensure-container {
@@ -297,7 +297,7 @@
           transform: rotate(360deg);
         }
       }
-      /* Résumé */
+      /* Rï¿½sumï¿½ */
       .lifensure-summary-box {
         margin-bottom: 25px;
         background-color: #f8f9fa;
@@ -326,7 +326,7 @@
         margin-top: 15px;
         font-weight: 500;
       }
-      /* Step Complétion */
+      /* Step Complï¿½tion */
       .lifensure-completion-icon {
         width: 80px;
         height: 80px;
@@ -701,13 +701,13 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-12 col-lg-11">
-            <!-- Contenu header si présent -->
+            <!-- Contenu header si prï¿½sent -->
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Module Émission Police -->
+    <!-- Module ï¿½mission Police -->
     <div id="custom-html-3u">
       <div id="lifensure-emission-module" class="lifensure-container">
         <div class="lifensure-card">
@@ -718,7 +718,7 @@
             <div id="lifensure-progress-bar"></div>
           </div>
 
-          <!-- ÉTAPE 1: Saisie Détails Offre -->
+          <!-- ï¿½TAPE 1: Saisie Dï¿½tails Offre -->
           <div id="lifensure-step-1" style="display: block">
             <div class="lifensure-step-title">
               1. Saisissez les d&eacute;tails de l'offre
@@ -762,7 +762,7 @@
               </div>
             </div>
 
-            <!-- Message d'erreur si les données de l'offre ne sont pas trouvées dans sessionStorage -->
+            <!-- Message d'erreur si les donnï¿½es de l'offre ne sont pas trouvï¿½es dans sessionStorage -->
             <div
               id="lifensure-session-error"
               class="invalid-feedback"
@@ -777,19 +777,19 @@
             </div>
 
             <div style="text-align: center; margin-top: 30px">
-              <!-- Ce bouton passe simplement à l'étape suivante si les champs sont remplis et les données sessionStorage présentes -->
+              <!-- Ce bouton passe simplement ï¿½ l'ï¿½tape suivante si les champs sont remplis et les donnï¿½es sessionStorage prï¿½sentes -->
               <button id="lifensure-verifica-btn" class="lifensure-button">
                 Afficher le r&eacute;sum&eacute; et les consentements
               </button>
             </div>
           </div>
 
-          <!-- ÉTAPE 2: Résumé et Consentements -->
+          <!-- ï¿½TAPE 2: Rï¿½sumï¿½ et Consentements -->
           <div id="lifensure-step-2" style="display: none">
             <div class="lifensure-step-title">2. R&eacute;sum&eacute; et Consentements</div>
 
             <div id="lifensure-riepilogo-content" class="lifensure-summary-box">
-              <!-- Contenu du résumé inséré dynamiquement depuis sessionStorage -->
+              <!-- Contenu du rï¿½sumï¿½ insï¿½rï¿½ dynamiquement depuis sessionStorage -->
               <p>Chargement du r&eacute;sum&eacute;...</p>
             </div>
 
@@ -856,7 +856,7 @@
               </div>
             </div>
 
-            <!-- Questions supplémentaires (si l'API indique leur nécessité dans la phase PREMIA/OFFER) -->
+            <!-- Questions supplï¿½mentaires (si l'API indique leur nï¿½cessitï¿½ dans la phase PREMIA/OFFER) -->
             <div id="lifensure-domande-aggiuntive" style="margin-top: 20px">
               <!-- Exemple de structure d'une question dynamique :
                  <div class="lifensure-form-group">
@@ -880,14 +880,14 @@
               >
                 Retour
               </button>
-              <!-- Ce bouton démarre le processus de soumission de l'application à l'API /application -->
+              <!-- Ce bouton dï¿½marre le processus de soumission de l'application ï¿½ l'API /application -->
               <button id="lifensure-procedi-btn" class="lifensure-button">
                 Proc&eacute;der &agrave; l'&eacute;mission
               </button>
             </div>
           </div>
 
-          <!-- ÉTAPE 3: Complétion (Ex Étape 4) -->
+          <!-- ï¿½TAPE 3: Complï¿½tion (Ex ï¿½tape 4) -->
           <div id="lifensure-step-3" style="display: none">
             <div class="lifensure-step-title">3. &Eacute;mission Compl&eacute;t&eacute;e</div>
             <div style="text-align: center; margin-bottom: 30px">
@@ -921,12 +921,12 @@
             </div>
           </div>
 
-          <!-- ÉTAPE 4: Erreur (Ex Étape 5) -->
+          <!-- ï¿½TAPE 4: Erreur (Ex ï¿½tape 5) -->
           <div id="lifensure-step-4" style="display: none">
             <div class="lifensure-step-title">4. Une erreur s'est produite</div>
             <div style="text-align: center; margin-bottom: 30px">
               <div class="lifensure-error-icon">!</div>
-              <!-- Icône simple -->
+              <!-- Icï¿½ne simple -->
               <div class="lifensure-error-message">
                 <h3>Une erreur s'est produite</h3>
                 <p id="lifensure-errore-messaggio">
@@ -949,7 +949,7 @@
             </div>
           </div>
 
-          <!-- Zone de debug (optionnelle, à supprimer en production) -->
+          <!-- Zone de debug (optionnelle, ï¿½ supprimer en production) -->
           <div id="lifensure-debug">
             <h5 style="margin-top: 0">Infos Debug :</h5>
             <div id="lifensure-debug-content"></div>
@@ -957,7 +957,7 @@
         </div>
         <!-- Fin lifensure-card -->
 
-        <!-- Fenêtre Modale -->
+        <!-- Fenï¿½tre Modale -->
         <div id="lifensure-overlay">
           <div
             id="lifensure-modal"
@@ -972,11 +972,11 @@
                 id="lifensure-modal-close"
                 aria-label="Fermer la fen&ecirc;tre modale"
               >
-                ×
+                ï¿½
               </button>
             </div>
             <div id="lifensure-modal-content">
-              <!-- Contenu modal inséré dynamiquement -->
+              <!-- Contenu modal insï¿½rï¿½ dynamiquement -->
             </div>
             <div id="lifensure-modal-footer">
               <button id="lifensure-modal-confirm" class="lifensure-button">
@@ -987,30 +987,31 @@
         </div>
       </div>
       <!-- Fin lifensure-emission-module -->
-      <script src="assets/api/test-connection.js"></script>
+      <script src="assets/api/test-connection.js"></script>      <script type="module" src="assets/api/text-email.js"></script>
+
       <script>
-        // Scope isolé pour éviter les conflits
+        // Scope isolï¿½ pour ï¿½viter les conflits
         (function () {
           "use strict";
 
           // --- VARIABLES ET CONSTANTES ---
           let currentStepIndex = 0;
-          // Variable qui mémorisera les données de l'offre chargées depuis sessionStorage
+          // Variable qui mï¿½morisera les donnï¿½es de l'offre chargï¿½es depuis sessionStorage
           let offerDetailsFromSession = null;
-          // Variable qui mémorisera la réponse de l'API après l'appel /application réussi
+          // Variable qui mï¿½morisera la rï¿½ponse de l'API aprï¿½s l'appel /application rï¿½ussi
           let applicationResponseData = null;
 
           let sessionStorageAvailable = false;
-          // DEBUG_MODE mis à false en production pour supprimer debugInfo
-          const DEBUG_MODE = true; // Mettre à false en production
+          // DEBUG_MODE mis ï¿½ false en production pour supprimer debugInfo
+          const DEBUG_MODE = true; // Mettre ï¿½ false en production
 
-          // Éléments DOM principaux
+          // ï¿½lï¿½ments DOM principaux
           const progressBar = document.getElementById("lifensure-progress-bar");
-          // Liste des étapes mise à jour selon la nouvelle structure
+          // Liste des ï¿½tapes mise ï¿½ jour selon la nouvelle structure
           const steps = [
             document.getElementById("lifensure-step-1"), // index 0 (Saisie ID/Email)
-            document.getElementById("lifensure-step-2"), // index 1 (Résumé et consentements)
-            document.getElementById("lifensure-step-3"), // index 2 (Complétion)
+            document.getElementById("lifensure-step-2"), // index 1 (Rï¿½sumï¿½ et consentements)
+            document.getElementById("lifensure-step-3"), // index 2 (Complï¿½tion)
             document.getElementById("lifensure-step-4"), // index 3 (Erreur)
           ];
 
@@ -1018,7 +1019,7 @@
             "lifensure-emission-module"
           );
 
-          // Inputs Étape 1
+          // Inputs ï¿½tape 1
           const offertaIdInput = document.getElementById(
             "lifensure-offerta-id"
           );
@@ -1033,7 +1034,7 @@
             "lifensure-session-error"
           );
 
-          // Checkbox Étape 2
+          // Checkbox ï¿½tape 2
           const condizioniCheck = document.getElementById(
             "lifensure-condizioni-check"
           );
@@ -1063,7 +1064,7 @@
             "lifensure-domande-aggiuntive"
           );
 
-          // Complétion Étape 3 (Ex Étape 4)
+          // Complï¿½tion ï¿½tape 3 (Ex ï¿½tape 4)
           const numeroPolizzaSpan = document.getElementById(
             "lifensure-numero-polizza"
           );
@@ -1071,17 +1072,17 @@
             "lifensure-documenti-polizza"
           );
 
-          // Erreur Étape 4 (Ex Étape 5)
+          // Erreur ï¿½tape 4 (Ex ï¿½tape 5)
           const erroreMessaggioP = document.getElementById(
             "lifensure-errore-messaggio"
           );
 
           // Boutons
-          const verificaBtn = document.getElementById("lifensure-verifica-btn"); // Maintenant "Afficher Résumé"
+          const verificaBtn = document.getElementById("lifensure-verifica-btn"); // Maintenant "Afficher Rï¿½sumï¿½"
           const indietroRiepilogoBtn = document.getElementById(
             "lifensure-indietro-riepilogo"
           );
-          // Le bouton "Procéder" lance maintenant le processus de soumission de l'application (application)
+          // Le bouton "Procï¿½der" lance maintenant le processus de soumission de l'application (application)
           const procediBtn = document.getElementById("lifensure-procedi-btn");
           const riprovaBtn = document.getElementById("lifensure-riprova");
 
@@ -1099,7 +1100,7 @@
             "lifensure-modal-confirm"
           );
 
-          // Debug - Garder les éléments DOM mais supprimer les fonctions debugInfo
+          // Debug - Garder les ï¿½lï¿½ments DOM mais supprimer les fonctions debugInfo
           const debugContainer = document.getElementById("lifensure-debug");
           const debugContent = document.getElementById(
             "lifensure-debug-content"
@@ -1107,57 +1108,57 @@
 
           // --- FONCTIONS UTILITAIRES ---
 
-          /** @param {string} message Message à logger */
+          /** @param {string} message Message ï¿½ logger */
           function safeLog(message) {
             if (window.console && console.log) {
               console.log("[Lifensure Emission] " + message);
             }
           }
 
-          // fonction debugInfo supprimée comme demandé
+          // fonction debugInfo supprimï¿½e comme demandï¿½
           function debugInfo(data) {
-            // Implémentation vide pour debugInfo en mode non-debug ou lorsque supprimé
+            // Implï¿½mentation vide pour debugInfo en mode non-debug ou lorsque supprimï¿½
             if (DEBUG_MODE && window.console && console.log) {
-              // Optionnel : Log dans la console si DEBUG_MODE est true, même si debugInfo est supprimé
+              // Optionnel : Log dans la console si DEBUG_MODE est true, mï¿½me si debugInfo est supprimï¿½
               console.log("[DEBUG INFO]", data);
             }
             if (!DEBUG_MODE && debugContainer) {
-              debugContainer.style.display = "none"; // S'assurer que la zone debug est cachée
+              debugContainer.style.display = "none"; // S'assurer que la zone debug est cachï¿½e
             }
           }
 
-          /** Vérifie la disponibilité de sessionStorage */
+          /** Vï¿½rifie la disponibilitï¿½ de sessionStorage */
           function checkSessionStorage() {
             try {
               const testKey = "lifensure_test";
               sessionStorage.setItem(testKey, testKey);
               sessionStorage.removeItem(testKey);
               sessionStorageAvailable = true;
-              // debugInfo("SessionStorage est disponible."); // Appel debug supprimé
+              // debugInfo("SessionStorage est disponible."); // Appel debug supprimï¿½
             } catch (e) {
               sessionStorageAvailable = false;
-              // debugInfo("SessionStorage non disponible ou bloqué."); // Appel debug supprimé
+              // debugInfo("SessionStorage non disponible ou bloquï¿½."); // Appel debug supprimï¿½
             }
           }
 
           /**
-           * Affiche/Cache un élément HTML.
-           * @param {HTMLElement} element L'élément à afficher/cacher.
+           * Affiche/Cache un ï¿½lï¿½ment HTML.
+           * @param {HTMLElement} element L'ï¿½lï¿½ment ï¿½ afficher/cacher.
            * @param {boolean} show True pour afficher, false pour cacher.
            */
           function toggleElement(element, show) {
             if (element) {
               element.style.display = show ? "block" : "none";
             } else {
-              // debugInfo("Tentative de toggle sur élément null."); // Appel debug supprimé
+              // debugInfo("Tentative de toggle sur ï¿½lï¿½ment null."); // Appel debug supprimï¿½
             }
           }
 
           /**
-           * Définit l'état de chargement d'un bouton.
+           * Dï¿½finit l'ï¿½tat de chargement d'un bouton.
            * @param {HTMLButtonElement} button Le bouton.
            * @param {boolean} isLoading True si en chargement, false sinon.
-           * @param {string} [loadingText='Traitement...'] Texte à afficher pendant le chargement.
+           * @param {string} [loadingText='Traitement...'] Texte ï¿½ afficher pendant le chargement.
            */
           function setButtonLoading(
             button,
@@ -1167,7 +1168,7 @@
             if (!button) return;
             if (isLoading) {
               button.disabled = true;
-              // Sauvegarde le texte original s'il n'est pas déjà sauvegardé
+              // Sauvegarde le texte original s'il n'est pas dï¿½jï¿½ sauvegardï¿½
               if (!button.dataset.originalText) {
                 button.dataset.originalText = button.innerHTML;
               }
@@ -1177,34 +1178,34 @@
               // Restaure le texte original
               button.innerHTML =
                 button.dataset.originalText || button.innerHTML;
-              delete button.dataset.originalText; // Nettoie le texte sauvegardé
+              delete button.dataset.originalText; // Nettoie le texte sauvegardï¿½
             }
           }
 
           // --- FONCTIONS MODAL ---
 
           /**
-           * Affiche la fenêtre modale.
+           * Affiche la fenï¿½tre modale.
            * @param {string} title Titre du modal.
            * @param {string} content Contenu HTML du modal.
            */
           function showModal(title, content) {
             if (!overlay || !modal || !modalTitle || !modalContent) {
-              // debugInfo("Éléments du modal non trouvés."); // Appel debug supprimé
+              // debugInfo("ï¿½lï¿½ments du modal non trouvï¿½s."); // Appel debug supprimï¿½
               return;
             }
             try {
               modalTitle.textContent = title;
               modalContent.innerHTML = content;
               overlay.classList.add("visible");
-              // Optionnel : Gestion du focus pour accessibilité
+              // Optionnel : Gestion du focus pour accessibilitï¿½
               // modalConfirmBtn.focus();
             } catch (err) {
-              // debugInfo("Erreur à l'ouverture du modal : " + err.message); // Appel debug supprimé
+              // debugInfo("Erreur ï¿½ l'ouverture du modal : " + err.message); // Appel debug supprimï¿½
             }
           }
 
-          /** Ferme la fenêtre modale. */
+          /** Ferme la fenï¿½tre modale. */
           function closeModal() {
             if (!overlay) return;
             overlay.classList.remove("visible");
@@ -1213,8 +1214,8 @@
           // --- FONCTIONS DE NAVIGATION ET VALIDATION ---
 
           /**
-           * Navigue vers une étape spécifique.
-           * @param {number} stepIndex Indice de l'étape (base 0).
+           * Navigue vers une ï¿½tape spï¿½cifique.
+           * @param {number} stepIndex Indice de l'ï¿½tape (base 0).
            */
           function goToStep(stepIndex) {
             if (
@@ -1222,7 +1223,7 @@
               stepIndex >= steps.length ||
               !steps[stepIndex]
             ) {
-              // debugInfo("Indice d'étape non valide : " + stepIndex); // Appel debug supprimé
+              // debugInfo("Indice d'ï¿½tape non valide : " + stepIndex); // Appel debug supprimï¿½
               return;
             }
             safeLog("Navigation vers l'&eacute;tape " + (stepIndex + 1));
@@ -1231,17 +1232,17 @@
             steps.forEach((step, index) => {
               if (step) {
                 step.style.display = index === stepIndex ? "block" : "none";
-                // Supprime l'état de validation lors du changement d'étape
+                // Supprime l'ï¿½tat de validation lors du changement d'ï¿½tape
                 step.classList.remove("was-validated");
               }
             });
 
-            // Met à jour la barre de progression (maintenant 3 étapes principales : 0, 1, 2)
+            // Met ï¿½ jour la barre de progression (maintenant 3 ï¿½tapes principales : 0, 1, 2)
             const progressPercentage =
               stepIndex < 2 ? (stepIndex / 2) * 100 : 100;
             progressBar.style.width = progressPercentage + "%";
 
-            // Défilement vers le début du module
+            // Dï¿½filement vers le dï¿½but du module
             if (emissionModuleContainer) {
               emissionModuleContainer.scrollIntoView({
                 behavior: "smooth",
@@ -1251,13 +1252,13 @@
           }
 
           /**
-           * Valide les inputs de l'étape courante.
+           * Valide les inputs de l'ï¿½tape courante.
            * @returns {boolean} True si valide, false sinon.
            */
           function validateCurrentStep() {
             const currentStepElement = steps[currentStepIndex];
             if (!currentStepElement) {
-              // debugInfo("currentStepElement non trouvé pour validation."); // Appel debug supprimé
+              // debugInfo("currentStepElement non trouvï¿½ pour validation."); // Appel debug supprimï¿½
               return false;
             }
 
@@ -1265,16 +1266,16 @@
             // Ajoute classe pour activer la validation HTML5 et les styles
             currentStepElement.classList.add("was-validated");
 
-            // Sélectionne tous les éléments du formulaire obligatoires dans l'étape courante
+            // Sï¿½lectionne tous les ï¿½lï¿½ments du formulaire obligatoires dans l'ï¿½tape courante
             const requiredElements = currentStepElement.querySelectorAll(
               "input[required], select[required], textarea[required]"
             );
 
             requiredElements.forEach((element) => {
-              // Vérifie si l'élément est visible (non caché via display: none)
+              // Vï¿½rifie si l'ï¿½lï¿½ment est visible (non cachï¿½ via display: none)
               const style = window.getComputedStyle(element);
               if (style.display === "none" || style.visibility === "hidden") {
-                return; // Ignore la validation des éléments cachés
+                return; // Ignore la validation des ï¿½lï¿½ments cachï¿½s
               }
 
               if (element.type === "checkbox") {
@@ -1289,8 +1290,8 @@
             });
 
             if (!isStepValid) {
-              // debugInfo(`Validation étape ${currentStepIndex + 1} échouée.`); // Appel debug supprimé
-              // Trouve le premier élément invalide visible pour mettre le focus
+              // debugInfo(`Validation ï¿½tape ${currentStepIndex + 1} ï¿½chouï¿½e.`); // Appel debug supprimï¿½
+              // Trouve le premier ï¿½lï¿½ment invalide visible pour mettre le focus
               const firstInvalidVisible = currentStepElement.querySelector(
                 ':invalid:not(fieldset):not([type="hidden"]):not([style*="display: none"]):not([style*="visibility: hidden"])'
               );
@@ -1309,12 +1310,12 @@
                     behavior: "smooth",
                     block: "center",
                   });
-                }, 100); // Petit délai pour un défilement fluide
+                }, 100); // Petit dï¿½lai pour un dï¿½filement fluide
               } else {
-                // debugInfo( "Aucun élément invalide visible trouvé pour le défilement."); // Appel debug supprimé
+                // debugInfo( "Aucun ï¿½lï¿½ment invalide visible trouvï¿½ pour le dï¿½filement."); // Appel debug supprimï¿½
               }
             } else {
-              // debugInfo(`Validation étape ${currentStepIndex + 1} réussie.`); // Appel debug supprimé
+              // debugInfo(`Validation ï¿½tape ${currentStepIndex + 1} rï¿½ussie.`); // Appel debug supprimï¿½
             }
 
             return isStepValid;
@@ -1323,11 +1324,11 @@
           // --- FONCTIONS APPELS API ---
 
           /**
-           * Fonction générique pour exécuter des requêtes Fetch vers l'API.
-           * @param {string} endpoint - Partie de l'URL après API_BASE_URL (ex. '/offer').
-           * @param {object} options - Options de la requête (method, headers, body).
-           * @returns {Promise<object | Response>} - Réponse JSON parsée ou objet Response pour types non-JSON (ex. Blob).
-           * @throws {object} Objet erreur avec détails (status, message, body)
+           * Fonction gï¿½nï¿½rique pour exï¿½cuter des requï¿½tes Fetch vers l'API.
+           * @param {string} endpoint - Partie de l'URL aprï¿½s API_BASE_URL (ex. '/offer').
+           * @param {object} options - Options de la requï¿½te (method, headers, body).
+           * @returns {Promise<object | Response>} - Rï¿½ponse JSON parsï¿½e ou objet Response pour types non-JSON (ex. Blob).
+           * @throws {object} Objet erreur avec dï¿½tails (status, message, body)
            */
           async function callApi(endpoint, options = {}) {
             const url = `${API_BASE_URL}${endpoint}`;
@@ -1417,17 +1418,17 @@
                   message: `Erreur r&eacute;seau : ${error.message}`,
                 };
               }
-              console.error(`Erreur API :`, error); // Log de l'erreur gérée
+              console.error(`Erreur API :`, error); // Log de l'erreur gï¿½rï¿½e
               throw error;
             }
           }
 
           /**
-           * Appelle l'API pour la soumission de l'application pour l'émission de la police (3.3 Application).
+           * Appelle l'API pour la soumission de l'application pour l'ï¿½mission de la police (3.3 Application).
            * @param {string} offerId - ID de l'offre.
-           * @param {object} underwritingData - Données pour la section underwriting ({ questions: [], checkbox: [] }).
-           * @returns {Promise<object>} - Réponse de l'API avec numéro de police et pointeurs vers les documents.
-           * @throws {object} Objet erreur avec détails
+           * @param {object} underwritingData - Donnï¿½es pour la section underwriting ({ questions: [], checkbox: [] }).
+           * @returns {Promise<object>} - Rï¿½ponse de l'API avec numï¿½ro de police et pointeurs vers les documents.
+           * @throws {object} Objet erreur avec dï¿½tails
            */
           async function callSubmitApplicationAPI(offerId, underwritingData) {
             safeLog(
@@ -1438,9 +1439,9 @@
             const requestBody = {
               id: offerId,
               email: emailConfermaInput.value,
-              underwriting: underwritingData,
+              underwriting: underwritingData,text: textEmailEmissioneFR(offerId),
             };
-            // debugInfo("Corps de la requête pour la Soumission Application :", requestBody); // Appel debug supprimé
+            // debugInfo("Corps de la requï¿½te pour la Soumission Application :", requestBody); // Appel debug supprimï¿½
 
             return callApi(endpoint, {
               method: "POST",
@@ -1449,7 +1450,7 @@
           }
 
           /**
-           * Appelle l'API pour récupérer le contenu d'un document via son pointeur (4.1 Retrieve document).
+           * Appelle l'API pour rï¿½cupï¿½rer le contenu d'un document via son pointeur (4.1 Retrieve document).
            * @param {string} pointer - Identifiant du document (pointeur).
            * @returns {Promise<Blob>} - Contenu du document comme Blob.
            * @throws {object | Error} Objet erreur de callApi ou Error si impossible d'obtenir le Blob.
@@ -1469,19 +1470,19 @@
               });
 
               const fileBlob = await response.blob();
-              // debugInfo( `Blob du document reçu (Type : ${fileBlob.type}, Taille : ${fileBlob.size} octets).`); // Appel debug supprimé
+              // debugInfo( `Blob du document reï¿½u (Type : ${fileBlob.type}, Taille : ${fileBlob.size} octets).`); // Appel debug supprimï¿½
               return fileBlob;
             } catch (error) {
-              // debugInfo(`Erreur dans callRetrieveDocumentAPI :`, error); // Appel debug supprimé
+              // debugInfo(`Erreur dans callRetrieveDocumentAPI :`, error); // Appel debug supprimï¿½
               throw error;
             }
           }
 
-          // --- FONCTIONS LOGIQUE DES ÉTAPES ---
+          // --- FONCTIONS LOGIQUE DES ï¿½TAPES ---
 
           /**
-           * Tente de charger les données de l'offre depuis sessionStorage.
-           * @returns {boolean} True si les données sont trouvées et valides, False sinon.
+           * Tente de charger les donnï¿½es de l'offre depuis sessionStorage.
+           * @returns {boolean} True si les donnï¿½es sont trouvï¿½es et valides, False sinon.
            */
           function loadOfferDetailsFromSession() {
             offerDetailsFromSession = null;
@@ -1534,7 +1535,7 @@
             return true;
           }
 
-          /** Remplit le résumé de l'offre à l'Étape 2 à partir des données de sessionStorage */
+          /** Remplit le rï¿½sumï¿½ de l'offre ï¿½ l'ï¿½tape 2 ï¿½ partir des donnï¿½es de sessionStorage */
           function populateOfferSummary() {
             if (
               !offerDetailsFromSession ||
@@ -1617,7 +1618,7 @@
             }
           }
 
-          /** Remplit la liste des documents à l'Étape 3 (Complétion) */
+          /** Remplit la liste des documents ï¿½ l'ï¿½tape 3 (Complï¿½tion) */
           function populatePolicyDocuments() {
             if (
               !applicationResponseData ||
@@ -1642,7 +1643,7 @@
                                }" data-description="${
                   doc.description || "Document"
                 }">
-                                   ? T&eacute;l&eacute;charger <!-- Flèche Bas -->
+                                   ? T&eacute;l&eacute;charger <!-- Flï¿½che Bas -->
                                </button>
                            </div>
                        `;
@@ -1673,7 +1674,7 @@
           }
 
           /**
-           * Gère le bouton "Afficher Résumé" (Étape 1 -> Étape 2 ou 4).
+           * Gï¿½re le bouton "Afficher Rï¿½sumï¿½" (ï¿½tape 1 -> ï¿½tape 2 ou 4).
            * @async
            */
           async function handleStep1Proceed() {
@@ -1694,7 +1695,7 @@
           }
 
           /**
-           * Gère la soumission de l'application (Étape 2 -> Étape 3 ou 4).
+           * Gï¿½re la soumission de l'application (ï¿½tape 2 -> ï¿½tape 3 ou 4).
            * @async
            */
           async function handleApplicationSubmission() {
@@ -1762,7 +1763,7 @@
           }
 
           /**
-           * Gère le téléchargement d'un document (Étape 3 Complétion).
+           * Gï¿½re le tï¿½lï¿½chargement d'un document (ï¿½tape 3 Complï¿½tion).
            * @param {string} pointer Identifiant du document.
            * @param {string} description Description pour le nom de fichier.
            * @async
@@ -1894,12 +1895,12 @@
           } else {
             initializeModule();
           }
-        })(); // Fin scope isolé
+        })(); // Fin scope isolï¿½
       </script>
     </div>
     <!-- Fin custom-html-3u -->
 
-    <!-- Scripts JS du thème -->
+    <!-- Scripts JS du thï¿½me -->
     <script src="https://r.mobirisesite.com/1342903/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://r.mobirisesite.com/1342903/assets/smoothscroll/smooth-scroll.js"></script>
     <script src="https://r.mobirisesite.com/1342903/assets/ytplayer/index.js"></script>
