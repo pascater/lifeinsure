@@ -2,7 +2,7 @@ import {
   textEmailRichiediOfertIT,
   textEmailRichiediOfertFR,
   textEmailRichiediOfertDE,
-} from "./text-email.js";
+} from "./text-email-richiedi-oferta.js";
 
 function getFormData(form) {
   let values = Object.fromEntries(form.entries());
