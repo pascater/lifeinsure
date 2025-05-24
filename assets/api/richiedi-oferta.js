@@ -2,6 +2,9 @@ import {
   textEmailRichiediOfertIT,
   textEmailRichiediOfertFR,
   textEmailRichiediOfertDE,
+  titleEmailRichiediOfertDE,
+  titleEmailRichiediOfertIT,
+  titleEmailRichiediOfertFR,
 } from "./text-email-richiedi-oferta.js";
 
 function getFormData(form) {
@@ -358,6 +361,12 @@ export async function richiediOfferta(
           id: datiOfferta.id,
           email: datiOfferta.holder.email,
           documentsPointer: datiRisposta.document_pointers,
+          subject:
+            language === "it"
+              ? titleEmailRichiediOfertIT
+              : language === "fr"
+              ? titleEmailRichiediOfertFR
+              : titleEmailRichiediOfertDE,
         }),
       });
     }
