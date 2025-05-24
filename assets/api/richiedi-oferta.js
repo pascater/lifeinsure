@@ -2,9 +2,9 @@ import {
   textEmailRichiediOfertIT,
   textEmailRichiediOfertFR,
   textEmailRichiediOfertDE,
-  titleEmailRichiediOfertDE,
-  titleEmailRichiediOfertIT,
-  titleEmailRichiediOfertFR,
+  titleEmailRichiediOfertaIT,
+  titleEmailRichiediOfertaFR,
+  titleEmailRichiediOfertaDE,
 } from "./text-email-richiedi-oferta.js";
 
 function getFormData(form) {
@@ -352,6 +352,13 @@ export async function richiediOfferta(
         : textEmailRichiediOfertDE(datiOfferta.id);
     console.log("textEmail", textEmail);
 
+    const titleOjbect =
+      language === "it"
+        ? titleEmailRichiediOfertaIT
+        : language === "fr"
+        ? titleEmailRichiediOfertaFR
+        : titleEmailRichiediOfertaDE;
+
     if (risposta.status === 200 && !requiresManualVerification) {
       await fetch(`${API_BASE_URL}/send_documents`, {
         method: "POST",
@@ -361,12 +368,7 @@ export async function richiediOfferta(
           id: datiOfferta.id,
           email: datiOfferta.holder.email,
           documentsPointer: datiRisposta.document_pointers,
-          subject:
-            language === "it"
-              ? titleEmailRichiediOfertIT
-              : language === "fr"
-              ? titleEmailRichiediOfertFR
-              : titleEmailRichiediOfertDE,
+          subject: titleOjbect,
         }),
       });
     }

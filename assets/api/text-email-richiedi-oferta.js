@@ -7,8 +7,8 @@ export const textEmailRichiediOfertFR = (idOferta) =>
 export const textEmailRichiediOfertDE = (idOferta) =>
   `E-Mail-Text zur Anfrage eines Angebots für die ID ${idOferta}`;
 
-export const titleEmailRichiediOfertIT = "Richiesta di un'offerta";
+export const titleEmailRichiediOfertaIT = "Richiesta di un'offerta";
 
-export const titleEmailRichiediOfertFR = "Demande d'une offre";
+export const titleEmailRichiediOfertaFR = "Demande d'une offre";
 
-export const titleEmailRichiediOfertDE = "Anfrage für ein Angebot";
+export const titleEmailRichiediOfertaDE = "Anfrage für ein Angebot";
