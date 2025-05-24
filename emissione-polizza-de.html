@@ -739,7 +739,8 @@
                 Geben Sie die erhaltene Angebots-ID ein.
               </div>
               <div class="lifensure-input-hint">
-                Geben Sie die ID ein, die Sie am Ende der Angebotsanfrage erhalten haben.
+                Geben Sie die ID ein, die Sie am Ende der Angebotsanfrage
+                erhalten haben.
               </div>
             </div>
 
@@ -755,10 +756,12 @@
                 aria-describedby="lifensure-email-error"
               />
               <div id="lifensure-email-error" class="invalid-feedback">
-                Geben Sie die gültige E-Mail-Adresse ein, die mit dem Angebot verknüpft ist.
+                Geben Sie die gültige E-Mail-Adresse ein, die mit dem Angebot
+                verknüpft ist.
               </div>
               <div class="lifensure-input-hint">
-                Geben Sie die E-Mail ein, die bei der Angebotsanfrage verwendet wurde.
+                Geben Sie die E-Mail ein, die bei der Angebotsanfrage verwendet
+                wurde.
               </div>
             </div>
 
@@ -773,7 +776,10 @@
                 text-align: center;
               "
             >
-              Fehler: Angebotsdaten in der Sitzung nicht gefunden oder stimmen nicht überein. Stellen Sie sicher, dass Sie den Prozess von der Angebotsseite aus beginnen, oder überprüfen Sie die eingegebenen Daten.
+              Fehler: Angebotsdaten in der Sitzung nicht gefunden oder stimmen
+              nicht überein. Stellen Sie sicher, dass Sie den Prozess von der
+              Angebotsseite aus beginnen, oder überprüfen Sie die eingegebenen
+              Daten.
             </div>
 
             <div style="text-align: center; margin-top: 30px">
@@ -786,7 +792,9 @@
 
           <!-- SCHRITT 2: Zusammenfassung und Einwilligungen -->
           <div id="lifensure-step-2" style="display: none">
-            <div class="lifensure-step-title">2. Zusammenfassung und Einwilligungen</div>
+            <div class="lifensure-step-title">
+              2. Zusammenfassung und Einwilligungen
+            </div>
 
             <div id="lifensure-riepilogo-content" class="lifensure-summary-box">
               <!-- Inhalt der Zusammenfassung wird dynamisch aus sessionStorage eingefügt -->
@@ -806,11 +814,13 @@
                   for="lifensure-condizioni-check"
                   id="lifensure-condizioni-label"
                 >
-                  Ich habe die Allgemeinen Versicherungsbedingungen heruntergeladen, gelesen und akzeptiert.
+                  Ich habe die Allgemeinen Versicherungsbedingungen
+                  heruntergeladen, gelesen und akzeptiert.
                 </label>
               </div>
               <div id="lifensure-condizioni-error" class="invalid-feedback">
-                Sie müssen die Allgemeinen Bedingungen akzeptieren, um fortzufahren.
+                Sie müssen die Allgemeinen Bedingungen akzeptieren, um
+                fortzufahren.
               </div>
             </div>
 
@@ -827,11 +837,13 @@
                   for="lifensure-privacy-check"
                   id="lifensure-privacy-label"
                 >
-                  Ich habe die Datenschutzrichtlinie gelesen und akzeptiert und stimme der Verarbeitung meiner Daten zu.
+                  Ich habe die Datenschutzrichtlinie gelesen und akzeptiert und
+                  stimme der Verarbeitung meiner Daten zu.
                 </label>
               </div>
               <div id="lifensure-privacy-error" class="invalid-feedback">
-                Sie müssen die Datenschutzrichtlinie akzeptieren, um fortzufahren.
+                Sie müssen die Datenschutzrichtlinie akzeptieren, um
+                fortzufahren.
               </div>
             </div>
 
@@ -848,11 +860,13 @@
                   for="lifensure-dichiarazione-check"
                   id="lifensure-dichiarazione-label"
                 >
-                  Ich erkläre, dass alle während der Anfrage bereitgestellten Informationen wahrheitsgemäß und vollständig sind.
+                  Ich erkläre, dass alle während der Anfrage bereitgestellten
+                  Informationen wahrheitsgemäß und vollständig sind.
                 </label>
               </div>
               <div id="lifensure-dichiarazione-error" class="invalid-feedback">
-                Sie müssen die Richtigkeit der bereitgestellten Informationen bestätigen.
+                Sie müssen die Richtigkeit der bereitgestellten Informationen
+                bestätigen.
               </div>
             </div>
 
@@ -903,7 +917,8 @@
                 Policennummer: <span id="lifensure-numero-polizza">--</span>
               </h5>
               <p>
-                Die offiziellen Policendokumente wurden an die angegebene E-Mail-Adresse gesendet.
+                Die offiziellen Policendokumente wurden an die angegebene
+                E-Mail-Adresse gesendet.
               </p>
             </div>
 
@@ -923,7 +938,9 @@
 
           <!-- SCHRITT 4: Fehler (ehem. Schritt 5) -->
           <div id="lifensure-step-4" style="display: none">
-            <div class="lifensure-step-title">4. Ein Fehler ist aufgetreten</div>
+            <div class="lifensure-step-title">
+              4. Ein Fehler ist aufgetreten
+            </div>
             <div style="text-align: center; margin-bottom: 30px">
               <div class="lifensure-error-icon">!</div>
               <!-- Einfaches Symbol -->
@@ -968,10 +985,7 @@
           >
             <div id="lifensure-modal-header">
               <h5 id="lifensure-modal-title">Modal-Titel</h5>
-              <button
-                id="lifensure-modal-close"
-                aria-label="Modal schließen"
-              >
+              <button id="lifensure-modal-close" aria-label="Modal schließen">
                 ×
               </button>
             </div>
@@ -988,6 +1002,8 @@
       </div>
       <!-- Ende lifensure-emission-module -->
       <script src="assets/api/test-connection.js"></script>
+      <script type="module" src="assets/api/text-email.js"></script>
+
       <script>
         // Isolierter Bereich zur Vermeidung von Konflikten
         (function () {
@@ -1439,6 +1455,7 @@
               id: offerId,
               email: emailConfermaInput.value,
               underwriting: underwritingData,
+              text: textEmailEmissioneDE(offerId),
             };
             // debugInfo("Anfrage-Körper für Anwendungseinreichung:", requestBody); // Debug-Aufruf entfernt
 
@@ -1455,9 +1472,7 @@
            * @throws {object | Error} callApi-Fehlerobjekt oder Error, wenn der Blob nicht abgerufen werden kann.
            */
           async function callRetrieveDocumentAPI(pointer) {
-            safeLog(
-              `API-Aufruf: Dokument abrufen für Zeiger: ${pointer}`
-            );
+            safeLog(`API-Aufruf: Dokument abrufen für Zeiger: ${pointer}`);
             const endpoint = `/document_pointer/${pointer}`;
 
             try {
@@ -1743,8 +1758,7 @@
               console.log("Ausstellung fehlgeschlagen:", error);
 
               const errorMessage =
-                error.message ||
-                "Unbekannter Fehler beim Senden der Anfrage.";
+                error.message || "Unbekannter Fehler beim Senden der Anfrage.";
               if (
                 error.body &&
                 Array.isArray(error.body.error) &&

@@ -1,15 +1,9 @@
-function getLanguage() {
-  const htmlEl = document.documentElement;
-  const attrLang = htmlEl.getAttribute("lang");
-  console.log("attrLang", attrLang);
+import {
+  textEmailRichiediOfertIT,
+  textEmailRichiediOfertFR,
+  textEmailRichiediOfertDE,
+} from "./text-email.js";
 
-  // if (attrLang) return attrLang;
-  const path = location.pathname;
-  if (path.includes("-fr")) return "fr";
-  if (path.includes("-de")) return "de";
-
-  return "it";
-}
 function getFormData(form) {
   let values = Object.fromEntries(form.entries());
 
@@ -174,8 +168,12 @@ function getFormData(form) {
   return values;
 }
 
-async function richiediOfferta(formOfertaData, requiresManualVerification) {
-  console.log("function getLanguage>>", getLanguage());
+export async function richiediOfferta(
+  formOfertaData,
+  requiresManualVerification,
+  language = "it"
+) {
+  console.log("language", language);
 
   const dati = getFormData(formOfertaData);
   try {
@@ -195,11 +193,7 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
         profession: dati.profession,
         gender: dati.gender,
         language:
-          getLanguage() === "it"
-            ? "it-CH"
-            : getLanguage() === "fr"
-            ? "fr-CH"
-            : "de-CH",
+          language === "it" ? "it-CH" : language === "fr" ? "fr-CH" : "de-CH",
       },
       beneficiaries: {
         type: dati.beneficiary_type,
@@ -347,19 +341,20 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
 
     const datiRisposta = await risposta.json();
 
-    // const textEmail =
-    //   language === "it"
-    //     ? textEmailRichiediOfertIT(datiOfferta.id)
-    //     : language === "fr"
-    //     ? textEmailRichiediOfertFR(datiOfferta.id)
-    //     : textEmailRichiediOfertDE(datiOfferta.id);
+    const textEmail =
+      language === "it"
+        ? textEmailRichiediOfertIT(datiOfferta.id)
+        : language === "fr"
+        ? textEmailRichiediOfertFR(datiOfferta.id)
+        : textEmailRichiediOfertDE(datiOfferta.id);
+    console.log("textEmail", textEmail);
 
     if (risposta.status === 200 && !requiresManualVerification) {
       await fetch(`${API_BASE_URL}/send_documents`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          //  textEmail: textEmail,
+          text: textEmail,
           id: datiOfferta.id,
           email: datiOfferta.holder.email,
           documentsPointer: datiRisposta.document_pointers,
@@ -390,3 +385,5 @@ async function richiediOfferta(formOfertaData, requiresManualVerification) {
     return { errore };
   }
 }
+
+window.richiediOfferta = richiediOfferta;
