@@ -1007,7 +1007,7 @@
       </div>
       <!-- Fin lifensure-emission-module -->
       <script src="assets/api/test-connection.js"></script>
-      <script  src="assets/api/text-email-emissione.js"></script>
+      <script src="assets/api/text-email-emissione.js"></script>
 
       <script>
         // Scope isol� pour �viter les conflits
@@ -1466,6 +1466,7 @@
               email: emailConfermaInput.value,
               underwriting: underwritingData,
               text: textEmailEmissioneFR(offerId),
+              subject: titleEmailEmissioneFR,
             };
             // debugInfo("Corps de la requ�te pour la Soumission Application :", requestBody); // Appel debug supprim�
 

@@ -6,3 +6,9 @@ const textEmailEmissioneFR = (idOferta) =>
 
 const textEmailEmissioneDE = (idOferta) =>
   `E-Mail-Text zur Anfrage der Ausstellung des Angebots für die ID ${idOferta}`;
+
+const titleEmailEmissioneIT = "Richiesta di emissione dell'offerta";
+
+const titleEmailEmissioneFR = "Demande d'émission de l'offre";
+
+const titleEmailEmissioneDE = "Anfrage zur Ausstellung des Angebots";
