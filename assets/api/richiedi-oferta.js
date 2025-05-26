@@ -174,7 +174,7 @@ function getFormData(form) {
 export async function richiediOfferta(
   formOfertaData,
   requiresManualVerification,
-  language = "it"
+  language
 ) {
   console.log("language", language);
 
