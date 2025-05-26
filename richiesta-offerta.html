@@ -1939,7 +1939,7 @@
     </div>
     <!-- Fine container -->
     <script src="assets/api/test-connection.js"></script>
-    <script type="module" src="assets/api/richiedi-oferta.js" ></script>
+    <script type="module" src="assets/api/richiedi-oferta.js"></script>
     <script src="assets/api/recupera-documento.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/api/check-age.js"></script>
@@ -3034,7 +3034,8 @@
           const formData = new FormData(form);
           const responseRichiediOfferta = await richiediOfferta(
             formData,
-            requiresManualVerification
+            requiresManualVerification,
+            "it"
           );
           console.log("Risposta backend:", responseRichiediOfferta);
 
